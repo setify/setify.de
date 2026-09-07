@@ -13,9 +13,11 @@ import Pricing from '@/components/sections/Pricing.astro';
 import Industries from '@/components/sections/Industries.astro';
 import Faq from '@/components/sections/Faq.astro';
 import Contact from '@/components/sections/Contact.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
 import { site } from '@/content/site';
 ---
 <Base title={site.meta.title} description={site.meta.description}>
+  <JsonLd slot="head" />
   <Nav />
   <main>
     <Hero />

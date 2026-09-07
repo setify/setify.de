@@ -89,3 +89,11 @@ html.js.motion-ready [data-split] { opacity: 1; transform: none; visibility: vis
 [data-contact-success].is-visible [data-success-circle] { animation: draw 1s var(--ease-out-expo) forwards; }
 [data-contact-success].is-visible [data-success-check] { animation: draw 0.6s 0.6s var(--ease-out-expo) forwards; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
+
+.legal h2 { font-family: var(--font-display); font-size: var(--text-h3); margin-top: 2.5rem; margin-bottom: 0.75rem; }
+.legal h3 { font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+.legal p, .legal li { color: #3f3d38; line-height: 1.7; }
+.legal p + p { margin-top: 0.9rem; }
+.legal ul { list-style: disc; padding-left: 1.25rem; margin: 0.75rem 0; }
+.legal a { color: #7a6a4c; text-decoration: underline; text-underline-offset: 3px; }
+.legal address { font-style: normal; }

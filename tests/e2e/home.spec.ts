@@ -36,3 +36,35 @@ test.describe('Startseite', () => {
     await expect(page.locator('#faq-panel-1')).toBeVisible();
   });
 });
+
+test.describe('Rechtsseiten', () => {
+  test('Impressum enthält Anbieterdaten', async ({ page }) => {
+    await page.goto('/impressum');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Impressum');
+    await expect(page.getByText('Philipp Walter')).toBeVisible();
+    await expect(page.getByText('Linder Weg 16a')).toBeVisible();
+  });
+
+  test('Datenschutz nennt Vercel, Resend und Turnstile, aber kein Webflow', async ({ page }) => {
+    await page.goto('/datenschutz');
+    const body = await page.locator('main').innerText();
+    expect(body).toContain('Vercel');
+    expect(body).toContain('Resend');
+    expect(body).toContain('Turnstile');
+    expect(body).not.toContain('Webflow');
+    expect(body).not.toContain('Google Analytics');
+  });
+
+  test('alte URLs leiten weiter', async ({ request }) => {
+    const res = await request.get('/cookie-richtlinie-eu', { maxRedirects: 0 });
+    expect([301, 302, 308]).toContain(res.status());
+    expect(res.headers()['location']).toContain('/datenschutz');
+  });
+
+  test('Startseite hat JSON-LD', async ({ page }) => {
+    await page.goto('/');
+    const ld = await page.locator('script[type="application/ld+json"]').textContent();
+    expect(ld).toContain('ProfessionalService');
+    expect(ld).toContain('Köln');
+  });
+});
