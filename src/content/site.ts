@@ -50,7 +50,7 @@ export const site: SiteContent = {
     { id: 'zahlen', tone: 'sand' },
     { id: 'preise', tone: 'dark' },
     { id: 'branchen', tone: 'sand' },
-    { id: 'faq', tone: 'sand' },
+    { id: 'faq', tone: 'dark' },
     { id: 'kontakt', tone: 'dark' },
     { id: 'footer', tone: 'dark' },
   ],

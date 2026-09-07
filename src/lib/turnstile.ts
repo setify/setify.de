@@ -2,6 +2,7 @@ const VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
 export async function verifyTurnstile(token: string | undefined, secret: string | undefined, ip?: string): Promise<{ ok: boolean; skipped: boolean }> {
   if (!secret) {
+    console.warn('[turnstile] TURNSTILE_SECRET_KEY fehlt, Pruefung uebersprungen');
     return { ok: true, skipped: true };
   }
   if (!token) {

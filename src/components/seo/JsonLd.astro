@@ -16,4 +16,4 @@ const data = {
   knowsAbout: ['Webdesign', 'Webentwicklung', 'Performance-Optimierung', 'UX Design'],
 };
 ---
-<script type="application/ld+json" set:html={JSON.stringify(data)} />
+<script type="application/ld+json" set:html={JSON.stringify(data).replace(/</g, '\u003c')} />

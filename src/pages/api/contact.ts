@@ -22,13 +22,15 @@ function redirect(path: string): Response {
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   const asJson = wantsJson(request);
-  let clientIp = 'unknown';
+  let ip = 'unknown';
   try {
-    clientIp = clientAddress ?? 'unknown';
+    ip = clientAddress || ip;
   } catch {
-    clientIp = 'unknown';
+    /* clientAddress unavailable in this environment */
   }
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || clientIp;
+  if (ip === 'unknown') {
+    ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  }
 
   const rate = checkRateLimit(ip);
   if (!rate.allowed) {
