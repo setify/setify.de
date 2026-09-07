@@ -1,0 +1,22 @@
+---
+import { site } from '@/content/site';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
+const { industries } = site;
+---
+<section id="branchen" class="section section--sand">
+  <div class="container">
+    <SectionHeading tone="sand" eyebrow={industries.eyebrow} title={industries.title} />
+    <ul class="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      {industries.items.map((item) => (
+        <li class="group relative overflow-hidden rounded-3xl" data-reveal>
+          <ImagePlaceholder id={item.image.id} ratio={item.image.ratio} label={item.image.label} alt={item.image.alt} tone="sand" class="transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-[1.04]" />
+          <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-anthracite-950/90 via-anthracite-950/40 to-transparent p-6 text-sand-100 transition-colors duration-500 group-hover:from-anthracite-950/95">
+            <h3 class="font-display text-h3">{item.title}</h3>
+            <p class="mt-2 max-h-0 overflow-hidden text-sm text-sand-100/80 opacity-0 transition-all duration-500 group-hover:max-h-24 group-hover:opacity-100 group-focus-within:max-h-24 group-focus-within:opacity-100">{item.text}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

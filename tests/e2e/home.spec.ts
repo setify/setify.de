@@ -26,4 +26,13 @@ test.describe('Startseite', () => {
     const desc = page.locator('meta[name="description"]');
     await expect(desc).toHaveAttribute('content', /setify baut Websites/);
   });
+
+  test.fixme('FAQ öffnet zweiten Eintrag', async ({ page }) => {
+    await page.goto('/');
+    const trigger = page.locator('#faq-trigger-1');
+    await trigger.scrollIntoViewIfNeeded();
+    await trigger.click();
+    await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator('#faq-panel-1')).toBeVisible();
+  });
 });

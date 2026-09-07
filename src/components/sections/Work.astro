@@ -1,0 +1,39 @@
+---
+import { site } from '@/content/site';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
+const { work } = site;
+---
+<section id="referenzen" class="section section--dark">
+  <div class="container">
+    <SectionHeading tone="dark" eyebrow={work.eyebrow} title={work.title} />
+    <div class="mt-16 grid gap-8 md:grid-cols-2 md:gap-x-10" data-motion="tilt">
+      {work.items.map((item, i) => (
+        <article class={`group relative ${i % 2 === 1 ? 'md:translate-y-[120px]' : ''}`} data-tilt-card data-reveal>
+          <div class="relative overflow-hidden rounded-3xl">
+            <ImagePlaceholder id={item.image.id} ratio={item.image.ratio} label={item.image.label} alt={item.image.alt} parallax class="transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-[1.03]" />
+            <span class="absolute right-5 top-5 grid h-11 w-11 -translate-y-2 place-items-center rounded-full bg-gold-500 text-anthracite-950 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100" aria-hidden="true">
+              <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M6 4h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </span>
+          </div>
+          <div class="mt-6 flex items-baseline justify-between gap-4">
+            <h3 class="font-display text-h3">{item.client}</h3>
+            <span class="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-gold-500">{item.industry}</span>
+          </div>
+          <p class="mt-2 text-paper-muted">{item.text}</p>
+          <blockquote class="mt-4 border-l border-gold-500/40 pl-4 text-sm italic text-sand-100/70">{item.quote}</blockquote>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-32 grid gap-8 md:mt-44 md:grid-cols-3">
+      {work.testimonials.map((t) => (
+        <figure class="rounded-3xl border border-anthracite-800 bg-anthracite-900 p-8" data-reveal>
+          <span class="font-display text-[3rem] leading-none text-gold-500" aria-hidden="true">„</span>
+          <blockquote class="mt-2 text-sand-100/90">{t.quote}</blockquote>
+          <figcaption class="mt-6 text-sm text-paper-muted">{t.author}, {t.company}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
