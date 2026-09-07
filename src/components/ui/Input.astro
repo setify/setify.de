@@ -1,0 +1,32 @@
+---
+interface Option { value: string; label: string }
+interface Props {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'select';
+  required?: boolean;
+  options?: Option[];
+  autocomplete?: string;
+  placeholder?: string;
+}
+const { name, label, type = 'text', required = false, options = [], autocomplete, placeholder } = Astro.props;
+const id = `field-${name}`;
+const field =
+  'peer w-full rounded-xl border border-anthracite-950/15 bg-sand-50 px-4 py-3.5 text-anthracite-950 placeholder:text-ink-muted/60 transition-colors duration-300 focus:border-gold-700 focus:outline-none aria-[invalid=true]:border-red-700';
+---
+<div class="group/field flex flex-col gap-2">
+  <label for={id} class="text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-ink-muted">
+    {label}{required && <span class="text-gold-700"> *</span>}
+  </label>
+  {type === 'textarea' ? (
+    <textarea id={id} name={name} rows="5" required={required} placeholder={placeholder} class={`${field} resize-y`}></textarea>
+  ) : type === 'select' ? (
+    <select id={id} name={name} required={required} class={field}>
+      <option value="">Bitte wählen</option>
+      {options.map((o) => <option value={o.value}>{o.label}</option>)}
+    </select>
+  ) : (
+    <input id={id} name={name} type={type} required={required} autocomplete={autocomplete} placeholder={placeholder} class={field} />
+  )}
+  <p class="min-h-[1.25rem] text-[0.8rem] text-red-700" data-error-for={name} aria-live="polite"></p>
+</div>

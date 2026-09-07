@@ -1,0 +1,82 @@
+@import './tokens.css';
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/manrope';
+@import 'lenis/dist/lenis.css';
+
+:root {
+  --gold-gradient: linear-gradient(135deg, #7a6a4c 0%, #bdac89 50%, #e3d6b8 100%);
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-anthracite-950 text-sand-100 font-sans antialiased;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+::selection {
+  background: #bdac89;
+  color: #1a1b1e;
+}
+
+:focus-visible {
+  outline: 2px solid #bdac89;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 30, 'WONK' 0;
+  letter-spacing: -0.02em;
+}
+
+.text-display { font-size: var(--text-display); line-height: 0.95; font-weight: 300; }
+.text-h1 { font-size: var(--text-h1); line-height: 1; font-weight: 400; }
+.text-h2 { font-size: var(--text-h2); line-height: 1.05; font-weight: 400; }
+.text-h3 { font-size: var(--text-h3); line-height: 1.15; font-weight: 500; }
+.text-lead { font-size: var(--text-lead); line-height: 1.5; }
+
+.container {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+.section { padding-block: clamp(5rem, 10vw, 10rem); position: relative; }
+.section--dark { @apply bg-anthracite-950 text-sand-100; }
+.section--sand { @apply bg-sand-100 text-anthracite-950; color-scheme: light; }
+
+.gold-gradient-text {
+  background: var(--gold-gradient);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gold-line {
+  height: 1px;
+  background: var(--gold-gradient);
+  opacity: 0.6;
+}
+
+/* Reveal-Startzustände. JS entfernt sie, ohne JS bleibt alles sichtbar. */
+html.js [data-reveal] { opacity: 0; transform: translateY(40px); }
+html.js [data-split] { visibility: hidden; }
+html.js.motion-ready [data-reveal],
+html.js.motion-ready [data-split] { opacity: 1; transform: none; visibility: visible; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] { opacity: 1; transform: none; }
+  html.js [data-split] { visibility: visible; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

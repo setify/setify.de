@@ -1,0 +1,17 @@
+---
+import Eyebrow from './Eyebrow.astro';
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  align?: 'left' | 'center';
+  tone: 'dark' | 'sand';
+}
+const { eyebrow, title, lead, align = 'left', tone } = Astro.props;
+const muted = tone === 'dark' ? 'text-paper-muted' : 'text-ink-muted';
+---
+<div class={`max-w-3xl ${align === 'center' ? 'mx-auto text-center' : ''}`}>
+  <Eyebrow class={align === 'center' ? 'justify-center' : ''}>{eyebrow}</Eyebrow>
+  <h2 class="font-display text-h2 mt-5 text-balance" data-split>{title}</h2>
+  {lead && <p class={`text-lead mt-6 ${muted}`} data-reveal>{lead}</p>}
+</div>

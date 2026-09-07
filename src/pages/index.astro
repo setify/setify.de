@@ -1,6 +1,24 @@
 ---
+import Base from '@/layouts/Base.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Button from '@/components/ui/Button.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 ---
-<html lang="de">
-  <head><meta charset="utf-8" /><title>setify</title></head>
-  <body><h1>setify</h1></body>
-</html>
+<Base title="setify | Premium Websites aus Köln" description="Designsystem-Vorschau">
+  <main>
+    <section class="section section--dark">
+      <div class="container">
+        <Eyebrow>Webagentur aus Köln</Eyebrow>
+        <h1 class="font-display text-display mt-6">Websites, die man <span class="gold-gradient-text">nicht wegklickt.</span></h1>
+        <div class="mt-10 flex gap-4"><Button href="#kontakt" magnetic>Projekt anfragen</Button><Button href="#work" variant="ghost">Referenzen ansehen</Button></div>
+        <ImagePlaceholder id="hero-visual" ratio="4:5" label="Hero-Visual" alt="Platzhalter" class="mt-12 max-w-md" />
+      </div>
+    </section>
+    <section class="section section--sand">
+      <div class="container">
+        <SectionHeading tone="sand" eyebrow="Leistungen" title="Alles, was dein Auftritt braucht." lead="Vorschau der Sand-Sektion." />
+      </div>
+    </section>
+  </main>
+</Base>

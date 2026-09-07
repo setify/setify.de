@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-anthracite-950: #1a1b1e;
+  --color-anthracite-900: #232428;
+  --color-anthracite-800: #2e3035;
+  --color-gold-700: #7a6a4c;
+  --color-gold-500: #bdac89;
+  --color-gold-300: #e3d6b8;
+  --color-sand-50: #fbf9f4;
+  --color-sand-100: #f3eee4;
+  --color-sand-200: #eae3d5;
+  --color-ink-muted: #6b665c;
+  --color-paper-muted: #a8a49b;
+
+  --font-display: 'Fraunces Variable', 'Georgia', serif;
+  --font-sans: 'Manrope Variable', system-ui, sans-serif;
+
+  --text-display: clamp(3rem, 2rem + 5vw, 6rem);
+  --text-h1: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  --text-h2: clamp(2rem, 1.3rem + 2.6vw, 3.5rem);
+  --text-h3: clamp(1.5rem, 1.2rem + 0.9vw, 2rem);
+  --text-lead: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
