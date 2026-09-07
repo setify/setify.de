@@ -57,11 +57,12 @@ export default function heroGradient(root: HTMLElement): () => void {
   window.addEventListener('resize', resize);
   raf = requestAnimationFrame(draw);
 
-  scrollBar?.animate([{ transform: 'translateY(-100%)' }, { transform: 'translateY(200%)' }], { duration: 1600, iterations: Infinity, easing: 'ease-in-out' });
+  const scrollAnim: Animation | undefined = scrollBar?.animate([{ transform: 'translateY(-100%)' }, { transform: 'translateY(200%)' }], { duration: 1600, iterations: Infinity, easing: 'ease-in-out' });
 
   return () => {
     cancelAnimationFrame(raf);
     io.disconnect();
     window.removeEventListener('resize', resize);
+    scrollAnim?.cancel();
   };
 }
