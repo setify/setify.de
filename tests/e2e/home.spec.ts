@@ -27,7 +27,7 @@ test.describe('Startseite', () => {
     await expect(desc).toHaveAttribute('content', /setify baut Websites/);
   });
 
-  test.fixme('FAQ öffnet zweiten Eintrag', async ({ page }) => {
+  test('FAQ öffnet zweiten Eintrag', async ({ page }) => {
     await page.goto('/');
     const trigger = page.locator('#faq-trigger-1');
     await trigger.scrollIntoViewIfNeeded();

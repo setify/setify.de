@@ -80,3 +80,12 @@ html.js.motion-ready [data-split] { opacity: 1; transform: none; visibility: vis
   html.js [data-split] { visibility: visible; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+[data-contact-success] [data-success-circle],
+[data-contact-success] [data-success-check] {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+[data-contact-success].is-visible [data-success-circle] { animation: draw 1s var(--ease-out-expo) forwards; }
+[data-contact-success].is-visible [data-success-check] { animation: draw 0.6s 0.6s var(--ease-out-expo) forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }

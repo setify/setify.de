@@ -3,6 +3,15 @@ import { initLenis, scrollToHash } from '../lenis';
 import reveals from './reveals';
 import nav from './nav';
 import preloader from './preloader';
+import heroGradient from './hero-gradient';
+import marquee from './marquee';
+import manifestScrub from './manifest-scrub';
+import processPin from './process-pin';
+import counters from './counters';
+import tilt from './tilt';
+import accordion from './accordion';
+import magnetic from './magnetic';
+import parallax from './parallax';
 
 export type MotionInit = (root: HTMLElement) => (() => void) | void;
 
@@ -13,6 +22,13 @@ export function registerMotion(name: string, init: MotionInit): void {
 
 registerMotion('nav', nav);
 registerMotion('preloader', preloader);
+registerMotion('hero', heroGradient);
+registerMotion('marquee', marquee);
+registerMotion('manifest', manifestScrub);
+registerMotion('process', processPin);
+registerMotion('counters', counters);
+registerMotion('tilt', tilt);
+registerMotion('accordion', accordion);
 
 let cleanups: Array<() => void> = [];
 
@@ -32,6 +48,8 @@ function setup(): void {
 
   cleanups.push(initLenis());
   cleanups.push(reveals(document.body) ?? (() => {}));
+  cleanups.push(magnetic(document.body) ?? (() => {}));
+  cleanups.push(parallax(document.body) ?? (() => {}));
 
   document.querySelectorAll<HTMLElement>('[data-motion]').forEach((root) => {
     const names = root.dataset.motion!.split(/\s+/);
