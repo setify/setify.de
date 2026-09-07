@@ -64,5 +64,16 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       </div>
     </div>
   </div>
+  <script>
+    import { initContactForm } from '@/scripts/contact-form';
+    let cleanup: (() => void) | undefined;
+    const setup = () => {
+      cleanup?.();
+      const root = document.getElementById('kontakt');
+      cleanup = root ? initContactForm(root) : undefined;
+    };
+    document.addEventListener('astro:page-load', setup);
+    document.addEventListener('astro:before-swap', () => cleanup?.());
+  </script>
   {siteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 </section>
