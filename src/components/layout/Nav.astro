@@ -1,0 +1,48 @@
+---
+import { site } from '@/content/site';
+import Button from '@/components/ui/Button.astro';
+interface Props { tone?: 'dark' | 'sand' }
+const { tone = 'dark' } = Astro.props;
+const sand = tone === 'sand';
+const logo = sand ? '/logo.svg' : '/logo-white.svg';
+const linkColor = sand ? 'text-anthracite-950/80 hover:text-anthracite-950' : 'text-sand-100/80 hover:text-sand-100';
+const bgColor = sand ? 'bg-sand-100/80 border-anthracite-950/10' : 'bg-anthracite-950/80 border-anthracite-800/60';
+const barColor = sand ? 'bg-anthracite-950' : 'bg-sand-100';
+const href = (h: string) => (sand ? `/${h}` : h);
+---
+<header class="fixed inset-x-0 top-0 z-50 transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)]" data-motion="nav" data-nav>
+  <div class={`absolute inset-0 -z-10 opacity-0 backdrop-blur-xl transition-opacity duration-500 border-b ${bgColor}`} data-nav-bg aria-hidden="true"></div>
+  <nav class="container flex h-20 items-center justify-between" aria-label="Hauptnavigation">
+    <a href="/" class="flex items-center" aria-label="setify Startseite">
+      <img src={logo} alt="setify" width="126" height="40" class="h-8 w-auto" />
+    </a>
+    <ul class="hidden items-center gap-8 lg:flex">
+      {site.nav.links.map((l) => (
+        <li>
+          <a href={href(l.href)} class={`relative text-[0.9rem] font-medium transition-colors duration-300 ${linkColor} after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-gold-500 after:transition-[width] after:duration-500 hover:after:w-full`}>{l.label}</a>
+        </li>
+      ))}
+    </ul>
+    <div class="hidden lg:block">
+      <Button href={href(site.nav.cta.href)} magnetic class="!px-6 !py-3">{site.nav.cta.label}</Button>
+    </div>
+    <button type="button" class="relative z-[60] flex h-11 w-11 flex-col items-center justify-center gap-1.5 lg:hidden" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-overlay" data-nav-toggle>
+      <span class={`block h-px w-6 transition-transform duration-500 ${barColor}`} data-bar="1"></span>
+      <span class={`block h-px w-6 transition-opacity duration-300 ${barColor}`} data-bar="2"></span>
+      <span class={`block h-px w-6 transition-transform duration-500 ${barColor}`} data-bar="3"></span>
+    </button>
+  </nav>
+  <div id="nav-overlay" class="fixed inset-0 z-[55] flex flex-col justify-between bg-anthracite-950 px-6 pb-10 pt-28 lg:hidden" hidden data-nav-overlay>
+    <ul class="flex flex-col gap-6">
+      {site.nav.links.map((l) => (
+        <li data-nav-overlay-item>
+          <a href={href(l.href)} class="font-display text-h2 text-sand-100" data-nav-link>{l.label}</a>
+        </li>
+      ))}
+    </ul>
+    <div data-nav-overlay-item>
+      <Button href={href(site.nav.cta.href)} class="w-full">{site.nav.cta.label}</Button>
+      <p class="mt-6 text-sm text-paper-muted">{site.meta.email} · {site.meta.city}</p>
+    </div>
+  </div>
+</header>
