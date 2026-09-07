@@ -161,7 +161,7 @@ export default defineConfig({
     '/kontakt': '/#kontakt',
     '/cookie-richtlinie-eu': '/datenschutz',
     '/2024/08/10/hello-world': '/',
-    '/category/[...slug]': '/',
+    '/category/uncategorized': '/',
   },
 });
 ```
