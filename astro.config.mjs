@@ -8,7 +8,10 @@ export default defineConfig({
   output: 'static',
   adapter: vercel(),
   integrations: [sitemap()],
-  vite: { plugins: [tailwindcss()] },
+  vite: {
+    plugins: [tailwindcss()],
+    optimizeDeps: { include: ['gsap', 'gsap/ScrollTrigger', 'gsap/SplitText', 'lenis', 'zod'] },
+  },
   redirects: {
     '/kontakt': '/#kontakt',
     '/cookie-richtlinie-eu': '/datenschutz',

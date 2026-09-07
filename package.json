@@ -14,7 +14,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "og": "node scripts/og.mjs"
+    "og": "node scripts/og.mjs",
+    "lighthouse": "pnpm build && (pnpm dlx serve .vercel/output/static -l 4321 -s > /dev/null 2>&1 & echo $! > .preview.pid; sleep 3; pnpm dlx lighthouse http://localhost:4321 --preset=desktop --quiet --chrome-flags='--headless' --output=json --output-path=./lighthouse.json; kill $(cat .preview.pid); rm -f .preview.pid; node -e \"const r=require('./lighthouse.json').categories;for(const k in r)console.log(k.padEnd(16),Math.round(r[k].score*100))\")"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
