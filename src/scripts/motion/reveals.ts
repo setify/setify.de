@@ -35,6 +35,16 @@ export default function reveals(root: HTMLElement): () => void {
       linesClass: 'split-line',
       autoSplit: true,
       onSplit(self) {
+        // background-clip: text greift nicht durch die Wort-Kindelemente hindurch.
+        // Verlauf deshalb pro Wort setzen und vom zerlegten Eltern-Span entfernen.
+        for (const word of self.words) {
+          const parent = (word as HTMLElement).closest<HTMLElement>('.gold-gradient-text, [data-gold-gradient]');
+          if (parent && parent !== el) {
+            word.classList.add('gold-gradient-text');
+            parent.classList.remove('gold-gradient-text');
+            parent.dataset.goldGradient = '';
+          }
+        }
         return gsap.from(self.words, {
           yPercent: 110,
           opacity: 0,
