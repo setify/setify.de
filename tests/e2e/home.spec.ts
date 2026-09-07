@@ -41,8 +41,8 @@ test.describe('Rechtsseiten', () => {
   test('Impressum enthält Anbieterdaten', async ({ page }) => {
     await page.goto('/impressum');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Impressum');
-    await expect(page.getByText('Philipp Walter')).toBeVisible();
-    await expect(page.getByText('Linder Weg 16a')).toBeVisible();
+    await expect(page.getByText('Philipp Walter').first()).toBeVisible();
+    await expect(page.getByText('Linder Weg 16a').first()).toBeVisible();
   });
 
   test('Datenschutz nennt Vercel, Resend und Turnstile, aber kein Webflow', async ({ page }) => {
