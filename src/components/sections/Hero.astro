@@ -1,0 +1,35 @@
+---
+import { site } from '@/content/site';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Button from '@/components/ui/Button.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
+const { hero } = site;
+---
+<section id="hero" class="section--dark relative flex min-h-svh items-center overflow-hidden pt-32 pb-20" data-motion="hero">
+  <canvas class="pointer-events-none absolute inset-0 h-full w-full opacity-70 [filter:blur(70px)_saturate(1.1)]" data-hero-canvas aria-hidden="true"></canvas>
+  <div class="pointer-events-none absolute inset-0 opacity-[0.045] mix-blend-overlay" aria-hidden="true" style="background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22240%22 height=%22240%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%222%22 stitchTiles=%22stitch%22/></filter><rect width=%22100%%22 height=%22100%%22 filter=%22url(%23n)%22/></svg>')"></div>
+  <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,#1a1b1e_100%)]" aria-hidden="true"></div>
+
+  <div class="container relative grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr]">
+    <div>
+      <Eyebrow>{hero.eyebrow}</Eyebrow>
+      <h1 class="font-display text-display mt-8 text-balance" data-hero-title data-split>
+        {hero.title} <span class="gold-gradient-text">{hero.titleAccent}</span>
+      </h1>
+      <p class="text-lead mt-8 max-w-xl text-paper-muted" data-reveal>{hero.lead}</p>
+      <div class="mt-10 flex flex-wrap gap-4" data-reveal>
+        <Button href={hero.primary.href} magnetic>{hero.primary.label}</Button>
+        <Button href={hero.secondary.href} variant="ghost">{hero.secondary.label}</Button>
+      </div>
+    </div>
+    <div class="relative mx-auto w-full max-w-md lg:max-w-none" data-hero-image>
+      <ImagePlaceholder id={hero.image.id} ratio={hero.image.ratio} label={hero.image.label} alt={hero.image.alt} parallax />
+      <div class="pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] bg-[radial-gradient(circle_at_30%_20%,rgba(189,172,137,0.25),transparent_60%)]" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <a href="#vertrauen" class="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-paper-muted" data-hero-scroll>
+    <span>Scrollen</span>
+    <span class="relative block h-12 w-px overflow-hidden bg-anthracite-800"><span class="absolute inset-x-0 top-0 h-1/2 bg-gold-500" data-hero-scroll-bar></span></span>
+  </a>
+</section>

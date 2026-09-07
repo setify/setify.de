@@ -1,0 +1,26 @@
+---
+import { site } from '@/content/site';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+const { process } = site;
+---
+<section id="prozess" class="section section--sand overflow-hidden border-t border-anthracite-950/10" data-motion="process">
+  <div class="container">
+    <SectionHeading tone="sand" eyebrow={process.eyebrow} title={process.title} />
+    <div class="relative mt-6 h-px w-full bg-anthracite-950/10" aria-hidden="true">
+      <div class="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-gold-700" data-process-progress></div>
+    </div>
+  </div>
+  <div class="mt-12 lg:mt-16">
+    <ol class="container flex flex-col gap-6 lg:w-max lg:max-w-none lg:flex-row lg:gap-8 lg:pr-[20vw]" data-process-track>
+      {process.steps.map((step) => (
+        <li class="flex flex-col justify-between rounded-3xl border border-anthracite-950/10 bg-sand-50 p-8 lg:h-[26rem] lg:w-[24rem] lg:shrink-0" data-process-card data-reveal>
+          <span class="font-display text-[4rem] leading-none font-light text-gold-700">{step.number}</span>
+          <div>
+            <h3 class="font-display text-h3">{step.title}</h3>
+            <p class="mt-4 text-ink-muted">{step.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

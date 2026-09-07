@@ -2,13 +2,24 @@
 import Base from '@/layouts/Base.astro';
 import Nav from '@/components/layout/Nav.astro';
 import Footer from '@/components/layout/Footer.astro';
+import Hero from '@/components/sections/Hero.astro';
+import TrustMarquee from '@/components/sections/TrustMarquee.astro';
+import Manifest from '@/components/sections/Manifest.astro';
+import Services from '@/components/sections/Services.astro';
+import Process from '@/components/sections/Process.astro';
 import { site } from '@/content/site';
-const bodySections = site.sections.filter((s) => s.id !== 'footer');
+const done = new Set(['hero', 'vertrauen', 'manifest', 'leistungen', 'prozess', 'footer']);
+const skeleton = site.sections.filter((s) => !done.has(s.id));
 ---
 <Base title={site.meta.title} description={site.meta.description}>
   <Nav />
   <main>
-    {bodySections.map((s) => (
+    <Hero />
+    <TrustMarquee />
+    <Manifest />
+    <Services />
+    <Process />
+    {skeleton.map((s) => (
       <section id={s.id} class={`section ${s.tone === 'dark' ? 'section--dark' : 'section--sand'}`}>
         <div class="container"><p class="text-paper-muted">Sektion {s.id}</p></div>
       </section>
