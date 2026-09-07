@@ -1,8 +1,10 @@
 ---
-interface Props { as?: 'p' | 'span'; class?: string }
-const { as: Tag = 'p', class: className = '' } = Astro.props;
+interface Props { as?: 'p' | 'span'; class?: string; tone?: 'dark' | 'sand' }
+const { as: Tag = 'p', class: className = '', tone = 'dark' } = Astro.props;
+const textColor = tone === 'sand' ? 'text-gold-700' : 'text-gold-500';
+const lineColor = tone === 'sand' ? 'bg-gold-700/70' : 'bg-gold-500/70';
 ---
-<Tag class={`inline-flex items-center gap-3 text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-gold-500 ${className}`}>
-  <span class="inline-block h-px w-6 bg-gold-500/70" aria-hidden="true"></span>
+<Tag class={`inline-flex items-center gap-3 text-[0.75rem] font-semibold uppercase tracking-[0.14em] ${textColor} ${className}`}>
+  <span class={`inline-block h-px w-6 ${lineColor}`} aria-hidden="true"></span>
   <slot />
 </Tag>

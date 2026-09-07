@@ -13,6 +13,7 @@ export default function manifestScrub(root: HTMLElement): () => void {
   const split = SplitText.create(text, {
     type: 'words',
     autoSplit: true,
+    aria: 'none',
     onSplit(self) {
       const tl = gsap.timeline({
         scrollTrigger: { trigger: text, start: 'top 75%', end: 'bottom 45%', scrub: 0.6 },
