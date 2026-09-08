@@ -17,7 +17,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <rect width="1200" height="630" fill="#1a1b1e"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
   ${logo}
-  <text x="120" y="420" font-family="Georgia, serif" font-size="54" fill="#f3eee4">Websites, die man nicht wegklickt.</text>
+  <text x="120" y="420" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="600" font-size="54" fill="#f3eee4">Websites, die man nicht wegklickt.</text>
   <text x="120" y="480" font-family="Helvetica, Arial, sans-serif" font-size="26" fill="#a8a49b">Premium Websites aus Köln. Konzept, Design und Code aus einer Hand.</text>
   <rect x="120" y="540" width="240" height="4" fill="url(#g)"/>
 </svg>`;

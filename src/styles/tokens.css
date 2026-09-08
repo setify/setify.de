@@ -13,7 +13,7 @@
   --color-ink-muted: #6b665c;
   --color-paper-muted: #a8a49b;
 
-  --font-display: 'Fraunces Variable', 'Georgia', serif;
+  --font-display: 'Space Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
   --font-sans: 'Manrope Variable', system-ui, sans-serif;
 
   --text-display: clamp(3rem, 2rem + 5vw, 6rem);

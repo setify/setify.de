@@ -52,7 +52,7 @@ function layout(title: string, body: string): string {
 <tr><td style="height:4px;background:linear-gradient(90deg,#7a6a4c,#bdac89,#e3d6b8)"></td></tr>
 <tr><td style="padding:32px">
 <p style="margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7a6a4c;font-weight:700">setify</p>
-<h1 style="margin:0 0 24px;font-family:Georgia,serif;font-weight:400;font-size:26px;line-height:1.2">${title}</h1>
+<h1 style="margin:0 0 24px;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:600;font-size:26px;line-height:1.2">${title}</h1>
 ${body}
 <p style="margin:32px 0 0;font-size:12px;color:#6b665c">setify, Philipp Walter, Linder Weg 16a, 51147 Köln, mail@setify.de</p>
 </td></tr></table></td></tr></table></body></html>`;
