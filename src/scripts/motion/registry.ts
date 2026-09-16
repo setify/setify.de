@@ -77,8 +77,17 @@ function setup(): void {
   document.documentElement.classList.add('motion-ready');
   requestAnimationFrame(() => ScrollTrigger.refresh());
 
+  // Sprungmarke erst anfahren, wenn Bilder und Schriften stehen und
+  // ScrollTrigger die gepinnten Sektionen neu vermessen hat. Vorher wuchs das
+  // Layout waehrend des Scrollens weiter und das Ziel verschob sich.
+  // Betrifft vor allem Links von Unterseiten wie /ki zurueck auf die Startseite.
   if (location.hash && document.querySelector(location.hash)) {
-    setTimeout(() => scrollToHash(location.hash), 100);
+    const jump = () => {
+      ScrollTrigger.refresh();
+      requestAnimationFrame(() => scrollToHash(location.hash));
+    };
+    if (document.readyState === 'complete') requestAnimationFrame(jump);
+    else window.addEventListener('load', () => requestAnimationFrame(jump), { once: true });
   }
 }
 

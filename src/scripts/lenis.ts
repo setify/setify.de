@@ -7,9 +7,11 @@ export function scrollToHash(hash: string): void {
   const target = document.querySelector<HTMLElement>(hash);
   if (!target) return;
   if (lenis) {
-    // Gemessen statt fest verdrahtet: mit Hinweisband ist der Header hoeher.
-    const header = document.querySelector<HTMLElement>('[data-nav]');
-    const offset = -((header?.offsetHeight ?? 80) + 8);
+    // Nur die Navigationsleiste messen, nicht den ganzen Header: das
+    // Hinweisband darueber faehrt beim Scrollen zusammen und waere zum
+    // Zeitpunkt der Landung ohnehin weg.
+    const bar = document.querySelector<HTMLElement>('[data-nav] nav');
+    const offset = -((bar?.offsetHeight ?? 80) + 8);
     lenis.scrollTo(target, { offset, duration: 1.2 });
   } else {
     target.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' });
