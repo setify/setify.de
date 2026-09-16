@@ -47,8 +47,9 @@ export default function reveals(root: HTMLElement): () => void {
         }
         return gsap.from(self.words, {
           // Muss die vergroesserte Clip-Box der Zeile (.split-line-mask) ueberschreiten,
-          // sonst blitzt die Wortoberkante vor dem Start durch.
-          yPercent: 135,
+          // sonst blitzt die Wortoberkante vor dem Start durch. Bei 0.3em
+          // Padding und Zeilenhoehe 0.95 liegt die Grenze bei rund 132 Prozent.
+          yPercent: 145,
           opacity: 0,
           filter: 'blur(8px)',
           duration: 1.1,

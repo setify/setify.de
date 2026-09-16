@@ -99,12 +99,16 @@ body {
   opacity: 0.6;
 }
 
-/* SplitText klippt jede Zeile auf Zeilenhoehe. Bei line-height < 1 fallen
-   Unterlaengen (g, j, p, q, y) heraus. Padding vergroessert die Clip-Box,
-   der negative Margin haelt den Zeilenabstand unveraendert. */
+/* SplitText klippt jede Zeile auf Zeilenhoehe. Unterlaengen (g, j, p, q, y)
+   ragen darunter heraus und wuerden abgeschnitten. Padding vergroessert die
+   Clip-Box, der negative Margin haelt den Zeilenabstand unveraendert.
+   Der noetige Wert haengt an der Zeilenhoehe und betraegt fuer Satoshi
+   0.75em - Zeilenhoehe/2, also 0.275em bei der engsten Stufe (text-display,
+   Zeilenhoehe 0.95). 0.34em laesst darueber hinaus Reserve; der negative
+   Margin macht sie kostenlos, der Zeilenabstand bleibt unveraendert. */
 .split-line-mask {
-  padding-bottom: 0.22em;
-  margin-bottom: -0.22em;
+  padding-bottom: 0.34em;
+  margin-bottom: -0.34em;
 }
 
 /* Hinweisband: Zustand haengt an <html>, weil nur dieser Knoten View
