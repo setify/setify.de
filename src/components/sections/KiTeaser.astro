@@ -2,14 +2,15 @@
 import { site, kiTeaserCards } from '@/content/site';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import Button from '@/components/ui/Button.astro';
+import LedGrid from '@/components/ui/LedGrid.astro';
 const { teaser } = site.ki;
 const cards = kiTeaserCards();
 ---
 <section id="ki" class="section section--dark relative overflow-hidden">
   <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
 
-  <!-- Hintergrund: Raster plus zwei treibende Goldschleier, rein per CSS. -->
-  <div class="ki-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
+  <!-- Hintergrund: pulsierendes LED-Raster plus zwei treibende Goldschleier. -->
+  <LedGrid />
   <div class="ki-beam pointer-events-none absolute -right-52 -top-40 h-[50rem] w-[50rem] opacity-50 [filter:blur(140px)] will-change-transform" aria-hidden="true"
        style="background: radial-gradient(circle, rgba(189,172,137,0.34), rgba(122,106,76,0.13) 45%, transparent 70%)"></div>
   <div class="ki-beam ki-beam--counter pointer-events-none absolute -bottom-56 -left-52 h-[45rem] w-[45rem] opacity-40 [filter:blur(150px)] will-change-transform" aria-hidden="true"

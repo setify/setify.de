@@ -111,14 +111,11 @@ html[data-banner-state='dismissed'] [data-ki-banner] { display: none; }
   inherits: false;
 }
 
-/* Technisches Raster, an den Raendern ausgeblendet. */
-.ki-grid {
-  background-image:
-    linear-gradient(to right, rgba(189, 172, 137, 0.11) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(189, 172, 137, 0.11) 1px, transparent 1px);
-  background-size: 64px 64px;
-  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 45%, #000 15%, transparent 78%);
-  mask-image: radial-gradient(ellipse 85% 65% at 50% 45%, #000 15%, transparent 78%);
+/* LED-Raster, an den Raendern weich ausgeblendet. Die Punkte selbst zeichnet
+   das Modul led-grid.ts auf Canvas. */
+.ki-led {
+  -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, #000 10%, transparent 80%);
+  mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, #000 10%, transparent 80%);
 }
 
 /* Zwei grosse, weiche Goldschleier, die langsam gegeneinander treiben. */
