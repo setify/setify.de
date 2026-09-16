@@ -7,8 +7,24 @@ export default function processPin(root: HTMLElement): () => void {
 
   const mm = gsap.matchMedia();
 
+  // Abstand, den die letzte Karte am Ende zum rechten Rand behaelt.
+  const GUTTER = 48;
+
   mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
-    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + 96);
+    /**
+     * Direkt an der letzten Karte gemessen statt ueber scrollWidth. Die Spur
+     * traegt die Klasse `container`, deren padding-inline und max-width als
+     * ungelayertes CSS die Tailwind-Utilities ueberstimmen. scrollWidth und
+     * das gewuenschte Endpolster gingen dadurch auseinander, und die letzte
+     * Karte blieb angeschnitten stehen.
+     */
+    const distance = () => {
+      const last = track.lastElementChild as HTMLElement | null;
+      if (!last) return 0;
+      const verschoben = (gsap.getProperty(track, 'x') as number) || 0;
+      const rechtsInRuhe = last.getBoundingClientRect().right - verschoben;
+      return Math.max(0, rechtsInRuhe - window.innerWidth + GUTTER);
+    };
     const tween = gsap.to(track, {
       x: () => -distance(),
       ease: 'none',
