@@ -2,8 +2,9 @@
 import { site } from '@/content/site';
 import Button from '@/components/ui/Button.astro';
 import { navHref } from '@/lib/href';
-interface Props { tone?: 'dark' | 'sand' }
-const { tone = 'dark' } = Astro.props;
+import StickyBanner from '@/components/layout/StickyBanner.astro';
+interface Props { tone?: 'dark' | 'sand'; banner?: boolean }
+const { tone = 'dark', banner = true } = Astro.props;
 const sand = tone === 'sand';
 const logo = sand ? '/logo.svg' : '/logo-white.svg';
 const linkColor = sand ? 'text-anthracite-950/80 hover:text-anthracite-950' : 'text-sand-100/80 hover:text-sand-100';
@@ -14,6 +15,7 @@ const href = (h: string) => navHref(h, Astro.url.pathname);
 const isCurrent = (h: string) => h === Astro.url.pathname;
 ---
 <header class="fixed inset-x-0 top-0 z-50 transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)]" data-motion="nav" data-nav>
+  {banner && <StickyBanner />}
   <div class={`absolute inset-0 -z-10 opacity-0 backdrop-blur-xl transition-opacity duration-500 border-b ${bgColor}`} data-nav-bg aria-hidden="true"></div>
   <nav class="container flex h-20 items-center justify-between" aria-label="Hauptnavigation">
     <a href="/" class="flex items-center" aria-label="setify Startseite">

@@ -7,7 +7,10 @@ export function scrollToHash(hash: string): void {
   const target = document.querySelector<HTMLElement>(hash);
   if (!target) return;
   if (lenis) {
-    lenis.scrollTo(target, { offset: -80, duration: 1.2 });
+    // Gemessen statt fest verdrahtet: mit Hinweisband ist der Header hoeher.
+    const header = document.querySelector<HTMLElement>('[data-nav]');
+    const offset = -((header?.offsetHeight ?? 80) + 8);
+    lenis.scrollTo(target, { offset, duration: 1.2 });
   } else {
     target.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' });
   }

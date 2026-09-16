@@ -92,6 +92,14 @@ body {
   margin-bottom: -0.22em;
 }
 
+/* Hinweisband: Zustand haengt an <html>, weil nur dieser Knoten View
+   Transitions ueberlebt. */
+html[data-banner-state='dismissed'] [data-ki-banner] { display: none; }
+
+/* Fallback fuer Sprungmarken ohne Lenis (Touch, reduzierte Bewegung):
+   der fixierte Header darf die Ueberschrift nicht verdecken. */
+[id] { scroll-margin-top: 7.5rem; }
+
 /* Reveal-Startzustände. JS entfernt sie, ohne JS bleibt alles sichtbar. */
 html.js [data-reveal] { opacity: 0; transform: translateY(40px); }
 html.js [data-split] { visibility: hidden; }

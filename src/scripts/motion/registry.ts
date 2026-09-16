@@ -12,6 +12,11 @@ import tilt from './tilt';
 import accordion from './accordion';
 import magnetic from './magnetic';
 import parallax from './parallax';
+import sparkles from './sparkles';
+import encryptedText from './encrypted-text';
+import cardStack from './card-stack';
+import glowingStars from './glowing-stars';
+import stickyBanner from './sticky-banner';
 
 export type MotionInit = (root: HTMLElement) => (() => void) | void;
 
@@ -29,6 +34,11 @@ registerMotion('process', processPin);
 registerMotion('counters', counters);
 registerMotion('tilt', tilt);
 registerMotion('accordion', accordion);
+registerMotion('sparkles', sparkles);
+registerMotion('encrypted', encryptedText);
+registerMotion('cardstack', cardStack);
+registerMotion('stars', glowingStars);
+registerMotion('banner', stickyBanner);
 
 let cleanups: Array<() => void> = [];
 

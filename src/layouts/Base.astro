@@ -20,7 +20,15 @@ const { title, description, tone = 'dark', noindex } = Astro.props;
     <meta name="theme-color" content="#1a1b1e" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <Meta title={title} description={description} noindex={noindex} />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      // Weggeklicktes Hinweisband vor dem ersten Paint ausblenden.
+      // localStorage wirft im privaten Modus, deshalb der Schutz.
+      try {
+        if (localStorage.getItem('setify:ki-banner') === 'dismissed')
+          document.documentElement.dataset.bannerState = 'dismissed';
+      } catch (e) {}
+    </script>
     <ClientRouter />
     <slot name="head" />
   </head>
