@@ -2,6 +2,7 @@
 import { site } from '@/content/site';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import Input from '@/components/ui/Input.astro';
+import ChipGroup from '@/components/ui/ChipGroup.astro';
 const { contact, meta } = site;
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
@@ -18,35 +19,37 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       </dl>
     </div>
 
-    <div class="relative rounded-3xl bg-sand-100 p-6 text-anthracite-950 md:p-10 [color-scheme:light]" data-reveal>
-      <form class="grid gap-5" action="/api/contact" method="post" novalidate data-contact-form>
-        <div class="grid gap-5 md:grid-cols-2">
+    <div class="relative rounded-3xl bg-sand-100 p-6 text-anthracite-950 md:p-8 [color-scheme:light]" data-reveal>
+      <form class="grid gap-4" action="/api/contact" method="post" novalidate data-contact-form>
+        <div class="grid gap-4 sm:grid-cols-2">
           <Input name="name" label="Name" required autocomplete="name" />
           <Input name="email" label="E-Mail" type="email" required autocomplete="email" />
         </div>
-        <div class="grid gap-5 md:grid-cols-2">
-          <Input name="phone" label="Telefon" type="tel" autocomplete="tel" />
-          <Input name="projectType" label="Projektart" type="select" required options={contact.projectTypes} />
-        </div>
-        <Input name="budget" label="Budget" type="select" required options={contact.budgets} />
-        <Input name="message" label="Nachricht" type="textarea" required placeholder="Worum geht es, was ist dein Ziel, bis wann soll es fertig sein?" />
+        <Input name="phone" label="Telefon, optional" type="tel" autocomplete="tel" />
+
+        <ChipGroup name="projectType" label="Projektart" required options={contact.projectTypes} />
+        <ChipGroup name="budget" label="Budget" required options={contact.budgets} />
+
+        <Input name="message" label="Nachricht" type="textarea" required rows={4} placeholder="Worum geht es, was ist dein Ziel, bis wann soll es fertig sein?" />
 
         <div class="hidden" aria-hidden="true">
           <label for="field-website">Website</label>
           <input id="field-website" name="website" type="text" tabindex="-1" autocomplete="off" />
         </div>
 
-        <label class="flex items-start gap-3 text-small text-ink-muted">
-          <input type="checkbox" name="consent" value="on" required class="mt-1 h-4 w-4 accent-gold-700" />
-          <span>Ich habe die <a href="/datenschutz" class="underline decoration-gold-700/50 underline-offset-2 hover:text-anthracite-950">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Bearbeitung der Anfrage einverstanden. *</span>
-        </label>
-        <p class="min-h-[1.25rem] text-small text-red-700" data-error-for="consent" aria-live="polite"></p>
+        <div>
+          <label class="flex items-start gap-2.5 text-[0.8rem] leading-snug text-ink-muted">
+            <input type="checkbox" name="consent" value="on" required class="mt-0.5 h-4 w-4 shrink-0 accent-gold-700" />
+            <span>Ich habe die <a href="/datenschutz" class="underline decoration-gold-700/50 underline-offset-2 hover:text-anthracite-950">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben einverstanden. *</span>
+          </label>
+          <p class="mt-1.5 text-[0.75rem] leading-tight text-red-700 empty:hidden" data-error-for="consent" aria-live="polite"></p>
+        </div>
 
         {siteKey && <div class="cf-turnstile" data-sitekey={siteKey} data-theme="light" data-size="flexible"></div>}
 
-        <p class="hidden rounded-xl border border-red-700/30 bg-red-50 px-4 py-3 text-small text-red-800" role="alert" data-contact-error></p>
+        <p class="hidden rounded-xl border border-red-700/30 bg-red-50 px-4 py-3 text-[0.85rem] text-red-800" role="alert" data-contact-error></p>
 
-        <button type="submit" class="group relative inline-flex items-center justify-center gap-2 rounded-full bg-gold-500 px-7 py-4 font-semibold text-anthracite-950 transition-[background-color,transform] duration-500 hover:bg-gold-300 disabled:opacity-60" data-magnetic>
+        <button type="submit" class="group relative mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold-500 px-7 py-4 font-semibold text-anthracite-950 transition-[background-color,transform] duration-500 hover:bg-gold-300 disabled:opacity-60" data-magnetic>
           <span data-submit-label>Anfrage senden</span>
           <svg class="h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
         </button>

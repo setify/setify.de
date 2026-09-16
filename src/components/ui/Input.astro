@@ -1,32 +1,50 @@
 ---
-interface Option { value: string; label: string }
+/**
+ * Feld mit mitwanderndem Label. Das Label sitzt im Feld und rutscht beim
+ * Fokussieren oder bei Inhalt nach oben, dadurch entfaellt die Labelzeile
+ * darueber. Der Platzhalter ist ein Leerzeichen, weil die Bewegung an
+ * `:placeholder-shown` haengt.
+ *
+ * Die Fehlerzeile belegt bewusst keine feste Hoehe mehr. Sieben reservierte
+ * Zeilen kosteten 140px, die in aller Regel leer blieben.
+ */
 interface Props {
   name: string;
   label: string;
-  type?: 'text' | 'email' | 'tel' | 'textarea' | 'select';
+  type?: 'text' | 'email' | 'tel' | 'textarea';
   required?: boolean;
-  options?: Option[];
   autocomplete?: string;
+  /** Erscheint erst im Fokus, damit er das mitwandernde Label nicht stoert. */
   placeholder?: string;
+  rows?: number;
+  class?: string;
 }
-const { name, label, type = 'text', required = false, options = [], autocomplete, placeholder } = Astro.props;
+const { name, label, type = 'text', required = false, autocomplete, placeholder, rows = 4, class: className = '' } = Astro.props;
 const id = `field-${name}`;
-const field =
-  'peer w-full rounded-xl border border-anthracite-950/15 bg-sand-50 px-4 py-3.5 text-anthracite-950 placeholder:text-ink-muted/60 transition-colors duration-300 focus:border-gold-700 focus:outline-none aria-[invalid=true]:border-red-700';
+
+const feld =
+  'peer w-full rounded-xl border border-anthracite-950/15 bg-sand-50 px-4 text-anthracite-950 transition-colors duration-300 placeholder:text-transparent focus:placeholder:text-ink-muted/55 focus:border-gold-700 focus:outline-none aria-[invalid=true]:border-red-700';
+const label_ =
+  'pointer-events-none absolute left-4 origin-left text-ink-muted transition-all duration-200 [transition-timing-function:var(--ease-out-expo)] peer-focus:text-gold-700';
 ---
-<div class="group/field flex flex-col gap-2">
-  <label for={id} class="text-label text-ink-muted">
-    {label}{required && <span class="text-gold-700"> *</span>}
-  </label>
+<div class={`relative ${className}`}>
   {type === 'textarea' ? (
-    <textarea id={id} name={name} rows="5" required={required} placeholder={placeholder} class={`${field} resize-y`}></textarea>
-  ) : type === 'select' ? (
-    <select id={id} name={name} required={required} class={field}>
-      <option value="">Bitte wählen</option>
-      {options.map((o) => <option value={o.value}>{o.label}</option>)}
-    </select>
+    <>
+      <textarea id={id} name={name} rows={rows} required={required} placeholder={placeholder ?? " "} class={`${feld} resize-y pt-7 pb-3`}></textarea>
+      <label for={id} class={`${label_} top-3 text-small peer-focus:top-3 peer-[:not(:placeholder-shown)]:top-3`}>
+        {label}{required && <span class="text-gold-700"> *</span>}
+      </label>
+    </>
   ) : (
-    <input id={id} name={name} type={type} required={required} autocomplete={autocomplete} placeholder={placeholder} class={field} />
+    <>
+      <input id={id} name={name} type={type} required={required} autocomplete={autocomplete} placeholder={placeholder ?? " "} class={`${feld} h-[3.75rem] pt-6 pb-2`} />
+      <label
+        for={id}
+        class={`${label_} top-[1.15rem] peer-focus:top-2 peer-focus:scale-[0.78] peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:scale-[0.78]`}
+      >
+        {label}{required && <span class="text-gold-700"> *</span>}
+      </label>
+    </>
   )}
-  <p class="min-h-[1.25rem] text-small text-red-700" data-error-for={name} aria-live="polite"></p>
+  <p class="mt-1.5 text-[0.75rem] leading-tight text-red-700 empty:hidden" data-error-for={name} aria-live="polite"></p>
 </div>
