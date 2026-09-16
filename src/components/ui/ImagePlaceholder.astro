@@ -12,11 +12,14 @@ interface Props {
   /** Setzen, wenn ueber dem Bild eine Textebene liegt (z. B. Branchen-Kacheln).
    *  Haelt den Prompt-Text aus dem Bereich der Ueberschrift heraus. */
   overlay?: boolean;
+  /** Fuellt die Hoehe des Elternelements statt ein Seitenverhaeltnis zu erzwingen.
+   *  `ratio` bleibt trotzdem die Vorgabe fuer die Bildproduktion. */
+  fill?: boolean;
   tone?: 'dark' | 'sand';
   class?: string;
   parallax?: boolean;
 }
-const { id, ratio, label, alt, prompt, overlay = false, tone = 'dark', class: className = '', parallax = false } = Astro.props;
+const { id, ratio, label, alt, prompt, overlay = false, fill = false, tone = 'dark', class: className = '', parallax = false } = Astro.props;
 
 const ratios = { '4:5': '4 / 5', '3:2': '3 / 2', '4:3': '4 / 3', '3:4': '3 / 4', '16:9': '16 / 9', '1:1': '1 / 1' };
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpg,jpeg,png,webp,avif}', { eager: true });
@@ -30,7 +33,11 @@ const showPrompt = !image && Boolean(prompt);
 const bg = tone === 'dark' ? 'bg-anthracite-900' : 'bg-sand-200';
 const fg = tone === 'dark' ? 'text-paper-muted' : 'text-ink-muted';
 ---
-<figure class={`relative overflow-hidden rounded-2xl ${bg} ${className}`} style={showPrompt ? 'min-height: 11rem' : `aspect-ratio: ${ratios[ratio]}`} data-image-id={id}>
+<figure
+  class={`relative overflow-hidden rounded-2xl ${bg} ${fill ? 'h-full' : ''} ${className}`}
+  style={fill ? undefined : showPrompt ? 'min-height: 11rem' : `aspect-ratio: ${ratios[ratio]}`}
+  data-image-id={id}
+>
   {image ? (
     <Image src={image} alt={alt} class="h-full w-full object-cover" data-parallax={parallax ? '' : undefined} widths={[480, 768, 1200, 1600]} sizes="(min-width: 1024px) 50vw, 100vw" />
   ) : (

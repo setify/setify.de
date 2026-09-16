@@ -154,8 +154,21 @@ html[data-banner-state='dismissed'] [data-ki-banner] { display: none; }
 }
 
 /* Duenner, umlaufender Rahmen: der Kegelverlauf dreht sich, die Maske laesst
-   nur die 1px breite Kante stehen. */
-.ki-card::before {
+   nur die 1px breite Kante stehen. Die Farben kommen aus Variablen, damit
+   dieselbe Mechanik auf dunklem und auf sandfarbenem Grund funktioniert. */
+.glow-card {
+  --glow-soft: rgba(189, 172, 137, 0.85);
+  --glow-strong: #e3d6b8;
+  --glow-rest: 0.5;
+}
+
+.glow-card--sand {
+  --glow-soft: rgba(122, 106, 76, 0.5);
+  --glow-strong: rgba(189, 172, 137, 0.95);
+  --glow-rest: 0;
+}
+
+.glow-card::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -164,25 +177,37 @@ html[data-banner-state='dismissed'] [data-ki-banner] { display: none; }
   background: conic-gradient(
     from var(--ki-angle),
     transparent 0deg 195deg,
-    rgba(189, 172, 137, 0.85) 285deg,
-    #e3d6b8 320deg,
+    var(--glow-soft) 285deg,
+    var(--glow-strong) 320deg,
     transparent 355deg
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
-  opacity: 0.5;
+  opacity: var(--glow-rest);
   animation: ki-rotate 7s linear infinite;
   transition: opacity 0.5s ease;
   pointer-events: none;
+  z-index: 1;
 }
 
-/* Versetzt starten, sonst drehen alle drei im Gleichschritt. */
-.ki-card:nth-child(2)::before { animation-delay: -2.3s; }
-.ki-card:nth-child(3)::before { animation-delay: -4.6s; }
+/* Versetzt starten, sonst drehen alle im Gleichschritt. */
+.glow-card:nth-child(2)::before { animation-delay: -2.3s; }
+.glow-card:nth-child(3)::before { animation-delay: -4.6s; }
+.glow-card:nth-child(4)::before { animation-delay: -1.1s; }
 
-.ki-card:hover::before { opacity: 1; animation-duration: 3s; }
+.glow-card:hover::before,
+.glow-card:focus-within::before { opacity: 1; animation-duration: 3s; }
+
+/* Weicher Schein nach aussen, nur auf der sandfarbenen Variante, wo die
+   duenne Kante allein zu leise waere. */
+.glow-card--sand {
+  transition: box-shadow 0.5s ease, transform 0.5s var(--ease-out-expo);
+}
+.glow-card--sand:hover {
+  box-shadow: 0 0 0 1px rgba(189, 172, 137, 0.35), 0 24px 60px -24px rgba(122, 106, 76, 0.45);
+}
 
 @keyframes ki-rotate { to { --ki-angle: 360deg; } }
 
@@ -217,7 +242,7 @@ html.js.motion-ready [data-split] { opacity: 1; transform: none; visibility: vis
   html.js [data-reveal] { opacity: 1; transform: none; }
   html.js [data-split] { visibility: visible; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  .ki-card::before { animation: none; opacity: 0.45; background: linear-gradient(135deg, rgba(189,172,137,0.6), rgba(122,106,76,0.2)); }
+  .glow-card::before { animation: none; opacity: 0.45; background: linear-gradient(135deg, rgba(189,172,137,0.6), rgba(122,106,76,0.2)); }
   .ki-beam { animation: none; }
 }
 
