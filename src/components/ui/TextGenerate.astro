@@ -1,0 +1,14 @@
+---
+/**
+ * Satz, dessen Woerter nacheinander aus der Unschaerfe aufblenden.
+ * Ohne JS steht der Text sofort lesbar da.
+ * Kein `data-split` setzen, reveals.ts wuerde denselben Knoten ein zweites Mal
+ * zerlegen.
+ */
+interface Props {
+  text: string;
+  class?: string;
+}
+const { text, class: className = '' } = Astro.props;
+---
+<span class={className} data-motion="generate" data-generate>{text}</span>

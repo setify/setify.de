@@ -20,7 +20,7 @@ export interface KiContent {
   navLabel: string;
   banner: { text: string; cta: { label: string; href: string }; dismissLabel: string };
   teaser: { eyebrow: string; title: string; titleAccent: string; lead: string; cardIds: string[]; cta: { label: string; href: string } };
-  page: { meta: { title: string; description: string }; hero: { eyebrow: string; title: string; titleAccent: string; encrypted: string; lead: string; primary: { label: string; href: string }; secondary: { label: string; href: string } } };
+  page: { meta: { title: string; description: string }; hero: { eyebrow: string; title: string; titleAccent: string; statement: string; lead: string; primary: { label: string; href: string }; secondary: { label: string; href: string } } };
   services: { eyebrow: string; title: string; lead: string; items: KiServiceCard[] };
   useCases: { eyebrow: string; title: string; lead: string; items: KiUseCase[] };
   process: { eyebrow: string; title: string; steps: KiStep[] };
@@ -229,7 +229,7 @@ export const site: SiteContent = {
         eyebrow: 'KI & Automatisierung',
         title: 'KI, die arbeitet.',
         titleAccent: 'Nicht beeindruckt.',
-        encrypted: 'Nicht jeder Prozess braucht KI. Aber fast jedes Unternehmen hat drei, die sie sofort tragen würden.',
+        statement: 'Nicht jeder Prozess braucht KI. Aber fast jedes Unternehmen hat drei, die sie sofort tragen würden.',
         lead: 'Wir sind seit über 20 Jahren in den Abläufen mittelständischer Betriebe unterwegs. Das ist der Grund, warum wir bei KI nicht mit dem Werkzeug anfangen, sondern mit der Frage, wo bei dir tatsächlich Zeit verloren geht.',
         primary: { label: 'Erstgespräch vereinbaren', href: '#kontakt' },
         secondary: { label: 'Anwendungsfälle ansehen', href: '#ki-anwendungen' },

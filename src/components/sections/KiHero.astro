@@ -3,7 +3,7 @@ import { site } from '@/content/site';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import Button from '@/components/ui/Button.astro';
 import Sparkles from '@/components/ui/Sparkles.astro';
-import EncryptedText from '@/components/ui/EncryptedText.astro';
+import TextGenerate from '@/components/ui/TextGenerate.astro';
 const { hero } = site.ki.page;
 ---
 <section id="ki-hero" class="section--dark relative flex min-h-[82svh] items-center overflow-hidden pt-32 pb-20">
@@ -21,7 +21,7 @@ const { hero } = site.ki.page;
       </h1>
 
       <p class="mt-10 max-w-3xl font-display text-[clamp(1.25rem,1rem+1.1vw,1.9rem)] leading-[1.35] font-light text-gold-300">
-        <EncryptedText text={hero.encrypted} />
+        <TextGenerate text={hero.statement} />
       </p>
 
       <p class="text-lead mt-8 max-w-2xl text-paper-muted" data-reveal>{hero.lead}</p>
