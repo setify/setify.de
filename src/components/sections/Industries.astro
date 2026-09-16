@@ -1,12 +1,10 @@
 ---
 import { site } from '@/content/site';
-import SectionDivider from '@/components/ui/SectionDivider.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 const { industries } = site;
 ---
-<section id="branchen" class="section relative section--sand">
-  <SectionDivider to="sand" variant="slope" />
+<section id="branchen" class="section section--sand">
   <div class="container">
     <SectionHeading tone="sand" eyebrow={industries.eyebrow} title={industries.title} />
     <ul class="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4">

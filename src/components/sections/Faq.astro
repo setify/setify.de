@@ -1,11 +1,9 @@
 ---
 import { site } from '@/content/site';
-import SectionDivider from '@/components/ui/SectionDivider.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 const { faq } = site;
 ---
-<section id="faq" class="section relative section--dark">
-  <SectionDivider to="dark" variant="wave" />
+<section id="faq" class="section section--dark">
   <div class="container grid gap-12 lg:grid-cols-[1fr_1.5fr]">
     <SectionHeading tone="dark" eyebrow={faq.eyebrow} title={faq.title} />
     <div class="divide-y divide-anthracite-800 border-y border-anthracite-800" data-motion="accordion">

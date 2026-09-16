@@ -1,6 +1,5 @@
 ---
 import { site, kiTeaserCards } from '@/content/site';
-import SectionDivider from '@/components/ui/SectionDivider.astro';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import Button from '@/components/ui/Button.astro';
 import LedGrid from '@/components/ui/LedGrid.astro';
@@ -8,18 +7,15 @@ import Icon, { type IconName } from '@/components/ui/Icon.astro';
 const { teaser } = site.ki;
 const cards = kiTeaserCards();
 ---
-<section id="ki" class="section section--dark relative">
-  <SectionDivider to="dark" variant="wave" />
+<section id="ki" class="section section--dark relative overflow-hidden">
+  <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
 
-  <!-- Hintergrund: pulsierendes LED-Raster plus zwei treibende Goldschleier.
-       Eigene Klippebene, damit die Sektion den Trenner nicht abschneidet. -->
-  <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-    <LedGrid />
+  <!-- Hintergrund: pulsierendes LED-Raster plus zwei treibende Goldschleier. -->
+  <LedGrid />
   <div class="ki-beam pointer-events-none absolute -right-52 -top-40 h-[50rem] w-[50rem] opacity-50 [filter:blur(140px)] will-change-transform" aria-hidden="true"
        style="background: radial-gradient(circle, rgba(189,172,137,0.34), rgba(122,106,76,0.13) 45%, transparent 70%)"></div>
   <div class="ki-beam ki-beam--counter pointer-events-none absolute -bottom-56 -left-52 h-[45rem] w-[45rem] opacity-40 [filter:blur(150px)] will-change-transform" aria-hidden="true"
        style="background: radial-gradient(circle, rgba(122,106,76,0.34), rgba(189,172,137,0.12) 50%, transparent 72%)"></div>
-  </div>
 
   <div class="container relative">
     <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">

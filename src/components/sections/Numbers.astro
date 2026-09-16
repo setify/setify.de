@@ -1,10 +1,8 @@
 ---
 import { site } from '@/content/site';
-import SectionDivider from '@/components/ui/SectionDivider.astro';
 const { numbers } = site;
 ---
-<section id="zahlen" class="relative section--sand border-y border-anthracite-950/10 py-16" data-motion="counters">
-  <SectionDivider to="sand" variant="slope" />
+<section id="zahlen" class="section--sand border-y border-anthracite-950/10 py-16" data-motion="counters">
   <div class="container grid grid-cols-2 gap-10 md:grid-cols-4">
     {numbers.items.map((n) => (
       <div data-reveal>
