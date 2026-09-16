@@ -122,9 +122,12 @@ body {
    Transitions ueberlebt. */
 html[data-banner-state='dismissed'] [data-ki-banner] { display: none; }
 
-/* Fallback fuer Sprungmarken ohne Lenis (Touch, reduzierte Bewegung):
-   der fixierte Header darf die Ueberschrift nicht verdecken. */
-[id] { scroll-margin-top: 7.5rem; }
+/* Fallback fuer Sprungmarken ohne Lenis (Touch, reduzierte Bewegung, kein JS):
+   der fixierte Header darf die Ueberschrift nicht verdecken.
+   Nur ohne Lenis, denn dessen scrollTo rechnet scroll-margin-top mit ein und
+   landete dadurch um genau diesen Betrag zu tief. Lenis bringt seinen eigenen
+   Offset mit, gemessen an der Hoehe der Navigationsleiste. */
+html:not(.lenis) [id] { scroll-margin-top: 7.5rem; }
 
 /* --- KI-Teaser ---------------------------------------------------------
    Hintergrund und Kartenrahmen laufen bewusst ueber CSS statt ueber ein

@@ -7,7 +7,8 @@ export default defineConfig({
   site: 'https://setify.de',
   output: 'static',
   adapter: vercel(),
-  integrations: [sitemap()],
+  // Diagnoseseite gehoert nicht in die Sitemap.
+  integrations: [sitemap({ filter: (page) => !page.includes('/scroll-test') })],
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: { include: ['gsap', 'gsap/ScrollTrigger', 'gsap/SplitText', 'lenis', 'zod'] },

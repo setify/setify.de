@@ -1,0 +1,195 @@
+---
+/**
+ * Diagnoseseite fuer das Scrollverhalten. Bewusst ohne Base-Layout, damit die
+ * Motion-Registry samt ScrollTrigger und Pins nicht mitlaeuft: hier wird jede
+ * Zutat einzeln zugeschaltet.
+ *
+ * Nicht verlinkt, noindex, nicht in der Sitemap. Nach der Diagnose loeschen.
+ */
+const sektionen = [
+  { id: 'alpha', titel: 'Alpha' },
+  { id: 'beta', titel: 'Beta' },
+  { id: 'pin-bereich', titel: 'Gepinnter Bereich' },
+  { id: 'preise', titel: 'Preise (Testziel)' },
+  { id: 'omega', titel: 'Omega' },
+];
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Scroll-Diagnose</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font: 15px/1.5 system-ui, sans-serif; background: #f6f4ef; color: #1a1b1e; }
+      header { position: fixed; inset: 0 0 auto 0; z-index: 10; background: #1a1b1e; color: #f3eee4; padding: 10px 16px; }
+      .zeile { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+      .zeile + .zeile { margin-top: 8px; }
+      button { font: inherit; padding: 6px 12px; border-radius: 999px; border: 1px solid #bdac89; background: transparent; color: #e3d6b8; cursor: pointer; }
+      button:hover { background: #bdac89; color: #1a1b1e; }
+      button[data-aktiv='true'] { background: #bdac89; color: #1a1b1e; }
+      code { font-family: ui-monospace, monospace; background: #2e3035; padding: 1px 5px; border-radius: 4px; }
+      #werte { font-family: ui-monospace, monospace; font-size: 12px; color: #e3d6b8; }
+      #protokoll { font-family: ui-monospace, monospace; font-size: 12px; white-space: pre-wrap; max-height: 24vh; overflow: auto; background: #101114; padding: 8px; border-radius: 6px; margin-top: 8px; }
+      main { padding-top: 210px; }
+      section { min-height: 90vh; padding: 48px 24px; border-top: 2px solid #1a1b1e22; }
+      section h2 { font-size: 40px; margin: 0 0 8px; }
+      .pin-innen { position: sticky; top: 220px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="zeile">
+        <strong>Ziel:</strong>
+        <button data-fahre="#preise">#preise</button>
+        <button data-fahre="#omega">#omega</button>
+        <button data-fahre="#alpha">#alpha</button>
+      </div>
+      <div class="zeile">
+        <strong>Zutaten:</strong>
+        <button data-schalter="lenis">Lenis</button>
+        <button data-schalter="pin">ScrollTrigger-Pin</button>
+        <button data-schalter="offset">Offset −88px</button>
+      </div>
+      <div class="zeile">
+        <strong>Methode:</strong>
+        <button data-methode="element" data-aktiv="true">Lenis: Element</button>
+        <button data-methode="zahl">Lenis: absolute Zahl</button>
+        <button data-methode="nativ">nativ scrollIntoView</button>
+      </div>
+      <div class="zeile" id="werte"></div>
+      <div id="protokoll">Bereit.</div>
+    </header>
+
+    <main>
+      {sektionen.map((s) => (
+        <section id={s.id}>
+          {s.id === 'pin-bereich' ? (
+            <div class="pin-innen" data-pin-innen>
+              <h2>{s.titel}</h2>
+              <p>Dieser Block wird bei aktivem Pin von ScrollTrigger festgehalten.</p>
+            </div>
+          ) : (
+            <h2>{s.titel}</h2>
+          )}
+          <p>Sektion <code>#{s.id}</code></p>
+        </section>
+      ))}
+    </main>
+
+    <script>
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      gsap.registerPlugin(ScrollTrigger);
+
+      const werte = document.getElementById('werte')!;
+      const protokoll = document.getElementById('protokoll')!;
+      const schreibe = (t: string) => { protokoll.textContent = t + '\n' + protokoll.textContent; };
+
+      let lenis: Lenis | null = null;
+      let pin: ScrollTrigger | null = null;
+      let methode: 'element' | 'zahl' | 'nativ' = 'element';
+      const an = { lenis: false, pin: false, offset: false };
+
+      const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+
+      function lenisAn() {
+        if (lenis) return;
+        lenis = new Lenis({ lerp: 0.1, smoothWheel: true, anchors: false });
+        const tick = (time: number) => lenis?.raf(time * 1000);
+        gsap.ticker.add(tick);
+        gsap.ticker.lagSmoothing(0);
+        (lenis as any).__tick = tick;
+        lenis.on('scroll', ScrollTrigger.update);
+      }
+      function lenisAus() {
+        if (!lenis) return;
+        gsap.ticker.remove((lenis as any).__tick);
+        lenis.destroy();
+        lenis = null;
+      }
+      function pinAn() {
+        if (pin) return;
+        pin = ScrollTrigger.create({
+          trigger: '#pin-bereich',
+          start: 'top top',
+          end: '+=1200',
+          pin: '[data-pin-innen]',
+          anticipatePin: 1,
+        });
+        ScrollTrigger.refresh();
+      }
+      function pinAus() { pin?.kill(true); pin = null; ScrollTrigger.refresh(); }
+
+      function offset(): number {
+        return an.offset ? -88 : 0;
+      }
+
+      async function fahre(hash: string) {
+        const ziel = document.querySelector<HTMLElement>(hash)!;
+        const vorher = Math.round(window.scrollY);
+        const rect = Math.round(ziel.getBoundingClientRect().top);
+        const absolut = Math.round(window.scrollY + ziel.getBoundingClientRect().top + offset());
+        schreibe(`--- ${hash} | Methode ${methode} | Lenis ${an.lenis ? 'an' : 'aus'} | Pin ${an.pin ? 'an' : 'aus'} | Offset ${offset()}`);
+        schreibe(`    vorher scrollY=${vorher}  rect.top=${rect}  errechnetes Ziel=${absolut}`);
+
+        const proben: number[] = [];
+        let laeuft = true;
+        const tick = () => { if (!laeuft) return; proben.push(Math.round(window.scrollY)); requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+
+        if (methode === 'nativ' || !lenis) {
+          ziel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (methode === 'zahl') {
+          lenis.scrollTo(absolut, { duration: 1.2, easing: easeOut });
+        } else {
+          lenis.scrollTo(ziel, { offset: offset(), duration: 1.2, easing: easeOut });
+        }
+
+        await new Promise((r) => setTimeout(r, 2000));
+        laeuft = false;
+
+        const stufen = [...new Set(proben)];
+        const nachher = Math.round(window.scrollY);
+        schreibe(`    nachher scrollY=${nachher}  bewegt um ${nachher - vorher}px`);
+        schreibe(`    Frames=${proben.length}  verschiedene Positionen=${stufen.length}  ${stufen.length <= 2 ? '>>> SPRUNG, keine Fahrt' : 'Fahrt erkannt'}`);
+        schreibe(`    Verlauf: ${stufen.slice(0, 12).join(' ')}${stufen.length > 12 ? ' ...' : ''}`);
+        const rest = Math.round(ziel.getBoundingClientRect().top - offset());
+        schreibe(`    Abweichung vom Ziel: ${rest}px`);
+      }
+
+      document.querySelectorAll<HTMLButtonElement>('[data-schalter]').forEach((b) => {
+        b.addEventListener('click', () => {
+          const k = b.dataset.schalter as keyof typeof an;
+          an[k] = !an[k];
+          b.dataset.aktiv = String(an[k]);
+          if (k === 'lenis') an.lenis ? lenisAn() : lenisAus();
+          if (k === 'pin') an.pin ? pinAn() : pinAus();
+          schreibe(`Schalter ${k} = ${an[k] ? 'an' : 'aus'}`);
+        });
+      });
+      document.querySelectorAll<HTMLButtonElement>('[data-methode]').forEach((b) => {
+        b.addEventListener('click', () => {
+          methode = b.dataset.methode as typeof methode;
+          document.querySelectorAll<HTMLButtonElement>('[data-methode]').forEach((x) => (x.dataset.aktiv = String(x === b)));
+        });
+      });
+      document.querySelectorAll<HTMLButtonElement>('[data-fahre]').forEach((b) => {
+        b.addEventListener('click', () => fahre(b.dataset.fahre!));
+      });
+
+      const anzeige = () => {
+        const ziel = document.querySelector<HTMLElement>('#preise')!;
+        werte.textContent =
+          `scrollY=${Math.round(window.scrollY)}  lenis.scroll=${lenis ? Math.round(lenis.scroll) : 'aus'}  ` +
+          `Abweichung=${lenis ? Math.round(lenis.scroll - window.scrollY) : '-'}  ` +
+          `#preise rect.top=${Math.round(ziel.getBoundingClientRect().top)}  Dokumenthoehe=${document.documentElement.scrollHeight}`;
+        requestAnimationFrame(anzeige);
+      };
+      anzeige();
+    </script>
+  </body>
+</html>

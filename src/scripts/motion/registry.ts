@@ -51,6 +51,12 @@ function onAnchorClick(event: MouseEvent): void {
   const hash = link.getAttribute('href')!.replace(/^\//, '');
   if (hash.length < 2 || !document.querySelector(hash)) return;
   event.preventDefault();
+  // Muss den Klick hier stoppen: der ClientRouter von Astro hat seinen
+  // Listener frueher registriert und wuerde die Sprungmarke sonst selbst
+  // behandeln, also hart springen und dabei scroll-margin-top anwenden.
+  // Unser preventDefault kaeme zu spaet, deshalb laeuft dieser Handler in der
+  // Capture-Phase und unterbindet die Weitergabe.
+  event.stopPropagation();
   history.pushState(null, '', hash);
   scrollToHash(hash);
 }
@@ -75,8 +81,8 @@ function setup(): void {
     }
   });
 
-  document.addEventListener('click', onAnchorClick);
-  cleanups.push(() => document.removeEventListener('click', onAnchorClick));
+  document.addEventListener('click', onAnchorClick, { capture: true });
+  cleanups.push(() => document.removeEventListener('click', onAnchorClick, { capture: true }));
 
   document.documentElement.classList.add('motion-ready');
   requestAnimationFrame(() => ScrollTrigger.refresh());

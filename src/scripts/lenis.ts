@@ -48,6 +48,11 @@ export function scrollToHash(hash: string): void {
   if (lenis) {
     const instanz = lenis;
 
+    // Einmalige Nachkorrektur: der gepinnte Prozessbereich veraendert waehrend
+    // der Fahrt die Dokumenthoehe, dadurch wandert das Ziel unter uns weg. Ein
+    // zweiter kurzer Anlauf holt den Rest, die Sperre verhindert ein Pendeln.
+    let korrigiert = false;
+
     const fahren = () => {
       // Nur die Navigationsleiste messen, nicht den ganzen Header: das
       // Hinweisband darueber faehrt beim Scrollen zusammen und waere zum
@@ -63,7 +68,18 @@ export function scrollToHash(hash: string): void {
       // `easing` muss mit, sonst greift die Lerp-Glaettung der Instanz und
       // `duration` bleibt wirkungslos. Lerp naehert sich dem Ziel asymptotisch
       // an und wirkt am Ende zaeh statt gebremst.
-      instanz.scrollTo(target, { offset, duration, easing: easeOutScroll });
+      instanz.scrollTo(target, {
+        offset,
+        duration,
+        easing: easeOutScroll,
+        onComplete: () => {
+          if (korrigiert) return;
+          const rest = target.getBoundingClientRect().top + offset;
+          if (Math.abs(rest) < 8) return;
+          korrigiert = true;
+          instanz.scrollTo(target, { offset, duration: 0.35, easing: easeOutScroll });
+        },
+      });
     };
 
     // Lenis fuehrt eine eigene Scrollposition. Weicht sie von der echten ab,
