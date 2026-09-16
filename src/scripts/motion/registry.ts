@@ -12,6 +12,7 @@ import tilt from './tilt';
 import accordion from './accordion';
 import magnetic from './magnetic';
 import parallax from './parallax';
+import iconDraw from './icon-draw';
 import sparkles from './sparkles';
 import textGenerate from './text-generate';
 import cardStack from './card-stack';
@@ -62,6 +63,7 @@ function setup(): void {
   cleanups.push(reveals(document.body) ?? (() => {}));
   cleanups.push(magnetic(document.body) ?? (() => {}));
   cleanups.push(parallax(document.body) ?? (() => {}));
+  cleanups.push(iconDraw(document.body) ?? (() => {}));
 
   document.querySelectorAll<HTMLElement>('[data-motion]').forEach((root) => {
     const names = root.dataset.motion!.split(/\s+/);

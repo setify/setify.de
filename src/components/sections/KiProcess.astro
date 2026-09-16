@@ -2,6 +2,7 @@
 import { site } from '@/content/site';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import GlowingStars from '@/components/ui/GlowingStars.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
 const { process } = site.ki;
 ---
 <section id="ki-prozess" class="section section--dark relative overflow-hidden">
@@ -11,7 +12,12 @@ const { process } = site.ki;
     <ol class="mt-16 grid gap-6 md:grid-cols-3">
       {process.steps.map((step) => (
         <li class="relative rounded-3xl border border-anthracite-800 bg-anthracite-950/80 p-8 backdrop-blur-sm" data-reveal>
-          <span class="font-display text-numeral leading-none font-light text-gold-700">{step.number}</span>
+          <div class="flex items-start justify-between gap-4">
+            <span class="font-display text-numeral leading-none font-light text-gold-700">{step.number}</span>
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold-500/25 text-gold-500">
+              <Icon name={step.icon as IconName} size={22} animate />
+            </span>
+          </div>
           <h3 class="font-display text-h3 mt-5">{step.title}</h3>
           <p class="mt-4 text-paper-muted">{step.text}</p>
         </li>

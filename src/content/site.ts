@@ -7,9 +7,9 @@ export type Ratio = '4:5' | '3:2' | '4:3' | '3:4' | '16:9' | '1:1';
 export interface ImageRef { id: string; ratio: Ratio; label: string; alt: string; prompt?: string }
 export interface SectionMeta { id: string; tone: Tone }
 
-export interface KiServiceCard { id: string; number: string; title: string; text: string; points: string[] }
+export interface KiServiceCard { id: string; number: string; title: string; text: string; points: string[]; icon: string }
 export interface KiUseCase { id: string; label: string; title: string; text: string }
-export interface KiStep { number: string; title: string; text: string }
+export interface KiStep { number: string; title: string; text: string; icon: string }
 
 /** Eigenstaendiger Leistungsbereich unter `path`. Der Startseiten-Teaser
  *  referenziert Karten ueber `teaser.cardIds`, damit Inhalte nur einmal
@@ -37,7 +37,7 @@ export interface SiteContent {
   trust: { label: string; clients: string[] };
   manifest: { text: string; highlights: string[] };
   services: { eyebrow: string; title: string; lead: string; items: { number: string; title: string; text: string; points: string[]; image: ImageRef }[] };
-  process: { eyebrow: string; title: string; steps: { number: string; title: string; text: string }[] };
+  process: { eyebrow: string; title: string; steps: { number: string; title: string; text: string; icon: string }[] };
   work: { eyebrow: string; title: string; items: { client: string; industry: string; text: string; quote: string; image: ImageRef }[]; testimonials: { quote: string; author: string; company: string }[] };
   numbers: { items: { value: number; suffix: string; label: string }[] };
   pricing: { eyebrow: string; title: string; note: string; plans: { name: string; price: string; prefix: string; period: string; text: string; features: string[]; cta: string; recommended: boolean }[] };
@@ -113,10 +113,10 @@ export const site: SiteContent = {
     eyebrow: 'So arbeiten wir',
     title: 'Vier Schritte bis zum Launch.',
     steps: [
-      { number: '01', title: 'Anfrage', text: 'Du schreibst uns über das Formular. Wir melden uns innerhalb eines Werktags mit ersten Gedanken und einem Terminvorschlag.' },
-      { number: '02', title: 'Briefing', text: 'In einem strukturierten Gespräch klären wir Ziele, Inhalte und Umfang. Danach bekommst du ein festes Angebot, kein Stundenschätzen.' },
-      { number: '03', title: 'Umsetzung', text: 'Design und Entwicklung laufen transparent. Du siehst Zwischenstände live und gibst direkt Feedback.' },
-      { number: '04', title: 'Launch & Betreuung', text: 'Wir gehen gemeinsam online, prüfen alles auf echten Geräten und bleiben danach ansprechbar.' },
+      { number: '01', title: 'Anfrage', icon: 'search', text: 'Du schreibst uns über das Formular. Wir melden uns innerhalb eines Werktags mit ersten Gedanken und einem Terminvorschlag.' },
+      { number: '02', title: 'Briefing', icon: 'lightbulb', text: 'In einem strukturierten Gespräch klären wir Ziele, Inhalte und Umfang. Danach bekommst du ein festes Angebot, kein Stundenschätzen.' },
+      { number: '03', title: 'Umsetzung', icon: 'penTool', text: 'Design und Entwicklung laufen transparent. Du siehst Zwischenstände live und gibst direkt Feedback.' },
+      { number: '04', title: 'Launch & Betreuung', icon: 'rocket', text: 'Wir gehen gemeinsam online, prüfen alles auf echten Geräten und bleiben danach ansprechbar.' },
     ],
   },
   work: {
@@ -242,6 +242,7 @@ export const site: SiteContent = {
       items: [
         {
           id: 'standort',
+          icon: 'compass',
           number: '01',
           title: 'Standortbestimmung',
           text: 'Wir sehen uns an, wo bei dir Zeit verloren geht. Am Ende steht eine Liste mit Aufwand, Nutzen und Reihenfolge, nicht eine Liste mit Tools.',
@@ -249,6 +250,7 @@ export const site: SiteContent = {
         },
         {
           id: 'automatisierung',
+          icon: 'workflow',
           number: '02',
           title: 'Workflow-Automatisierung',
           text: 'Angebote, Rechnungen, Terminbestätigungen, Datenübergaben zwischen Systemen. Alles, was heute jemand von Hand kopiert, läuft danach von selbst.',
@@ -256,6 +258,7 @@ export const site: SiteContent = {
         },
         {
           id: 'assistenten',
+          icon: 'bot',
           number: '03',
           title: 'Assistenten auf deinen Daten',
           text: 'Ein Assistent, der deine Preisliste kennt, deine Verträge liest und deinem Team antwortet. Nicht das halbe Internet, sondern dein Wissen.',
@@ -263,6 +266,7 @@ export const site: SiteContent = {
         },
         {
           id: 'betrieb',
+          icon: 'graduationCap',
           number: '04',
           title: 'Betrieb & Schulung',
           text: 'Eine Automatisierung, die keiner versteht, wird nach drei Monaten abgeschaltet. Wir übergeben sie so, dass dein Team damit arbeitet.',
@@ -285,9 +289,9 @@ export const site: SiteContent = {
       eyebrow: 'So arbeiten wir',
       title: 'Drei Schritte, kein Wasserfall.',
       steps: [
-        { number: '01', title: 'Analyse', text: 'Ein halber Tag, in dem wir deine Abläufe durchgehen. Danach weißt du, was sich lohnt und was nicht. Zum Festpreis.' },
-        { number: '02', title: 'Pilot', text: 'Wir setzen einen Anwendungsfall um, den du in zwei bis vier Wochen im Alltag messen kannst. Ein echter, kein Demoprojekt.' },
-        { number: '03', title: 'Ausbau', text: 'Was funktioniert, wird erweitert. Was nicht funktioniert, wird abgeschaltet statt schöngeredet.' },
+        { number: '01', title: 'Analyse', icon: 'search', text: 'Ein halber Tag, in dem wir deine Abläufe durchgehen. Danach weißt du, was sich lohnt und was nicht. Zum Festpreis.' },
+        { number: '02', title: 'Pilot', icon: 'rocket', text: 'Wir setzen einen Anwendungsfall um, den du in zwei bis vier Wochen im Alltag messen kannst. Ein echter, kein Demoprojekt.' },
+        { number: '03', title: 'Ausbau', icon: 'gauge', text: 'Was funktioniert, wird erweitert. Was nicht funktioniert, wird abgeschaltet statt schöngeredet.' },
       ],
     },
     privacy: {

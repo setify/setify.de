@@ -1,12 +1,15 @@
 ---
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
+
 interface Props {
   number: string;
+  icon?: IconName;
   title: string;
   text: string;
   points: string[];
   class?: string;
 }
-const { number, title, text, points, class: className = '' } = Astro.props;
+const { number, title, text, points, icon, class: className = '' } = Astro.props;
 ---
 <article
   class={`group relative flex flex-col overflow-hidden rounded-3xl border border-gold-500/15 bg-anthracite-900/60 p-8 transition-colors duration-500 hover:border-gold-500/40 ${className}`}
@@ -17,9 +20,13 @@ const { number, title, text, points, class: className = '' } = Astro.props;
     style="background: var(--gold-gradient)"
     aria-hidden="true"></span>
 
-  <div class="flex items-baseline justify-between gap-4">
+  <div class="flex items-center justify-between gap-4">
     <span class="font-display text-h3 text-gold-500">{number}</span>
-    <span class="h-px w-12 bg-gold-500/30" aria-hidden="true"></span>
+    {icon && (
+      <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-gold-500/25 text-gold-500 transition-colors duration-500 group-hover:border-gold-500/60">
+        <Icon name={icon} size={20} animate />
+      </span>
+    )}
   </div>
 
   <h3 class="font-display text-h3 mt-6 text-balance">{title}</h3>

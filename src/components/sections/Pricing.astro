@@ -1,10 +1,12 @@
 ---
 import { site } from '@/content/site';
+import SectionDivider from '@/components/ui/SectionDivider.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import Button from '@/components/ui/Button.astro';
 const { pricing } = site;
 ---
-<section id="preise" class="section section--dark">
+<section id="preise" class="section relative section--dark">
+  <SectionDivider to="dark" variant="wave" />
   <div class="container">
     <SectionHeading tone="dark" eyebrow={pricing.eyebrow} title={pricing.title} align="center" />
     <div class="mt-16 grid gap-6 lg:grid-cols-3">

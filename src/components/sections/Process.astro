@@ -1,6 +1,7 @@
 ---
 import { site } from '@/content/site';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
 const { process } = site;
 ---
 <section id="prozess" class="section section--sand overflow-hidden border-t border-anthracite-950/10" data-motion="process">
@@ -14,7 +15,12 @@ const { process } = site;
     <ol class="container flex flex-col gap-6 lg:w-max lg:max-w-none lg:flex-row lg:gap-8 lg:pr-[20vw]" data-process-track>
       {process.steps.map((step) => (
         <li class="flex flex-col justify-between rounded-3xl border border-anthracite-950/10 bg-sand-50 p-8 lg:h-[26rem] lg:w-[24rem] lg:shrink-0" data-process-card data-reveal>
-          <span class="font-display text-numeral leading-none font-light text-gold-700">{step.number}</span>
+          <div class="flex items-start justify-between gap-4">
+            <span class="font-display text-numeral leading-none font-light text-gold-700">{step.number}</span>
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold-700/25 text-gold-700">
+              <Icon name={step.icon as IconName} size={22} animate />
+            </span>
+          </div>
           <div>
             <h3 class="font-display text-h3">{step.title}</h3>
             <p class="mt-4 text-ink-muted">{step.text}</p>
