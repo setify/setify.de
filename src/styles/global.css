@@ -1,7 +1,24 @@
 @import './tokens.css';
-@import '@fontsource-variable/space-grotesk';
-@import '@fontsource-variable/manrope';
 @import 'lenis/dist/lenis.css';
+
+/* Satoshi (Headlines) und Switzer (Fliesstext), lokal als Variable Fonts. */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('../assets/fonts/Satoshi-Variable.woff2') format('woff2'),
+       url('../assets/fonts/Satoshi-Variable.woff') format('woff');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Switzer';
+  src: url('../assets/fonts/Switzer-Variable.woff2') format('woff2'),
+       url('../assets/fonts/Switzer-Variable.woff') format('woff');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --gold-gradient: linear-gradient(135deg, #7a6a4c 0%, #bdac89 50%, #e3d6b8 100%);
@@ -17,7 +34,6 @@ body {
   @apply bg-anthracite-950 text-sand-100 font-sans antialiased;
   font-size: 1.0625rem;
   line-height: 1.6;
-  font-feature-settings: 'ss01', 'cv11';
 }
 
 ::selection {
@@ -33,14 +49,14 @@ body {
 
 .font-display {
   font-family: var(--font-display);
+  font-weight: 700;
   letter-spacing: -0.035em;
-  font-feature-settings: 'ss01';
 }
 
-.text-display { font-size: var(--text-display); line-height: 0.95; font-weight: 500; }
-.text-h1 { font-size: var(--text-h1); line-height: 1; font-weight: 500; }
-.text-h2 { font-size: var(--text-h2); line-height: 1.05; font-weight: 500; }
-.text-h3 { font-size: var(--text-h3); line-height: 1.15; font-weight: 600; letter-spacing: -0.02em; }
+.text-display { font-size: var(--text-display); line-height: 0.95; font-weight: 700; }
+.text-h1 { font-size: var(--text-h1); line-height: 1; font-weight: 700; }
+.text-h2 { font-size: var(--text-h2); line-height: 1.05; font-weight: 700; }
+.text-h3 { font-size: var(--text-h3); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
 .text-lead { font-size: var(--text-lead); line-height: 1.5; }
 
 .container {
@@ -68,6 +84,14 @@ body {
   opacity: 0.6;
 }
 
+/* SplitText klippt jede Zeile auf Zeilenhoehe. Bei line-height < 1 fallen
+   Unterlaengen (g, j, p, q, y) heraus. Padding vergroessert die Clip-Box,
+   der negative Margin haelt den Zeilenabstand unveraendert. */
+.split-line-mask {
+  padding-bottom: 0.22em;
+  margin-bottom: -0.22em;
+}
+
 /* Reveal-Startzustände. JS entfernt sie, ohne JS bleibt alles sichtbar. */
 html.js [data-reveal] { opacity: 0; transform: translateY(40px); }
 html.js [data-split] { visibility: hidden; }
@@ -89,7 +113,7 @@ html.js.motion-ready [data-split] { opacity: 1; transform: none; visibility: vis
 [data-contact-success].is-visible [data-success-check] { animation: draw 0.6s 0.6s var(--ease-out-expo) forwards; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 
-.legal h2 { font-family: var(--font-display); font-size: var(--text-h3); margin-top: 2.5rem; margin-bottom: 0.75rem; }
+.legal h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--text-h3); margin-top: 2.5rem; margin-bottom: 0.75rem; }
 .legal h3 { font-weight: 600; margin-top: 1.75rem; margin-bottom: 0.5rem; }
 .legal p, .legal li { color: #3f3d38; line-height: 1.7; }
 .legal p + p { margin-top: 0.9rem; }

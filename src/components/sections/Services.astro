@@ -15,7 +15,7 @@ const { services } = site;
             <span class="font-display text-h3 text-gold-700">{item.number}</span>
             <span class="h-px w-16 bg-gold-700/40" aria-hidden="true"></span>
           </div>
-          <ImagePlaceholder id={item.image.id} ratio={item.image.ratio} label={item.image.label} alt={item.image.alt} tone="sand" class="mt-6" />
+          <ImagePlaceholder id={item.image.id} ratio={item.image.ratio} label={item.image.label} alt={item.image.alt} prompt={item.image.prompt} tone="sand" class="mt-6" />
           <h3 class="font-display text-h3 mt-7">{item.title}</h3>
           <p class="mt-3 text-ink-muted">{item.text}</p>
           <ul class="mt-6 flex flex-wrap gap-2">

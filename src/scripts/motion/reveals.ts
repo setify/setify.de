@@ -46,7 +46,9 @@ export default function reveals(root: HTMLElement): () => void {
           }
         }
         return gsap.from(self.words, {
-          yPercent: 110,
+          // Muss die vergroesserte Clip-Box der Zeile (.split-line-mask) ueberschreiten,
+          // sonst blitzt die Wortoberkante vor dem Start durch.
+          yPercent: 135,
           opacity: 0,
           filter: 'blur(8px)',
           duration: 1.1,

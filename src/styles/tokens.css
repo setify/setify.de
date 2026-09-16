@@ -13,8 +13,8 @@
   --color-ink-muted: #6b665c;
   --color-paper-muted: #a8a49b;
 
-  --font-display: 'Space Grotesk Variable', 'Helvetica Neue', Arial, sans-serif;
-  --font-sans: 'Manrope Variable', system-ui, sans-serif;
+  --font-display: 'Satoshi', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Switzer', system-ui, sans-serif;
 
   --text-display: clamp(3rem, 2rem + 5vw, 6rem);
   --text-h1: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
