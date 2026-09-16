@@ -85,12 +85,19 @@ body {
 .section--dark { @apply bg-anthracite-950 text-sand-100; }
 .section--sand { @apply bg-sand-100 text-anthracite-950; color-scheme: light; }
 
+/* Die Schrift ist hier transparent und wird ausschliesslich durch den
+   Hintergrund sichtbar. Der Hintergrundkasten reicht aber nur bis zur
+   Zeilenhoehe, weshalb Unterlaengen (g, j, p, q, y) darunter unbemalt und
+   damit unsichtbar blieben. Das Padding vergroessert den Kasten nach unten,
+   der negative Margin haelt das Layout unveraendert. */
 .gold-gradient-text {
   background: var(--gold-gradient);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  padding-bottom: 0.34em;
+  margin-bottom: -0.34em;
 }
 
 .gold-line {
