@@ -1,6 +1,7 @@
 ---
 import { site } from '@/content/site';
 import Button from '@/components/ui/Button.astro';
+import { navHref } from '@/lib/href';
 interface Props { tone?: 'dark' | 'sand' }
 const { tone = 'dark' } = Astro.props;
 const sand = tone === 'sand';
@@ -8,7 +9,9 @@ const logo = sand ? '/logo.svg' : '/logo-white.svg';
 const linkColor = sand ? 'text-anthracite-950/80 hover:text-anthracite-950' : 'text-sand-100/80 hover:text-sand-100';
 const bgColor = sand ? 'bg-sand-100/80 border-anthracite-950/10' : 'bg-anthracite-950/80 border-anthracite-800/60';
 const barColor = sand ? 'bg-anthracite-950' : 'bg-sand-100';
-const href = (h: string) => (sand ? `/${h}` : h);
+// Praefix haengt am Ort, nicht am Farbton: /ki ist dunkel und trotzdem Unterseite.
+const href = (h: string) => navHref(h, Astro.url.pathname);
+const isCurrent = (h: string) => h === Astro.url.pathname;
 ---
 <header class="fixed inset-x-0 top-0 z-50 transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)]" data-motion="nav" data-nav>
   <div class={`absolute inset-0 -z-10 opacity-0 backdrop-blur-xl transition-opacity duration-500 border-b ${bgColor}`} data-nav-bg aria-hidden="true"></div>
@@ -16,10 +19,10 @@ const href = (h: string) => (sand ? `/${h}` : h);
     <a href="/" class="flex items-center" aria-label="setify Startseite">
       <img src={logo} alt="setify" width="126" height="40" class="h-8 w-auto" />
     </a>
-    <ul class="hidden items-center gap-8 lg:flex">
+    <ul class="hidden items-center gap-6 lg:flex xl:gap-8">
       {site.nav.links.map((l) => (
         <li>
-          <a href={href(l.href)} class={`relative text-[0.9rem] font-medium transition-colors duration-300 ${linkColor} after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-gold-500 after:transition-[width] after:duration-500 hover:after:w-full`}>{l.label}</a>
+          <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`relative whitespace-nowrap text-[0.9rem] font-medium transition-colors duration-300 ${linkColor} after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold-500 after:transition-[width] after:duration-500 hover:after:w-full ${isCurrent(l.href) ? 'after:w-full' : 'after:w-0'}`}>{l.label}</a>
         </li>
       ))}
     </ul>
@@ -36,7 +39,7 @@ const href = (h: string) => (sand ? `/${h}` : h);
     <ul class="flex flex-col gap-6">
       {site.nav.links.map((l) => (
         <li data-nav-overlay-item>
-          <a href={href(l.href)} class="font-display text-h2 text-sand-100" data-nav-link>{l.label}</a>
+          <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`font-display text-h2 ${isCurrent(l.href) ? 'text-gold-500' : 'text-sand-100'}`} data-nav-link>{l.label}</a>
         </li>
       ))}
     </ul>

@@ -1,0 +1,38 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  text: string;
+  points: string[];
+  class?: string;
+}
+const { number, title, text, points, class: className = '' } = Astro.props;
+---
+<article
+  class={`group relative flex flex-col overflow-hidden rounded-3xl border border-gold-500/15 bg-anthracite-900/60 p-8 transition-colors duration-500 hover:border-gold-500/40 ${className}`}
+  data-reveal
+>
+  <span
+    class="pointer-events-none absolute inset-x-0 top-0 h-px opacity-40 transition-opacity duration-500 group-hover:opacity-100"
+    style="background: var(--gold-gradient)"
+    aria-hidden="true"></span>
+
+  <div class="flex items-baseline justify-between gap-4">
+    <span class="font-display text-h3 text-gold-500">{number}</span>
+    <span class="h-px w-12 bg-gold-500/30" aria-hidden="true"></span>
+  </div>
+
+  <h3 class="font-display text-h3 mt-6 text-balance">{title}</h3>
+  <p class="mt-4 text-sand-100/75">{text}</p>
+
+  <ul class="mt-7 flex flex-col gap-3 text-sm">
+    {points.map((p) => (
+      <li class="flex gap-3">
+        <svg class="mt-1.5 h-2.5 w-2.5 shrink-0 text-gold-500" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+          <path d="M1 5h8M5 1v8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+        </svg>
+        <span class="text-sand-100/85">{p}</span>
+      </li>
+    ))}
+  </ul>
+</article>

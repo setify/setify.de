@@ -7,6 +7,28 @@ export type Ratio = '4:5' | '3:2' | '4:3' | '3:4' | '16:9' | '1:1';
 export interface ImageRef { id: string; ratio: Ratio; label: string; alt: string; prompt?: string }
 export interface SectionMeta { id: string; tone: Tone }
 
+export interface KiServiceCard { id: string; number: string; title: string; text: string; points: string[] }
+export interface KiUseCase { id: string; label: string; title: string; text: string }
+export interface KiStep { number: string; title: string; text: string }
+
+/** Eigenstaendiger Leistungsbereich unter `path`. Der Startseiten-Teaser
+ *  referenziert Karten ueber `teaser.cardIds`, damit Inhalte nur einmal
+ *  gepflegt werden. Bewusst ohne Preisfelder. */
+export interface KiContent {
+  path: string;
+  anchor: string;
+  navLabel: string;
+  banner: { text: string; cta: { label: string; href: string }; dismissLabel: string };
+  teaser: { eyebrow: string; title: string; titleAccent: string; lead: string; cardIds: string[]; cta: { label: string; href: string } };
+  page: { meta: { title: string; description: string }; hero: { eyebrow: string; title: string; titleAccent: string; encrypted: string; lead: string; primary: { label: string; href: string }; secondary: { label: string; href: string } } };
+  services: { eyebrow: string; title: string; lead: string; items: KiServiceCard[] };
+  useCases: { eyebrow: string; title: string; lead: string; items: KiUseCase[] };
+  process: { eyebrow: string; title: string; steps: KiStep[] };
+  privacy: { eyebrow: string; title: string; text: string; points: string[] };
+  faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] };
+  cta: { title: string; text: string; primary: { label: string; href: string } };
+}
+
 export interface SiteContent {
   meta: { title: string; description: string; url: string; email: string; city: string };
   nav: { links: { label: string; href: string }[]; cta: { label: string; href: string } };
@@ -23,6 +45,7 @@ export interface SiteContent {
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] };
   contact: { eyebrow: string; title: string; text: string; success: { title: string; text: string }; projectTypes: { value: string; label: string }[]; budgets: { value: string; label: string }[] };
   footer: { claim: string; legal: { label: string; href: string }[] };
+  ki: KiContent;
 }
 
 export const site: SiteContent = {
@@ -36,6 +59,7 @@ export const site: SiteContent = {
   nav: {
     links: [
       { label: 'Leistungen', href: '#leistungen' },
+      { label: 'KI', href: '/ki' },
       { label: 'Prozess', href: '#prozess' },
       { label: 'Referenzen', href: '#referenzen' },
       { label: 'Preise', href: '#preise' },
@@ -179,4 +203,123 @@ export const site: SiteContent = {
       { label: 'Datenschutz', href: '/datenschutz' },
     ],
   },
+  ki: {
+    path: '/ki',
+    anchor: 'ki',
+    navLabel: 'KI',
+    banner: {
+      text: 'Neu: KI-Beratung und Automatisierung für den Mittelstand.',
+      cta: { label: 'Ansehen', href: '/ki' },
+      dismissLabel: 'Hinweis schließen',
+    },
+    teaser: {
+      eyebrow: 'Neu im Programm',
+      title: 'KI, die arbeitet.',
+      titleAccent: 'Nicht beeindruckt.',
+      lead: 'Die meisten KI-Projekte scheitern nicht an der Technik. Sie scheitern daran, dass niemand sie in den Alltag einbaut. Wir fangen beim Prozess an, nicht beim Modell.',
+      cardIds: ['standort', 'automatisierung', 'assistenten'],
+      cta: { label: 'KI-Bereich ansehen', href: '/ki' },
+    },
+    page: {
+      meta: {
+        title: 'KI & Automatisierung | setify',
+        description: 'KI-Beratung, Workflow-Automatisierung und Assistenten auf deinen Daten. Wir fangen beim Prozess an, nicht beim Modell. Aus Köln, seit über 20 Jahren im Geschäft.',
+      },
+      hero: {
+        eyebrow: 'KI & Automatisierung',
+        title: 'KI, die arbeitet.',
+        titleAccent: 'Nicht beeindruckt.',
+        encrypted: 'Nicht jeder Prozess braucht KI. Aber fast jedes Unternehmen hat drei, die sie sofort tragen würden.',
+        lead: 'Wir sind seit über 20 Jahren in den Abläufen mittelständischer Betriebe unterwegs. Das ist der Grund, warum wir bei KI nicht mit dem Werkzeug anfangen, sondern mit der Frage, wo bei dir tatsächlich Zeit verloren geht.',
+        primary: { label: 'Erstgespräch vereinbaren', href: '#kontakt' },
+        secondary: { label: 'Anwendungsfälle ansehen', href: '#ki-anwendungen' },
+      },
+    },
+    services: {
+      eyebrow: 'Leistungen',
+      title: 'Vom Prozess zur Automatisierung.',
+      lead: 'Vier Bausteine, die aufeinander aufbauen. Du kannst bei jedem einsteigen und nach jedem aufhören.',
+      items: [
+        {
+          id: 'standort',
+          number: '01',
+          title: 'Standortbestimmung',
+          text: 'Wir sehen uns an, wo bei dir Zeit verloren geht. Am Ende steht eine Liste mit Aufwand, Nutzen und Reihenfolge, nicht eine Liste mit Tools.',
+          points: ['Prozess-Audit im Tagesgeschäft', 'Use-Cases bewertet nach Aufwand und Nutzen', 'Ehrliche Einschätzung, wo KI nichts bringt', 'Fahrplan mit Prioritäten'],
+        },
+        {
+          id: 'automatisierung',
+          number: '02',
+          title: 'Workflow-Automatisierung',
+          text: 'Angebote, Rechnungen, Terminbestätigungen, Datenübergaben zwischen Systemen. Alles, was heute jemand von Hand kopiert, läuft danach von selbst.',
+          points: ['Anbindung deiner bestehenden Systeme', 'Automatisierungen mit n8n oder Make', 'Fehlerbehandlung und Benachrichtigung', 'Dokumentierte Abläufe, kein Blackbox-Skript'],
+        },
+        {
+          id: 'assistenten',
+          number: '03',
+          title: 'Assistenten auf deinen Daten',
+          text: 'Ein Assistent, der deine Preisliste kennt, deine Verträge liest und deinem Team antwortet. Nicht das halbe Internet, sondern dein Wissen.',
+          points: ['Chat-Assistent für Website oder intern', 'Dokumente auswerten statt durchsuchen', 'Angebunden an CRM, ERP oder Wissensablage', 'Antworten mit Quellenangabe'],
+        },
+        {
+          id: 'betrieb',
+          number: '04',
+          title: 'Betrieb & Schulung',
+          text: 'Eine Automatisierung, die keiner versteht, wird nach drei Monaten abgeschaltet. Wir übergeben sie so, dass dein Team damit arbeitet.',
+          points: ['Monitoring und Kostenkontrolle', 'Schulung für dein Team', 'Anpassung, wenn sich Abläufe ändern', 'DSGVO-Dokumentation inklusive'],
+        },
+      ],
+    },
+    useCases: {
+      eyebrow: 'Anwendungsfälle',
+      title: 'So sieht das in der Praxis aus.',
+      lead: 'Vier Beispiele aus den Branchen, in denen wir ohnehin zu Hause sind.',
+      items: [
+        { id: 'handwerk', label: 'Handwerk', title: 'Angebot in 4 Minuten statt 40', text: 'Aufmaß rein, Angebot raus. Der Assistent zieht Preise aus der Kalkulation und schreibt den Text im Ton des Betriebs. Freigabe bleibt beim Chef.' },
+        { id: 'industrie', label: 'Industrie', title: 'Anfragen sortieren sich selbst', text: 'Eingehende Mails werden gelesen, kategorisiert und samt Zusammenfassung an die richtige Person übergeben. Niemand sortiert mehr Posteingang.' },
+        { id: 'gastro', label: 'Gastro & Event', title: 'Reservierungen ohne Rückruf', text: 'Anfragen laufen über ein Formular, der Assistent prüft Verfügbarkeit, bestätigt und trägt in den Kalender ein. Der Rückruf entfällt.' },
+        { id: 'lifestyle', label: 'Lifestyle', title: 'Produkttexte in deiner Handschrift', text: 'Aus Stichpunkten werden Beschreibungen, die klingen wie deine Marke, weil der Assistent auf deinen bisherigen Texten sitzt.' },
+      ],
+    },
+    process: {
+      eyebrow: 'So arbeiten wir',
+      title: 'Drei Schritte, kein Wasserfall.',
+      steps: [
+        { number: '01', title: 'Analyse', text: 'Ein halber Tag, in dem wir deine Abläufe durchgehen. Danach weißt du, was sich lohnt und was nicht. Zum Festpreis.' },
+        { number: '02', title: 'Pilot', text: 'Wir setzen einen Anwendungsfall um, den du in zwei bis vier Wochen im Alltag messen kannst. Ein echter, kein Demoprojekt.' },
+        { number: '03', title: 'Ausbau', text: 'Was funktioniert, wird erweitert. Was nicht funktioniert, wird abgeschaltet statt schöngeredet.' },
+      ],
+    },
+    privacy: {
+      eyebrow: 'Datenschutz',
+      title: 'Deine Daten bleiben deine Daten.',
+      text: 'Der häufigste Grund, warum KI im Mittelstand liegen bleibt, ist nicht fehlender Nutzen. Es ist die Unsicherheit, wo die Daten landen. Deshalb klären wir das vor der ersten Zeile Code.',
+      points: ['Verarbeitung in der EU, wo immer es geht', 'Keine Weitergabe deiner Inhalte an Modelltraining', 'Auftragsverarbeitungsvertrag inklusive', 'Auf Wunsch Modelle, die bei dir im Haus laufen'],
+    },
+    faq: {
+      eyebrow: 'Fragen',
+      title: 'Was du wissen willst.',
+      items: [
+        { question: 'Brauchen wir dafür eine eigene IT-Abteilung?', answer: 'Nein. Wir bauen, dokumentieren und übergeben. Was dein Team können muss, zeigen wir in einer Schulung. Danach reicht ein Ansprechpartner bei dir, der die Abläufe kennt.' },
+        { question: 'Was kostet das?', answer: 'Die Analyse hat einen Festpreis. Für alles danach bekommst du ein Angebot, sobald wir wissen, was tatsächlich gebraucht wird. Kein Stundenschätzen.' },
+        { question: 'Was, wenn sich herausstellt, dass sich KI nicht lohnt?', answer: 'Dann sagen wir das. Ein ehrliches Nein nach der Analyse ist günstiger als ein Projekt, das am Ende keiner nutzt.' },
+        { question: 'Arbeitet ihr mit ChatGPT?', answer: 'Unter anderem. Wir wählen das Modell nach Aufgabe, Datenschutz und Kosten aus, nicht nach Bekanntheit. Für viele Aufgaben reicht ein kleines, günstiges Modell völlig.' },
+        { question: 'Was passiert mit unseren Daten?', answer: 'Sie bleiben deine. Wir verarbeiten in der EU, wo es geht, und deine Inhalte fließen nicht in Modelltraining. Den Auftragsverarbeitungsvertrag bekommst du vor dem Start.' },
+        { question: 'Wie schnell sehen wir Ergebnisse?', answer: 'Der erste Anwendungsfall läuft in der Regel nach zwei bis vier Wochen im Alltag. Nicht als Demo, sondern mit echten Daten und echten Nutzern.' },
+      ],
+    },
+    cta: {
+      title: 'Lass uns eine Stunde über deine Abläufe reden.',
+      text: 'Kostenlos, unverbindlich und ohne Folienschlacht. Danach weißt du, ob sich KI bei dir lohnt und womit du anfangen solltest.',
+      primary: { label: 'Erstgespräch vereinbaren', href: '#kontakt' },
+    },
+  },
 };
+
+/** Karten des Startseiten-Teasers, aufgeloest aus `ki.teaser.cardIds`,
+ *  damit Teaser und Unterseite dieselben Objekte teilen. */
+export const kiTeaserCards = (): KiServiceCard[] =>
+  site.ki.teaser.cardIds
+    .map((id) => site.ki.services.items.find((s) => s.id === id))
+    .filter((s): s is KiServiceCard => Boolean(s));
+

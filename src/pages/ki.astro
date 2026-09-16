@@ -1,0 +1,31 @@
+---
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/layout/Nav.astro';
+import Footer from '@/components/layout/Footer.astro';
+import KiHero from '@/components/sections/KiHero.astro';
+import KiServices from '@/components/sections/KiServices.astro';
+import KiUseCases from '@/components/sections/KiUseCases.astro';
+import KiProcess from '@/components/sections/KiProcess.astro';
+import KiPrivacy from '@/components/sections/KiPrivacy.astro';
+import KiFaq from '@/components/sections/KiFaq.astro';
+import KiCta from '@/components/sections/KiCta.astro';
+import Contact from '@/components/sections/Contact.astro';
+import JsonLdKi from '@/components/seo/JsonLdKi.astro';
+import { site } from '@/content/site';
+const { meta } = site.ki.page;
+---
+<Base title={meta.title} description={meta.description}>
+  <JsonLdKi slot="head" />
+  <Nav />
+  <main>
+    <KiHero />
+    <KiServices />
+    <KiUseCases />
+    <KiProcess />
+    <KiPrivacy />
+    <KiFaq />
+    <KiCta />
+    <Contact />
+  </main>
+  <Footer />
+</Base>

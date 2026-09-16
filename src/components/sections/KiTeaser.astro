@@ -1,0 +1,38 @@
+---
+import { site, kiTeaserCards } from '@/content/site';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Button from '@/components/ui/Button.astro';
+const { teaser } = site.ki;
+const cards = kiTeaserCards();
+---
+<section id="ki" class="section section--dark relative overflow-hidden">
+  <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute -right-40 top-0 h-[45rem] w-[45rem] opacity-40 [filter:blur(130px)]" aria-hidden="true"
+       style="background: radial-gradient(circle, rgba(189,172,137,0.3), rgba(122,106,76,0.12) 45%, transparent 70%)"></div>
+
+  <div class="container relative">
+    <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+      <div>
+        <Eyebrow>{teaser.eyebrow}</Eyebrow>
+        <h2 class="font-display text-h2 mt-5 text-balance" data-split>
+          {teaser.title} <span class="gold-gradient-text">{teaser.titleAccent}</span>
+        </h2>
+      </div>
+      <p class="text-lead text-paper-muted" data-reveal>{teaser.lead}</p>
+    </div>
+
+    <ul class="mt-14 grid gap-4 md:grid-cols-3">
+      {cards.map((card) => (
+        <li class="rounded-2xl border border-gold-500/15 bg-anthracite-900/50 p-6" data-reveal>
+          <span class="font-display text-[1.1rem] text-gold-500">{card.number}</span>
+          <h3 class="font-display mt-3 text-[1.25rem] leading-tight">{card.title}</h3>
+          <p class="mt-3 text-sm text-sand-100/70">{card.text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-12" data-reveal>
+      <Button href={teaser.cta.href} magnetic>{teaser.cta.label}</Button>
+    </div>
+  </div>
+</section>

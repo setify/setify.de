@@ -1,0 +1,30 @@
+---
+/**
+ * Kartenstapel, dessen unterste Karte alle paar Sekunden nach vorne rotiert.
+ * Der Wrapper hat eine feste Hoehe, damit die Rotation die Dokumenthoehe nicht
+ * aendert und kein ScrollTrigger.refresh() noetig wird.
+ */
+interface Props {
+  items: { id: string; label: string; title: string; text: string }[];
+  class?: string;
+}
+const { items, class: className = '' } = Astro.props;
+---
+<div class={`relative min-h-[22rem] sm:min-h-[19rem] ${className}`} data-motion="cardstack" data-card-stack>
+  {items.map((item, i) => (
+    <article
+      id={`ki-case-${item.id}`}
+      class="absolute inset-x-0 top-0 flex flex-col justify-between rounded-3xl border border-gold-500/20 bg-anthracite-900 p-7 shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)] sm:p-8"
+      style={`z-index: ${items.length - i}`}
+      data-stack-card
+      data-stack-index={i}
+    >
+      <div>
+        <p class="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-gold-500">{item.label}</p>
+        <h3 class="font-display mt-4 text-[1.5rem] leading-tight text-balance">{item.title}</h3>
+        <p class="mt-4 text-sand-100/75">{item.text}</p>
+      </div>
+      <span class="gold-line mt-7 block" aria-hidden="true"></span>
+    </article>
+  ))}
+</div>

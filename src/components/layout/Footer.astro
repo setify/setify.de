@@ -1,5 +1,6 @@
 ---
 import { site } from '@/content/site';
+import { navHref } from '@/lib/href';
 const year = new Date().getFullYear();
 ---
 <footer id="footer" class="section--dark relative border-t border-anthracite-800">
@@ -12,7 +13,7 @@ const year = new Date().getFullYear();
     <nav aria-label="Footer Navigation">
       <p class="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-gold-500">Navigation</p>
       <ul class="mt-4 flex flex-col gap-2">
-        {site.nav.links.map((l) => <li><a href={`/${l.href}`} class="text-sand-100/80 transition-colors hover:text-gold-300">{l.label}</a></li>)}
+        {site.nav.links.map((l) => <li><a href={navHref(l.href, Astro.url.pathname)} class="text-sand-100/80 transition-colors hover:text-gold-300">{l.label}</a></li>)}
       </ul>
     </nav>
     <div>

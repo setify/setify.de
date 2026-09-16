@@ -1,0 +1,28 @@
+---
+import { site } from '@/content/site';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+const { faq } = site.ki;
+---
+<section id="ki-faq" class="section section--dark">
+  <div class="container grid gap-12 lg:grid-cols-[1fr_1.5fr]">
+    <SectionHeading tone="dark" eyebrow={faq.eyebrow} title={faq.title} />
+    <div class="divide-y divide-anthracite-800 border-y border-anthracite-800" data-motion="accordion">
+      {faq.items.map((item, i) => (
+        <div data-accordion-item data-reveal>
+          <h3>
+            <button type="button" class="flex w-full items-center justify-between gap-6 py-6 text-left" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`ki-faq-panel-${i}`} id={`ki-faq-trigger-${i}`}>
+              <span class="font-display text-[1.35rem] leading-tight">{item.question}</span>
+              <span class="relative grid h-9 w-9 shrink-0 place-items-center rounded-full border border-gold-500/50 text-gold-500" aria-hidden="true">
+                <span class="absolute h-px w-3.5 bg-current"></span>
+                <span class="absolute h-3.5 w-px bg-current transition-transform duration-500" data-accordion-icon></span>
+              </span>
+            </button>
+          </h3>
+          <div id={`ki-faq-panel-${i}`} role="region" aria-labelledby={`ki-faq-trigger-${i}`} class="overflow-hidden" data-accordion-panel hidden={i !== 0}>
+            <p class="pb-6 text-paper-muted">{item.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

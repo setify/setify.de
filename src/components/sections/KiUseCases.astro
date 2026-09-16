@@ -1,0 +1,14 @@
+---
+import { site } from '@/content/site';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import CardStack from '@/components/ui/CardStack.astro';
+const { useCases } = site.ki;
+---
+<section id="ki-anwendungen" class="section section--dark relative overflow-hidden">
+  <div class="container relative grid items-center gap-14 lg:grid-cols-[1fr_1fr]">
+    <SectionHeading tone="dark" eyebrow={useCases.eyebrow} title={useCases.title} lead={useCases.lead} />
+    <div data-reveal>
+      <CardStack items={useCases.items} />
+    </div>
+  </div>
+</section>
