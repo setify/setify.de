@@ -100,6 +100,69 @@ html[data-banner-state='dismissed'] [data-ki-banner] { display: none; }
    der fixierte Header darf die Ueberschrift nicht verdecken. */
 [id] { scroll-margin-top: 7.5rem; }
 
+/* --- KI-Teaser ---------------------------------------------------------
+   Hintergrund und Kartenrahmen laufen bewusst ueber CSS statt ueber ein
+   weiteres JS-Modul: beides ist rein kompositiert und kostet keine
+   Animationsschleife zusaetzlich zu den vier auf /ki. */
+
+@property --ki-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Technisches Raster, an den Raendern ausgeblendet. */
+.ki-grid {
+  background-image:
+    linear-gradient(to right, rgba(189, 172, 137, 0.11) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(189, 172, 137, 0.11) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 45%, #000 15%, transparent 78%);
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 45%, #000 15%, transparent 78%);
+}
+
+/* Zwei grosse, weiche Goldschleier, die langsam gegeneinander treiben. */
+.ki-beam { animation: ki-drift 20s ease-in-out infinite alternate; }
+.ki-beam--counter { animation-duration: 29s; animation-direction: alternate-reverse; }
+
+@keyframes ki-drift {
+  from { transform: translate3d(-7%, -5%, 0) scale(1); }
+  to { transform: translate3d(9%, 7%, 0) scale(1.18); }
+}
+
+/* Duenner, umlaufender Rahmen: der Kegelverlauf dreht sich, die Maske laesst
+   nur die 1px breite Kante stehen. */
+.ki-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--ki-angle),
+    transparent 0deg 195deg,
+    rgba(189, 172, 137, 0.85) 285deg,
+    #e3d6b8 320deg,
+    transparent 355deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.5;
+  animation: ki-rotate 7s linear infinite;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+/* Versetzt starten, sonst drehen alle drei im Gleichschritt. */
+.ki-card:nth-child(2)::before { animation-delay: -2.3s; }
+.ki-card:nth-child(3)::before { animation-delay: -4.6s; }
+
+.ki-card:hover::before { opacity: 1; animation-duration: 3s; }
+
+@keyframes ki-rotate { to { --ki-angle: 360deg; } }
+
 /* Reveal-Startzustände. JS entfernt sie, ohne JS bleibt alles sichtbar. */
 html.js [data-reveal] { opacity: 0; transform: translateY(40px); }
 html.js [data-split] { visibility: hidden; }
@@ -110,6 +173,8 @@ html.js.motion-ready [data-split] { opacity: 1; transform: none; visibility: vis
   html.js [data-reveal] { opacity: 1; transform: none; }
   html.js [data-split] { visibility: visible; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .ki-card::before { animation: none; opacity: 0.45; background: linear-gradient(135deg, rgba(189,172,137,0.6), rgba(122,106,76,0.2)); }
+  .ki-beam { animation: none; }
 }
 
 [data-contact-success] [data-success-circle],
