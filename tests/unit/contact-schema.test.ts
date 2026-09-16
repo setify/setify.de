@@ -1,11 +1,11 @@
 import { parseContactInput, formDataToObject } from '@/lib/contact-schema';
 
 const valid = {
-  name: 'Maria Muster',
+  firstName: 'Maria',
+  lastName: 'Muster',
   email: 'maria@example.com',
   phone: '+49 221 123456',
   projectType: 'website',
-  budget: '5k-10k',
   message: 'Wir brauchen eine neue Website für unser Handwerksunternehmen.',
   consent: 'on',
   'cf-turnstile-response': 'token-123',
@@ -17,7 +17,8 @@ describe('parseContactInput', () => {
     const r = parseContactInput(valid);
     expect(r.ok).toBe(true);
     if (r.ok && !r.honeypot) {
-      expect(r.data.name).toBe('Maria Muster');
+      expect(r.data.firstName).toBe('Maria');
+      expect(r.data.lastName).toBe('Muster');
       expect(r.data.consent).toBe(true);
       expect(r.data.turnstileToken).toBe('token-123');
       expect(r.data.phone).toBe('+49 221 123456');
@@ -40,12 +41,12 @@ describe('parseContactInput', () => {
   });
 
   it.each([
-    ['name', 'M', 'name'],
-    ['name', 'x'.repeat(101), 'name'],
+    ['firstName', 'M', 'firstName'],
+    ['firstName', 'x'.repeat(61), 'firstName'],
+    ['lastName', 'M', 'lastName'],
     ['email', 'keine-mail', 'email'],
     ['phone', 'abc', 'phone'],
     ['projectType', 'raumschiff', 'projectType'],
-    ['budget', 'unendlich', 'budget'],
     ['message', 'zu kurz', 'message'],
     ['message', 'x'.repeat(3001), 'message'],
     ['consent', 'off', 'consent'],
@@ -60,7 +61,7 @@ describe('parseContactInput', () => {
     const r = parseContactInput({});
     expect(r.ok).toBe(false);
     if (!r.ok) {
-      expect(Object.keys(r.fieldErrors).sort()).toEqual(['budget', 'consent', 'email', 'message', 'name', 'projectType']);
+      expect(Object.keys(r.fieldErrors).sort()).toEqual(['consent', 'email', 'firstName', 'lastName', 'message', 'projectType']);
     }
   });
 
@@ -73,8 +74,8 @@ describe('parseContactInput', () => {
 describe('formDataToObject', () => {
   it('converts FormData to plain object', () => {
     const fd = new FormData();
-    fd.set('name', 'A');
+    fd.set('firstName', 'A');
     fd.set('consent', 'on');
-    expect(formDataToObject(fd)).toEqual({ name: 'A', consent: 'on' });
+    expect(formDataToObject(fd)).toEqual({ firstName: 'A', consent: 'on' });
   });
 });

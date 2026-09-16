@@ -11,7 +11,8 @@
 interface Props {
   name: string;
   label: string;
-  type?: 'text' | 'email' | 'tel' | 'textarea';
+  type?: 'text' | 'email' | 'tel' | 'textarea' | 'select';
+  options?: { value: string; label: string }[];
   required?: boolean;
   autocomplete?: string;
   /** Erscheint erst im Fokus, damit er das mitwandernde Label nicht stoert. */
@@ -19,7 +20,7 @@ interface Props {
   rows?: number;
   class?: string;
 }
-const { name, label, type = 'text', required = false, autocomplete, placeholder, rows = 4, class: className = '' } = Astro.props;
+const { name, label, type = 'text', required = false, autocomplete, placeholder, options = [], rows = 4, class: className = '' } = Astro.props;
 const id = `field-${name}`;
 
 const feld =
@@ -28,7 +29,28 @@ const label_ =
   'pointer-events-none absolute left-4 origin-left text-ink-muted transition-all duration-200 [transition-timing-function:var(--ease-out-expo)] peer-focus:text-gold-700';
 ---
 <div class={`relative ${className}`}>
-  {type === 'textarea' ? (
+  {type === 'select' ? (
+    <>
+      {/* Eigener Pfeil und appearance-none, damit das Feld nicht nach
+          Browser-Standard aussieht. Das Label steht fest oben, weil ein Select
+          immer einen sichtbaren Wert hat und `:placeholder-shown` nicht greift. */}
+      <select
+        id={id}
+        name={name}
+        required={required}
+        class={`${feld} h-[3.75rem] cursor-pointer appearance-none pt-6 pb-2 pr-11`}
+      >
+        <option value="">Bitte wählen</option>
+        {options.map((o) => <option value={o.value}>{o.label}</option>)}
+      </select>
+      <label for={id} class={`${label_} top-2 scale-[0.78]`}>
+        {label}{required && <span class="text-gold-700"> *</span>}
+      </label>
+      <svg class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </>
+  ) : type === 'textarea' ? (
     <>
       <textarea id={id} name={name} rows={rows} required={required} placeholder={placeholder ?? " "} class={`${feld} resize-y pt-7 pb-3`}></textarea>
       <label for={id} class={`${label_} top-3 text-small peer-focus:top-3 peer-[:not(:placeholder-shown)]:top-3`}>

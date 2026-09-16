@@ -43,7 +43,7 @@ export interface SiteContent {
   pricing: { eyebrow: string; title: string; note: string; plans: { name: string; price: string; prefix: string; period: string; text: string; features: string[]; cta: string; recommended: boolean }[] };
   industries: { eyebrow: string; title: string; items: { title: string; text: string; image: ImageRef }[] };
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] };
-  contact: { eyebrow: string; title: string; text: string; success: { title: string; text: string }; projectTypes: { value: string; label: string }[]; budgets: { value: string; label: string }[] };
+  contact: { eyebrow: string; title: string; text: string; success: { title: string; text: string }; projectTypes: { value: string; label: string }[] };
   footer: { claim: string; legal: { label: string; href: string }[] };
   ki: KiContent;
 }
@@ -186,14 +186,6 @@ export const site: SiteContent = {
       { value: 'performance', label: 'Performance und SEO' },
       { value: 'betreuung', label: 'Betreuung und Wartung' },
       { value: 'sonstiges', label: 'Sonstiges' },
-    ],
-    budgets: [
-      { value: 'bis-5k', label: 'bis 5.000 €' },
-      { value: '5k-10k', label: '5.000 bis 10.000 €' },
-      { value: '10k-25k', label: '10.000 bis 25.000 €' },
-      { value: 'ueber-25k', label: 'über 25.000 €' },
-      { value: 'abo', label: 'Website Abo' },
-      { value: 'offen', label: 'Noch offen' },
     ],
   },
   footer: {

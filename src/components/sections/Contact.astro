@@ -2,7 +2,6 @@
 import { site } from '@/content/site';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import Input from '@/components/ui/Input.astro';
-import ChipGroup from '@/components/ui/ChipGroup.astro';
 const { contact, meta } = site;
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
@@ -22,13 +21,14 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     <div class="relative rounded-3xl bg-sand-100 p-6 text-anthracite-950 md:p-8 [color-scheme:light]" data-reveal>
       <form class="grid gap-4" action="/api/contact" method="post" novalidate data-contact-form>
         <div class="grid gap-4 sm:grid-cols-2">
-          <Input name="name" label="Name" required autocomplete="name" />
-          <Input name="email" label="E-Mail" type="email" required autocomplete="email" />
+          <Input name="firstName" label="Vorname" required autocomplete="given-name" />
+          <Input name="lastName" label="Nachname" required autocomplete="family-name" />
         </div>
-        <Input name="phone" label="Telefon, optional" type="tel" autocomplete="tel" />
-
-        <ChipGroup name="projectType" label="Projektart" required options={contact.projectTypes} />
-        <ChipGroup name="budget" label="Budget" required options={contact.budgets} />
+        <Input name="email" label="E-Mail" type="email" required autocomplete="email" />
+        <div class="grid gap-4 sm:grid-cols-2">
+          <Input name="phone" label="Telefon, optional" type="tel" autocomplete="tel" />
+          <Input name="projectType" label="Projektart" type="select" required options={contact.projectTypes} />
+        </div>
 
         <Input name="message" label="Nachricht" type="textarea" required rows={4} placeholder="Worum geht es, was ist dein Ziel, bis wann soll es fertig sein?" />
 

@@ -1,13 +1,28 @@
 import { site } from '@/content/site';
 
 describe('site content', () => {
-  it('has 12 sections with unique ids matching nav anchors', () => {
+  it('has unique section ids', () => {
     const ids = site.sections.map((s) => s.id);
-    expect(ids).toHaveLength(12);
-    expect(new Set(ids).size).toBe(12);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  // Seit /ki kann ein Menuepunkt entweder eine Sprungmarke auf der Startseite
+  // oder ein eigener Pfad sein. Beides muss ein Ziel haben.
+  it('points every nav link at an existing anchor or page', () => {
+    const anker = new Set(site.sections.map((s) => s.id));
+    const seiten = new Set([site.ki.path]);
     for (const link of site.nav.links) {
-      expect(ids).toContain(link.href.replace('#', ''));
+      if (link.href.startsWith('#')) {
+        expect(anker).toContain(link.href.slice(1));
+      } else {
+        expect(seiten).toContain(link.href);
+      }
     }
+  });
+
+  it('keeps the KI teaser anchor addressable', () => {
+    expect(site.ki.anchor).toBe('ki');
+    expect(site.ki.teaser.cta.href).toBe(site.ki.path);
   });
 
   it('spells the brand lowercase everywhere', () => {
@@ -33,6 +48,7 @@ describe('site content', () => {
       ...site.services.items.map((s) => s.image.id),
       ...site.work.items.map((w) => w.image.id),
       ...site.industries.items.map((i) => i.image.id),
+      ...site.process.steps.map((p) => p.image.id),
     ];
     expect(new Set(ids).size).toBe(ids.length);
   });

@@ -2,11 +2,11 @@ import { buildContactEmails } from '@/lib/mail';
 import type { ContactInput } from '@/lib/contact-schema';
 
 const data: ContactInput = {
-  name: 'Maria <Muster>',
+  firstName: 'Maria',
+  lastName: '<Muster>',
   email: 'maria@example.com',
   phone: '+49 221 123456',
   projectType: 'redesign',
-  budget: '10k-25k',
   message: 'Zeile eins.\nZeile zwei mit <b>HTML</b>.',
   consent: true,
   turnstileToken: 'x',
@@ -24,7 +24,7 @@ describe('buildContactEmails', () => {
 
   it('includes all fields with labels in owner mail', () => {
     const { toOwner } = buildContactEmails(data, env);
-    for (const s of ['Maria &lt;Muster&gt;', 'maria@example.com', '+49 221 123456', 'Redesign bestehender Seite', '10.000 bis 25.000 €', 'Zeile eins.<br>Zeile zwei mit &lt;b&gt;HTML&lt;/b&gt;.']) {
+    for (const s of ['Maria &lt;Muster&gt;', 'maria@example.com', '+49 221 123456', 'Redesign bestehender Seite', 'Zeile eins.<br>Zeile zwei mit &lt;b&gt;HTML&lt;/b&gt;.']) {
       expect(toOwner.html).toContain(s);
     }
     expect(toOwner.text).toContain('Telefon: +49 221 123456');

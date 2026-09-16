@@ -25,15 +25,6 @@ const PROJECT_LABELS: Record<ContactInput['projectType'], string> = {
   sonstiges: 'Sonstiges',
 };
 
-const BUDGET_LABELS: Record<ContactInput['budget'], string> = {
-  'bis-5k': 'bis 5.000 €',
-  '5k-10k': '5.000 bis 10.000 €',
-  '10k-25k': '10.000 bis 25.000 €',
-  'ueber-25k': 'über 25.000 €',
-  abo: 'Website Abo',
-  offen: 'Noch offen',
-};
-
 const DEFAULT_FROM = 'setify <onboarding@resend.dev>';
 const DEFAULT_TO = 'mail@setify.de';
 
@@ -66,25 +57,23 @@ export function buildContactEmails(data: ContactInput, env: MailEnv): { toOwner:
   const from = env.RESEND_FROM || DEFAULT_FROM;
   const to = env.CONTACT_TO || DEFAULT_TO;
   const project = PROJECT_LABELS[data.projectType];
-  const budget = BUDGET_LABELS[data.budget];
+  const name = `${data.firstName} ${data.lastName}`;
 
   const ownerRows = [
-    row('Name', escapeHtml(data.name)),
+    row('Name', escapeHtml(name)),
     row('E-Mail', `<a href="mailto:${escapeHtml(data.email)}" style="color:#7a6a4c">${escapeHtml(data.email)}</a>`),
     data.phone ? row('Telefon', escapeHtml(data.phone)) : '',
     row('Projektart', escapeHtml(project)),
-    row('Budget', escapeHtml(budget)),
     row('Nachricht', nl2br(data.message)),
   ].join('');
 
   const ownerText = [
     `Neue Anfrage über setify.de`,
     ``,
-    `Name: ${data.name}`,
+    `Name: ${name}`,
     `E-Mail: ${data.email}`,
     data.phone ? `Telefon: ${data.phone}` : null,
     `Projektart: ${project}`,
-    `Budget: ${budget}`,
     ``,
     `Nachricht:`,
     data.message,
@@ -94,12 +83,12 @@ export function buildContactEmails(data: ContactInput, env: MailEnv): { toOwner:
     from,
     to: [to],
     replyTo: data.email,
-    subject: `Neue Anfrage: ${project}, ${data.name}`,
+    subject: `Neue Anfrage: ${project}, ${name}`,
     html: layout('Neue Anfrage über setify.de', `<table role="presentation" cellspacing="0" cellpadding="0" width="100%">${ownerRows}</table>`),
     text: ownerText,
   };
 
-  const senderBody = `<p style="font-size:15px;line-height:1.6;margin:0 0 16px">Hallo ${escapeHtml(data.name)},</p>
+  const senderBody = `<p style="font-size:15px;line-height:1.6;margin:0 0 16px">Hallo ${escapeHtml(data.firstName)},</p>
 <p style="font-size:15px;line-height:1.6;margin:0 0 16px">danke für deine Anfrage. Sie ist bei uns angekommen. Wir melden uns innerhalb eines Werktags persönlich bei dir.</p>
 <p style="font-size:15px;line-height:1.6;margin:0 0 16px">Zur Erinnerung, das hast du uns geschrieben:</p>
 <blockquote style="margin:0 0 16px;padding:12px 16px;border-left:2px solid #bdac89;background:#f3eee4;font-size:14px;line-height:1.6">${nl2br(data.message)}</blockquote>
@@ -110,7 +99,7 @@ export function buildContactEmails(data: ContactInput, env: MailEnv): { toOwner:
     to: [data.email],
     subject: 'Deine Anfrage bei setify',
     html: layout('Deine Anfrage ist angekommen.', senderBody),
-    text: `Hallo ${data.name},\n\ndanke für deine Anfrage. Sie ist bei uns angekommen. Wir melden uns innerhalb eines Werktags persönlich bei dir.\n\nDas hast du uns geschrieben:\n${data.message}\n\nBis bald,\nPhilipp von setify\n\nsetify, Philipp Walter, Linder Weg 16a, 51147 Köln, mail@setify.de`,
+    text: `Hallo ${data.firstName},\n\ndanke für deine Anfrage. Sie ist bei uns angekommen. Wir melden uns innerhalb eines Werktags persönlich bei dir.\n\nDas hast du uns geschrieben:\n${data.message}\n\nBis bald,\nPhilipp von setify\n\nsetify, Philipp Walter, Linder Weg 16a, 51147 Köln, mail@setify.de`,
   };
 
   return { toOwner, toSender };
