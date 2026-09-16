@@ -20,8 +20,8 @@ const { items, class: className = '' } = Astro.props;
       data-stack-index={i}
     >
       <div>
-        <p class="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-gold-500">{item.label}</p>
-        <h3 class="font-display mt-4 text-[1.5rem] leading-tight text-balance">{item.title}</h3>
+        <p class="text-label text-gold-500">{item.label}</p>
+        <h3 class="font-display mt-4 text-h4 leading-tight text-balance">{item.title}</h3>
         <p class="mt-4 text-sand-100/75">{item.text}</p>
       </div>
       <span class="gold-line mt-7 block" aria-hidden="true"></span>

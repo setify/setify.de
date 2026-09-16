@@ -16,11 +16,21 @@
   --font-display: 'Satoshi', 'Helvetica Neue', Arial, sans-serif;
   --font-sans: 'Switzer', system-ui, sans-serif;
 
+  /* Fliesstext kennt genau drei Groessen: Label, Small, Body.
+     Body steht im body-Selektor in global.css. */
+  --text-label: 0.75rem;
+  --text-small: 0.9375rem;
+  --text-body: 1.0625rem;
+
+  /* Display-Rollen. Jede steht fuer einen Zweck, nicht fuer einen Wert. */
   --text-display: clamp(3rem, 2rem + 5vw, 6rem);
   --text-h1: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
   --text-h2: clamp(2rem, 1.3rem + 2.6vw, 3.5rem);
   --text-h3: clamp(1.5rem, 1.2rem + 0.9vw, 2rem);
+  --text-h4: clamp(1.2rem, 1.05rem + 0.5vw, 1.4rem);
   --text-lead: clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+  --text-statement: clamp(1.5rem, 1rem + 2.2vw, 3.25rem);
+  --text-numeral: clamp(2.5rem, 1.6rem + 3vw, 4rem);
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }

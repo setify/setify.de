@@ -24,7 +24,7 @@ const isCurrent = (h: string) => h === Astro.url.pathname;
     <ul class="hidden items-center gap-6 lg:flex xl:gap-8">
       {site.nav.links.map((l) => (
         <li>
-          <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`relative whitespace-nowrap text-[0.9rem] font-medium transition-colors duration-300 ${linkColor} after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold-500 after:transition-[width] after:duration-500 hover:after:w-full ${isCurrent(l.href) ? 'after:w-full' : 'after:w-0'}`}>{l.label}</a>
+          <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`relative whitespace-nowrap text-small font-medium transition-colors duration-300 ${linkColor} after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold-500 after:transition-[width] after:duration-500 hover:after:w-full ${isCurrent(l.href) ? 'after:w-full' : 'after:w-0'}`}>{l.label}</a>
         </li>
       ))}
     </ul>
@@ -47,7 +47,7 @@ const isCurrent = (h: string) => h === Astro.url.pathname;
     </ul>
     <div data-nav-overlay-item>
       <Button href={href(site.nav.cta.href)} class="w-full">{site.nav.cta.label}</Button>
-      <p class="mt-6 text-sm text-paper-muted">{site.meta.email} · {site.meta.city}</p>
+      <p class="mt-6 text-small text-paper-muted">{site.meta.email} · {site.meta.city}</p>
     </div>
   </div>
 </header>

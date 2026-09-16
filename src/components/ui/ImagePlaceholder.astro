@@ -47,7 +47,7 @@ const fg = tone === 'dark' ? 'text-paper-muted' : 'text-ink-muted';
         <line x1="100%" y1="0" x2="0" y2="100%" stroke="#bdac89" stroke-opacity="0.3" />
       </svg>
       <div class={`relative z-10 flex w-full flex-col items-center justify-center gap-3 px-5 pt-6 text-center ${showPrompt && overlay ? 'pb-32' : 'pb-6'}`} aria-hidden="true">
-        <div class={`shrink-0 rounded-full border border-gold-500/40 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.14em] ${fg}`}>
+        <div class={`shrink-0 rounded-full border border-gold-500/40 px-4 py-2 text-label ${fg}`}>
           BILD: {label}, {ratio}
         </div>
         {prompt && (

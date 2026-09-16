@@ -18,10 +18,10 @@ const { work } = site;
           </div>
           <div class="mt-6 flex items-baseline justify-between gap-4">
             <h3 class="font-display text-h3">{item.client}</h3>
-            <span class="text-[0.75rem] font-semibold uppercase tracking-[0.14em] text-gold-500">{item.industry}</span>
+            <span class="text-label text-gold-500">{item.industry}</span>
           </div>
           <p class="mt-2 text-paper-muted">{item.text}</p>
-          <blockquote class="mt-4 border-l border-gold-500/40 pl-4 text-sm italic text-sand-100/70">{item.quote}</blockquote>
+          <blockquote class="mt-4 border-l border-gold-500/40 pl-4 text-small italic text-sand-100/70">{item.quote}</blockquote>
         </article>
       ))}
     </div>
@@ -29,9 +29,9 @@ const { work } = site;
     <div class="mt-32 grid gap-8 md:mt-44 md:grid-cols-3">
       {work.testimonials.map((t) => (
         <figure class="rounded-3xl border border-anthracite-800 bg-anthracite-900 p-8" data-reveal>
-          <span class="font-display text-[3rem] leading-none text-gold-500" aria-hidden="true">„</span>
+          <span class="font-display text-numeral leading-none text-gold-500" aria-hidden="true">„</span>
           <blockquote class="mt-2 text-sand-100/90">{t.quote}</blockquote>
-          <figcaption class="mt-6 text-sm text-paper-muted">{t.author}, {t.company}</figcaption>
+          <figcaption class="mt-6 text-small text-paper-muted">{t.author}, {t.company}</figcaption>
         </figure>
       ))}
     </div>

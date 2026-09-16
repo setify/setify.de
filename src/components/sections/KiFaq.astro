@@ -11,7 +11,7 @@ const { faq } = site.ki;
         <div data-accordion-item data-reveal>
           <h3>
             <button type="button" class="flex w-full items-center justify-between gap-6 py-6 text-left" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`ki-faq-panel-${i}`} id={`ki-faq-trigger-${i}`}>
-              <span class="font-display text-[1.35rem] leading-tight">{item.question}</span>
+              <span class="font-display text-h4 leading-tight">{item.question}</span>
               <span class="relative grid h-9 w-9 shrink-0 place-items-center rounded-full border border-gold-500/50 text-gold-500" aria-hidden="true">
                 <span class="absolute h-px w-3.5 bg-current"></span>
                 <span class="absolute h-3.5 w-px bg-current transition-transform duration-500" data-accordion-icon></span>

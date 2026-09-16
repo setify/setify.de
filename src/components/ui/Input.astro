@@ -15,7 +15,7 @@ const field =
   'peer w-full rounded-xl border border-anthracite-950/15 bg-sand-50 px-4 py-3.5 text-anthracite-950 placeholder:text-ink-muted/60 transition-colors duration-300 focus:border-gold-700 focus:outline-none aria-[invalid=true]:border-red-700';
 ---
 <div class="group/field flex flex-col gap-2">
-  <label for={id} class="text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-ink-muted">
+  <label for={id} class="text-label text-ink-muted">
     {label}{required && <span class="text-gold-700"> *</span>}
   </label>
   {type === 'textarea' ? (
@@ -28,5 +28,5 @@ const field =
   ) : (
     <input id={id} name={name} type={type} required={required} autocomplete={autocomplete} placeholder={placeholder} class={field} />
   )}
-  <p class="min-h-[1.25rem] text-[0.8rem] text-red-700" data-error-for={name} aria-live="polite"></p>
+  <p class="min-h-[1.25rem] text-small text-red-700" data-error-for={name} aria-live="polite"></p>
 </div>

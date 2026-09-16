@@ -11,7 +11,7 @@ const { process } = site.ki;
     <ol class="mt-16 grid gap-6 md:grid-cols-3">
       {process.steps.map((step) => (
         <li class="relative rounded-3xl border border-anthracite-800 bg-anthracite-950/80 p-8 backdrop-blur-sm" data-reveal>
-          <span class="font-display text-[3.5rem] leading-none font-light text-gold-700">{step.number}</span>
+          <span class="font-display text-numeral leading-none font-light text-gold-700">{step.number}</span>
           <h3 class="font-display text-h3 mt-5">{step.title}</h3>
           <p class="mt-4 text-paper-muted">{step.text}</p>
         </li>

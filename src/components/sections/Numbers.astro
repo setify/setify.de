@@ -6,10 +6,10 @@ const { numbers } = site;
   <div class="container grid grid-cols-2 gap-10 md:grid-cols-4">
     {numbers.items.map((n) => (
       <div data-reveal>
-        <p class="font-display text-[clamp(2.5rem,1.5rem+3vw,4.5rem)] leading-none text-gold-700">
+        <p class="font-display text-numeral leading-none text-gold-700">
           <span data-counter data-value={n.value} data-suffix={n.suffix}>{n.value}{n.suffix}</span>
         </p>
-        <p class="mt-3 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-ink-muted">{n.label}</p>
+        <p class="mt-3 text-label text-ink-muted">{n.label}</p>
       </div>
     ))}
   </div>
