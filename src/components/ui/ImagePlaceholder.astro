@@ -4,7 +4,7 @@ import type { ImageMetadata } from 'astro';
 
 interface Props {
   id: string;
-  ratio: '4:5' | '3:2' | '4:3' | '3:4' | '16:9' | '1:1';
+  ratio: '4:5' | '3:2' | '4:3' | '3:4' | '16:9' | '21:9' | '1:1';
   label: string;
   alt: string;
   /** Bildbeschreibung fuer die Produktion, wird im Platzhalter mit ausgegeben. */
@@ -24,7 +24,7 @@ interface Props {
 const { id, ratio, label, alt, prompt, overlay = false, fill = false, tone = 'dark', radius = '2xl', class: className = '', parallax = false } = Astro.props;
 const rounded = radius === 'inherit' ? 'rounded-[inherit]' : 'rounded-2xl';
 
-const ratios = { '4:5': '4 / 5', '3:2': '3 / 2', '4:3': '4 / 3', '3:4': '3 / 4', '16:9': '16 / 9', '1:1': '1 / 1' };
+const ratios = { '4:5': '4 / 5', '3:2': '3 / 2', '4:3': '4 / 3', '3:4': '3 / 4', '16:9': '16 / 9', '21:9': '21 / 9', '1:1': '1 / 1' };
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpg,jpeg,png,webp,avif}', { eager: true });
 const match = Object.entries(images).find(([path]) => path.replace(/^.*\//, '').replace(/\.[^.]+$/, '') === id);
 const image = match?.[1].default;

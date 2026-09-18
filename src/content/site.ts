@@ -1,5 +1,5 @@
 export type Tone = 'dark' | 'sand';
-export type Ratio = '4:5' | '3:2' | '4:3' | '3:4' | '16:9' | '1:1';
+export type Ratio = '4:5' | '3:2' | '4:3' | '3:4' | '16:9' | '21:9' | '1:1';
 
 /** `prompt` ist die Bildbeschreibung fuer die Produktion. Sie wird nur im
  *  Platzhalter angezeigt, solange unter src/assets/images/ kein Bild mit
@@ -329,7 +329,7 @@ export const site: SiteContent = {
       title: 'Deine Daten bleiben deine Daten.',
       text: 'Der häufigste Grund, warum KI im Mittelstand liegen bleibt, ist nicht fehlender Nutzen. Es ist die Unsicherheit, wo die Daten landen. Deshalb klären wir das vor der ersten Zeile Code.',
       points: ['Verarbeitung in der EU, wo immer es geht', 'Keine Weitergabe deiner Inhalte an Modelltraining', 'Auftragsverarbeitungsvertrag inklusive', 'Auf Wunsch Modelle, die bei dir im Haus laufen'],
-      image: { id: 'ki-datenschutz', ratio: '16:9', label: 'Datenschutz', alt: 'Moderner Serverschrank hinter Glas in einem dunklen Technikraum, warm in Gold ausgeleuchtet', prompt: 'Querformat 16:9, realistische Architektur- und Technikfotografie, dunkel und hochwertig, Low-Key aber gut durchgezeichnet. Ein moderner Serverschrank hinter Glas in einem aufgeraeumten Technikraum, praezise gefuehrte Kabel, gebuerstete Metallflaechen, Beton und dunkles Glas. Ausgeleuchtet von warmen goldenen Lichtleisten und Statuspunkten, ausdruecklich keine blauen oder cyanfarbenen LEDs. Menschenleer, sehr aufgeraeumt, kein Kabelchaos. Leichte Fluchtlinie in die Tiefe, rechts das Technikelement, links eine ruhige dunkle Flaeche fuer Text. Palette: Anthrazit #1a1b1e und #232428, Stahlgrau, Goldakzent #bdac89 als Lichtkante und Reflex auf Metall. 24mm, f/4, scharfe Kanten, feiner Kontrast, moderne High-Tech-Anmutung. Kein altes Buero, keine Schreibtischlampe, keine Schloss- oder Schild-Symbolik, keine Bildschirme mit lesbarem Inhalt, keine Menschen, keine Logos, kein Neon, kein Teal-Orange-Grading.' },
+      image: { id: 'ki-datenschutz', ratio: '21:9', label: 'Datenschutz', alt: 'Reihe moderner Serverschraenke hinter Glas in einem dunklen Betonraum, warm in Gold ausgeleuchtet', prompt: 'Querformat 21:9, realistische Architektur- und Technikfotografie, dunkel und hochwertig, Low-Key aber gut durchgezeichnet. Ein moderner Serverschrank hinter Glas in einem aufgeraeumten Technikraum, praezise gefuehrte Kabel, gebuerstete Metallflaechen, Beton und dunkles Glas. Ausgeleuchtet von warmen goldenen Lichtleisten und Statuspunkten, ausdruecklich keine blauen oder cyanfarbenen LEDs. Menschenleer, sehr aufgeraeumt, kein Kabelchaos. Leichte Fluchtlinie in die Tiefe, rechts das Technikelement, links eine ruhige dunkle Flaeche fuer Text. Palette: Anthrazit #1a1b1e und #232428, Stahlgrau, Goldakzent #bdac89 als Lichtkante und Reflex auf Metall. 24mm, f/4, scharfe Kanten, feiner Kontrast, moderne High-Tech-Anmutung. Kein altes Buero, keine Schreibtischlampe, keine Schloss- oder Schild-Symbolik, keine Bildschirme mit lesbarem Inhalt, keine Menschen, keine Logos, kein Neon, kein Teal-Orange-Grading.' },
     },
     faq: {
       eyebrow: 'Fragen',
