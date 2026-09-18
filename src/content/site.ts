@@ -92,7 +92,7 @@ export const site: SiteContent = {
     lead: 'setify baut digitale Auftritte für Unternehmen, die mehr wollen als Baukasten. Konzept, Design und Code aus einer Hand, seit über 20 Jahren.',
     primary: { label: 'Projekt anfragen', href: '#kontakt' },
     secondary: { label: 'Referenzen ansehen', href: '#referenzen' },
-    image: { id: 'hero-visual', ratio: '4:5', label: 'Hero-Visual', alt: 'Arbeitsplatz mit Website-Entwurf auf großem Bildschirm' },
+    image: { id: 'hero-visual', ratio: '4:5', label: 'Hero-Visual', alt: 'Dunkler Arbeitsplatz bei Nacht: Person am Schreibtisch vor einem grossen Bildschirm mit einem Website-Entwurf, warmes Licht einer Messinglampe', prompt: 'Hochformat 4:5, realistische Fotografie, dunkle edle Stimmung, Low-Key aber sauber durchgezeichnet, kein Schwarz ohne Zeichnung. Ein Arbeitsplatz am spaeten Abend: eine Person sitzt leicht von hinten und seitlich angeschnitten vor einem grossen Bildschirm, auf dem unscharf ein dunkler Website-Entwurf mit klarer Spaltenstruktur zu sehen ist, Text unlesbar. Auf dem Holztisch eine Messing-Schreibtischlampe als warme Lichtquelle, ein aufgeschlagenes Skizzenbuch, ein Stift. Im Hintergrund unscharf eine dunkle Betonwand und ein Fenster mit wenigen warmen Stadtlichtern. Ruhige Komposition, viel dunkle Flaeche oben und unten. Palette: Anthrazit #1a1b1e und #232428, Blaumetall #4a5f7c im Schattenlicht, Goldakzent #bdac89 als Messingreflex an Lampe und Bildschirmkante. 50mm, f/2.0, weiches Licht auf dem Gesicht im Profil, kein Kamerablick, natuerliche Hauttoene, korrekte Haende. Nur eine Person. Keine blauen oder cyanfarbenen Bildschirmfarben, kein Neon, keine Code-Zeilen, keine Logos, kein Teal-Orange-Grading, kein Hochglanz-Stockfoto.' },
   },
   trust: {
     label: 'Vertrauen uns',
