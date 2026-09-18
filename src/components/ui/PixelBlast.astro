@@ -1,0 +1,8 @@
+---
+/** Pixel-Blast-Hintergrund auf WebGL2. Rein dekorativ. */
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<div class={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} data-motion="pixelblast" aria-hidden="true">
+  <canvas class="h-full w-full" data-pixel-canvas></canvas>
+</div>
