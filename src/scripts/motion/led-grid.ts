@@ -96,8 +96,9 @@ export default function ledGrid(root: HTMLElement): () => void {
   ro.observe(root);
   resize();
 
-  // Ohne Animation ein ruhiges, gleichmaessiges Raster zeichnen.
-  if (!motionEnabled()) {
+  // Ohne Animation und auf kleinen Geraeten ein ruhiges, gleichmaessiges
+  // Raster zeichnen, statt dauerhaft zu rechnen.
+  if (!motionEnabled() || !isDesktop()) {
     ctx.clearRect(0, 0, w, h);
     for (const led of leds) {
       ctx.fillStyle = `rgba(189,172,137,${FALLBACK_ALPHA})`;

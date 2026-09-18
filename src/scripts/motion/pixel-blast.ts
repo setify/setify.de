@@ -288,8 +288,11 @@ export default function pixelBlast(root: HTMLElement): () => void {
   resize();
 
   // Ohne Animation ein einzelnes Standbild zeichnen.
-  if (!motionEnabled()) {
+  // Auf kleinen Geraeten nur ein Standbild: die Schleife ist reine Dekoration
+  // und kostet dort spuerbar Rechenzeit.
+  if (!motionEnabled() || !desktop) {
     render(performance.now());
+    canvas.setAttribute('data-geladen', '');
     return () => {
       ro.disconnect();
       gl.getExtension('WEBGL_lose_context')?.loseContext();
@@ -322,6 +325,7 @@ export default function pixelBlast(root: HTMLElement): () => void {
   root.parentElement?.addEventListener('pointerdown', onPointerDown, { passive: true });
 
   render(performance.now());
+  canvas.setAttribute('data-geladen', '');
   play();
 
   return () => {

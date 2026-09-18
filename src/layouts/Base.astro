@@ -3,6 +3,8 @@ import '@/styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import Meta from '@/components/seo/Meta.astro';
 import Preloader from '@/components/layout/Preloader.astro';
+import satoshi from '@/assets/fonts/Satoshi-Variable.woff2?url';
+import switzer from '@/assets/fonts/Switzer-Variable.woff2?url';
 
 interface Props {
   title: string;
@@ -19,6 +21,10 @@ const { title, description, tone = 'dark', noindex } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#1a1b1e" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Beide Schriften stehen im ersten Bildschirm. Ohne Vorladen faengt der
+         Browser erst nach dem CSS damit an, und die Ueberschrift springt. -->
+    <link rel="preload" href={satoshi} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={switzer} as="font" type="font/woff2" crossorigin />
     <Meta title={title} description={description} noindex={noindex} />
     <script is:inline>
       document.documentElement.classList.add('js');

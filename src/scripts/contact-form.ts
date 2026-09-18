@@ -1,4 +1,4 @@
-import { parseContactInput } from '@/lib/contact-schema';
+import { validateContact } from '@/lib/contact-rules';
 
 type ApiResponse = { ok: true; dryRun?: boolean } | { ok: false; fieldErrors?: Record<string, string>; message?: string };
 
@@ -34,8 +34,7 @@ function aktualisiereBanner(form: HTMLFormElement): void {
 }
 
 function alleFehler(form: HTMLFormElement): Record<string, string> {
-  const parsed = parseContactInput(werte(form));
-  return parsed.ok ? {} : parsed.fieldErrors;
+  return validateContact(werte(form));
 }
 
 function showErrors(form: HTMLFormElement, errors: Record<string, string>): void {
@@ -129,10 +128,10 @@ export function initContactForm(root: HTMLElement): () => void {
     setBanner(form, null);
 
     const raw = werte(form);
-    const parsed = parseContactInput(raw);
-    if (!parsed.ok) {
-      showErrors(form, parsed.fieldErrors);
-      const anzahl = Object.keys(parsed.fieldErrors).length;
+    const fehler = validateContact(raw);
+    if (Object.keys(fehler).length > 0) {
+      showErrors(form, fehler);
+      const anzahl = Object.keys(fehler).length;
       setBanner(form, anzahl === 1 ? 'Ein Feld fehlt noch.' : `${anzahl} Felder fehlen noch.`);
       return;
     }

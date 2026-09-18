@@ -144,6 +144,7 @@ export default function heroGradient(root: HTMLElement): () => void {
 
   const fallback = () => {
     canvas.style.background = FALLBACK_BG;
+    canvas.setAttribute('data-geladen', '');
   };
 
   if (!motionEnabled()) {
@@ -209,7 +210,7 @@ export default function heroGradient(root: HTMLElement): () => void {
   gl.uniform1f(u('uZoom'), 0.7);
   gl.uniform1f(u('uHeight'), 6.5);
   gl.uniform1f(u('uFogDepth'), 24);
-  gl.uniform1f(u('uSteps'), desktop ? 90 : 45);
+  gl.uniform1f(u('uSteps'), desktop ? 90 : 32);
   gl.uniform1f(u('uBrightness'), 0.46);
   gl.uniform1f(u('uOpacity'), 1.0);
   gl.uniform1f(u('uGrainIntensity'), 0.04);
@@ -311,6 +312,7 @@ export default function heroGradient(root: HTMLElement): () => void {
 
   resize();
   render(performance.now());
+  canvas.setAttribute('data-geladen', '');
   play();
 
   return () => {

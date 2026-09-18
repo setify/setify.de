@@ -13,6 +13,7 @@ import accordion from './accordion';
 import magnetic from './magnetic';
 import parallax from './parallax';
 import iconDraw from './icon-draw';
+import imageFade from './image-fade';
 import sparkles from './sparkles';
 import textGenerate from './text-generate';
 import cardStack from './card-stack';
@@ -69,24 +70,59 @@ function onAnchorClick(event: MouseEvent): void {
   scrollToHash(hash);
 }
 
+/** Laeuft, sobald der Hauptthread Luft hat, spaetestens nach 1,2 Sekunden. */
+function beiGelegenheit(fn: () => void): void {
+  const ric = (window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+  if (ric) ric(fn, { timeout: 1200 });
+  else window.setTimeout(fn, 200);
+}
+
+function starteModule(root: HTMLElement): void {
+  const names = root.dataset.motion!.split(/\s+/);
+  for (const name of names) {
+    const init = modules.get(name);
+    if (!init) continue;
+    const cleanup = init(root);
+    if (cleanup) cleanups.push(cleanup);
+  }
+}
+
 function setup(): void {
   cleanups.forEach((fn) => fn());
   cleanups = [];
 
   cleanups.push(initLenis());
-  cleanups.push(reveals(document.body) ?? (() => {}));
-  cleanups.push(magnetic(document.body) ?? (() => {}));
-  cleanups.push(parallax(document.body) ?? (() => {}));
-  cleanups.push(iconDraw(document.body) ?? (() => {}));
 
-  document.querySelectorAll<HTMLElement>('[data-motion]').forEach((root) => {
-    const names = root.dataset.motion!.split(/\s+/);
-    for (const name of names) {
-      const init = modules.get(name);
-      if (!init) continue;
-      const cleanup = init(root);
-      if (cleanup) cleanups.push(cleanup);
-    }
+  // Nur der erste Bildschirm wird sofort aufgebaut. SplitText zerlegt jede
+  // Ueberschrift in Zeilen und Woerter, das ist auf dem Handy teuer.
+  const grenze = window.innerHeight * 1.25;
+  const imBild = (el: HTMLElement) => el.getBoundingClientRect().top < grenze;
+
+  cleanups.push(reveals(document.body, imBild) ?? (() => {}));
+  cleanups.push(imageFade(document.body) ?? (() => {}));
+
+  // Alles auf einmal zu starten ergab auf dem Handy eine einzige Aufgabe von
+  // ueber einer Sekunde, in der die Seite nicht auf Eingaben reagierte.
+  // Deshalb zuerst nur, was im ersten Bild steht, der Rest folgt, sobald der
+  // Hauptthread frei ist.
+  const alle = Array.from(document.querySelectorAll<HTMLElement>('[data-motion]'));
+  const zuerst = alle.filter(imBild);
+  const spaeter = alle.filter((el) => !zuerst.includes(el));
+
+  // Der Hero-Hintergrund ist WebGL. Das Uebersetzen des Shaders blockiert
+  // kurz, und er liegt hinter dem Text, deshalb laeuft er in der zweiten
+  // Schicht mit und blendet sich per CSS ein.
+  const schwer = (el: HTMLElement) => /\b(hero|pixelblast)\b/.test(el.dataset.motion ?? '');
+  zuerst.filter((el) => !schwer(el)).forEach(starteModule);
+
+  beiGelegenheit(() => {
+    cleanups.push(reveals(document.body) ?? (() => {}));
+    cleanups.push(magnetic(document.body) ?? (() => {}));
+    cleanups.push(parallax(document.body) ?? (() => {}));
+    cleanups.push(iconDraw(document.body) ?? (() => {}));
+    zuerst.filter(schwer).forEach(starteModule);
+    spaeter.forEach(starteModule);
+    ScrollTrigger.refresh();
   });
 
   document.addEventListener('click', onAnchorClick, { capture: true });
