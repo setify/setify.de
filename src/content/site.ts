@@ -38,7 +38,7 @@ export interface SiteContent {
   manifest: { text: string; highlights: string[] };
   services: { eyebrow: string; title: string; lead: string; items: { number: string; title: string; text: string; points: string[]; image: ImageRef }[] };
   process: { eyebrow: string; title: string; steps: { number: string; title: string; text: string; icon: string; image: ImageRef }[] };
-  work: { eyebrow: string; title: string; items: { client: string; industry: string; text: string; quote: string; image: ImageRef }[]; testimonials: { quote: string; author: string; company: string; pending?: boolean }[] };
+  work: { eyebrow: string; title: string; items: { client: string; industry: string; text: string; quote: string; image: ImageRef }[]; testimonials: { quote: string; company: string; logo?: string; pending?: boolean }[] };
   numbers: { items: { value: number; suffix: string; label: string }[] };
   pricing: { eyebrow: string; title: string; note: string; plans: { name: string; price: string; prefix: string; period: string; text: string; features: string[]; cta: string; recommended: boolean }[] };
   industries: { eyebrow: string; title: string; items: { title: string; text: string; image: ImageRef }[] };
@@ -128,12 +128,15 @@ export const site: SiteContent = {
       { client: 'Weinhof Rudolstadt', industry: 'Gastro & Event', text: 'Genuss und Veranstaltungen, stimmungsvoll inszeniert.', quote: 'Zitat zur Freigabe: Die Seite fühlt sich an wie ein Abend bei uns im Weinhof.', image: { id: 'work-weinhof', ratio: '4:3', label: 'Screenshot Weinhof Rudolstadt', alt: 'Startseite der Weinhof Rudolstadt Website' } },
       { client: 'Berg-Loft Styles', industry: 'Lifestyle', text: 'Ästhetik mit Liebe zum Detail, die sich vom Wettbewerb abhebt.', quote: 'Zitat zur Freigabe: Jedes Detail sitzt. Genau so wollten wir wahrgenommen werden.', image: { id: 'work-bergloft', ratio: '4:3', label: 'Screenshot Berg-Loft Styles', alt: 'Startseite der Berg-Loft Styles Website' } },
     ],
-    // `pending` markiert Zitate, die noch nicht vom Kunden freigegeben sind.
-    // Der Hinweis stand bisher im Zitattext selbst und wurde mit ausgegeben.
+    // Wortlaut von setify.de uebernommen. `logo` verweist auf den Dateinamen
+    // unter src/assets/logos/. `pending` bliebe fuer noch nicht freigegebene
+    // Stimmen, diese fuenf stehen bereits oeffentlich auf der alten Seite.
     testimonials: [
-      { quote: 'Schnell, ehrlich, und das Ergebnis spricht für sich.', author: 'Marcel', company: 'Kunde', pending: true },
-      { quote: 'Wir hatten einen Ansprechpartner und keine Überraschungen bei den Kosten.', author: 'Geschäftsführung', company: 'Tivendo', pending: true },
-      { quote: 'Die Betreuung nach dem Launch ist Gold wert.', author: 'Inhaberin', company: 'Blumen Strunck', pending: true },
+      { quote: 'Wir arbeiten seit Jahren erfolgreich zusammen und konnten unzählige Onlineshops gemeinsam realisieren, die sowohl Besitzern und Kunden immer gefallen haben.', company: 'Tivendo', logo: 'tivendo' },
+      { quote: 'Wir konnten uns durch unseren neuen Internetauftritt von der Masse an Wettbewerbern absetzen und unsere Kunden lieben unsere neue Website. Sie versprüht die Qualität unseres Geschäfts.', company: 'Blumen Strunck', logo: 'strunck' },
+      { quote: 'Unser Onlineshop ist einfach gelungen. Die Zusammenarbeit und das fertige Ergebnis waren wirklich perfekt.', company: 'Weinhof Rudolstadt', logo: 'weinhof-rudolstadt' },
+      { quote: 'Die neue Website mit Shop ist einfach klasse geworden. Unsere Kunden lieben den Shop und wir sind mehr als zufrieden mit dem Ergebnis.', company: 'Berg-Loft Styles', logo: 'berg-loft-styles' },
+      { quote: 'Man spürt die Expertise, die in unsere eigenen Ideen mit eingeflossen ist und unsere Projekte wirklich rund gemacht haben.', company: 'Marcel', logo: 'marcel' },
     ],
   },
   numbers: {
