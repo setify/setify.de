@@ -1,45 +1,65 @@
 ---
 import { site } from '@/content/site';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
-import KiServiceCard from '@/components/ui/KiServiceCard.astro';
 import Icon, { type IconName } from '@/components/ui/Icon.astro';
 const { services } = site.ki;
 ---
 <!--
-  Einziger heller Abschnitt der Seite. Acht dunkle Sektionen hintereinander
-  verschwimmen zu einer Flaeche, der Helligkeitswechsel setzt hier die Zaesur
-  und laesst die Leistungen als eigenen Block lesen.
+  Einziger heller Abschnitt der Seite und zugleich der einzige, der quer
+  laeuft: ab 1024px haelt die Sektion am oberen Rand und die vier Bausteine
+  ziehen beim Scrollen nach links. Dieselbe Mechanik wie im Prozess der
+  Startseite, deshalb dasselbe Modul und dieselben Datenattribute.
+  Darunter stehen die Karten schlicht untereinander.
 -->
-<section id="ki-leistungen" class="section section--sand relative overflow-hidden">
+<section id="ki-leistungen" class="section--sand relative overflow-hidden py-24 lg:py-28" data-motion="process">
   <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
-  <div class="gold-line absolute inset-x-0 bottom-0" aria-hidden="true"></div>
 
-  <div class="container grid gap-14 lg:grid-cols-[0.8fr_1.55fr] lg:gap-16">
-    <div class="lg:sticky lg:top-32 lg:self-start">
-      <SectionHeading tone="sand" eyebrow={services.eyebrow} title={services.title} lead={services.lead} />
-      <ul class="mt-10 hidden flex-col gap-3 lg:flex" aria-hidden="true">
-        {services.items.map((item) => (
-          <li class="flex items-center gap-3 text-small text-ink-muted">
-            <Icon name={item.icon as IconName} size={16} class="text-gold-700" />
-            {item.title}
-          </li>
-        ))}
-      </ul>
+  <!-- Kopf zweispaltig: gepinnt zaehlt jede Zeile Hoehe, die Karte muss
+       darunter noch vollstaendig ins Bild passen. -->
+  <div class="container">
+    <div class="grid gap-6 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-16">
+      <SectionHeading tone="sand" eyebrow={services.eyebrow} title={services.title} />
+      <p class="max-w-[46ch] text-ink-muted lg:pb-2" data-reveal>{services.lead}</p>
     </div>
+    <div class="relative mt-10 h-px w-full bg-anthracite-950/10" aria-hidden="true">
+      <div class="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-gold-700" data-process-progress></div>
+    </div>
+  </div>
 
-    <!-- Zweite Spalte laeuft versetzt, damit die vier Karten kein Raster bilden. -->
-    <div class="grid gap-6 sm:grid-cols-2">
-      {services.items.map((item, i) => (
-        <KiServiceCard
-          number={item.number}
-          title={item.title}
-          text={item.text}
-          points={item.points}
-          icon={item.icon as IconName}
-          tone="sand"
-          class={`glow-card glow-card--sand ${i % 2 === 1 ? 'sm:mt-14' : ''}`}
-        />
+  <div class="mt-10 lg:mt-14">
+    <ol class="container flex flex-col gap-6 lg:w-max lg:max-w-none lg:flex-row lg:gap-8" data-process-track>
+      {services.items.map((item) => (
+        <li
+          class="glow-card glow-card--sand group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-anthracite-950/10 bg-sand-50 p-8 lg:h-[24rem] lg:w-[40rem] lg:shrink-0 lg:p-11"
+          data-process-card
+          data-reveal
+        >
+          <div class="flex items-start justify-between gap-6">
+            <span class="font-display text-numeral font-light leading-none text-gold-700">{item.number}</span>
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold-700/25 text-gold-700 transition-colors duration-500 group-hover:border-gold-700/60">
+              <Icon name={item.icon as IconName} size={22} animate />
+            </span>
+          </div>
+
+          <div class="mt-8 lg:mt-0 lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-10">
+            <div>
+              <h3 class="font-display text-h3 text-balance">{item.title}</h3>
+              <p class="mt-4 max-w-[38ch] text-ink-muted">{item.text}</p>
+            </div>
+
+            <ul class="mt-7 flex flex-col gap-3 text-small lg:mt-0">
+              {item.points.map((p) => (
+                <li class="flex gap-3">
+                  <svg class="mt-1.5 h-2.5 w-2.5 shrink-0 text-gold-700" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                    <path d="M1 5h8M5 1v8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                  </svg>
+                  <span class="text-anthracite-950/85">{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
       ))}
-    </div>
+    </ol>
   </div>
 </section>
