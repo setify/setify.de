@@ -1,0 +1,18 @@
+---
+import { site } from '@/content/site';
+import TextGenerate from '@/components/ui/TextGenerate.astro';
+const { hero } = site.ki.page;
+---
+<!-- Schmales Band zwischen Hero und Leistungen: eine Aussage, sonst nichts. -->
+<section class="section--dark relative overflow-hidden py-20 md:py-28">
+  <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
+  <div class="gold-line absolute inset-x-0 bottom-0" aria-hidden="true"></div>
+  <div class="ki-beam pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[52rem] -translate-x-1/2 -translate-y-1/2 opacity-30 [filter:blur(140px)] will-change-transform" aria-hidden="true"
+       style="background: radial-gradient(ellipse, rgba(189,172,137,0.3), transparent 70%)"></div>
+
+  <div class="container relative">
+    <p class="mx-auto max-w-4xl text-center font-display text-statement text-gold-300">
+      <TextGenerate text={hero.statement} />
+    </p>
+  </div>
+</section>

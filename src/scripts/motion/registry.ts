@@ -19,6 +19,8 @@ import cardStack from './card-stack';
 import glowingStars from './glowing-stars';
 import ledGrid from './led-grid';
 import pixelBlast from './pixel-blast';
+import kiConsole from './ki-console';
+import kiRail from './ki-rail';
 import quoteStage from './quote-stage';
 import stickyBanner from './sticky-banner';
 
@@ -44,6 +46,8 @@ registerMotion('cardstack', cardStack);
 registerMotion('stars', glowingStars);
 registerMotion('ledgrid', ledGrid);
 registerMotion('pixelblast', pixelBlast);
+registerMotion('kiconsole', kiConsole);
+registerMotion('kirail', kiRail);
 registerMotion('quotes', quoteStage);
 registerMotion('banner', stickyBanner);
 

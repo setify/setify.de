@@ -15,12 +15,19 @@ export default function cardStack(root: HTMLElement): () => void {
   const cards = [...root.querySelectorAll<HTMLElement>('[data-stack-card]')];
   if (cards.length < 2) return () => {};
 
+  // Die Marken der Liste stehen ausserhalb des Stapels, deshalb ueber die
+  // Sektion suchen. Sie zeigen nur an, welche Karte vorne liegt.
+  const marken = [...(root.closest('section') ?? root).querySelectorAll<HTMLElement>('[data-stack-dot]')];
+
   const place = (order: HTMLElement[], animate: boolean) => {
     order.forEach((card, i) => {
       const props = { y: i * OFFSET_PX, scale: 1 - i * SCALE_STEP, zIndex: order.length - i };
       if (animate) gsap.to(card, { ...props, duration: 0.6, ease: 'power3.out' });
       else gsap.set(card, props);
     });
+
+    const vorn = Number(order[0]?.dataset.stackIndex ?? '0');
+    marken.forEach((m, i) => m.toggleAttribute('data-aktiv', i === vorn));
   };
 
   let order = [...cards];

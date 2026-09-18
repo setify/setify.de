@@ -7,10 +7,10 @@ const { cta } = site.ki;
   <div class="pointer-events-none absolute left-1/2 top-1/2 h-[42rem] w-[42rem] -translate-x-1/2 -translate-y-1/2 opacity-45 [filter:blur(120px)]" aria-hidden="true"
        style="background: radial-gradient(circle, rgba(189,172,137,0.4), rgba(122,106,76,0.15) 45%, transparent 70%)"></div>
   <div class="container relative">
-    <div class="mx-auto max-w-3xl rounded-[2rem] border border-gold-500/20 bg-anthracite-900/70 px-8 py-14 text-center backdrop-blur-sm sm:px-14" data-reveal>
-      <h2 class="font-display text-h2 text-balance">{cta.title}</h2>
-      <p class="text-lead mx-auto mt-6 max-w-xl text-paper-muted">{cta.text}</p>
-      <div class="mt-10 flex justify-center">
+    <div class="glow-card mx-auto max-w-3xl overflow-hidden rounded-[2rem] border border-gold-500/20 bg-anthracite-900/70 px-8 py-16 text-center backdrop-blur-sm sm:px-14" data-reveal>
+      <h2 class="font-display text-h2 relative text-balance">{cta.title}</h2>
+      <p class="text-lead relative mx-auto mt-6 max-w-xl text-paper-muted">{cta.text}</p>
+      <div class="relative mt-10 flex justify-center">
         <Button href={cta.primary.href} magnetic>{cta.primary.label}</Button>
       </div>
     </div>

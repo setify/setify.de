@@ -2,14 +2,43 @@
 import { site } from '@/content/site';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import KiServiceCard from '@/components/ui/KiServiceCard.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
 const { services } = site.ki;
 ---
-<section id="ki-leistungen" class="section section--dark">
-  <div class="container">
-    <SectionHeading tone="dark" eyebrow={services.eyebrow} title={services.title} lead={services.lead} />
-    <div class="mt-16 grid gap-6 md:grid-cols-2">
-      {services.items.map((item) => (
-        <KiServiceCard number={item.number} title={item.title} text={item.text} points={item.points} icon={item.icon as any} />
+<!--
+  Einziger heller Abschnitt der Seite. Acht dunkle Sektionen hintereinander
+  verschwimmen zu einer Flaeche, der Helligkeitswechsel setzt hier die Zaesur
+  und laesst die Leistungen als eigenen Block lesen.
+-->
+<section id="ki-leistungen" class="section section--sand relative overflow-hidden">
+  <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
+  <div class="gold-line absolute inset-x-0 bottom-0" aria-hidden="true"></div>
+
+  <div class="container grid gap-14 lg:grid-cols-[0.8fr_1.55fr] lg:gap-16">
+    <div class="lg:sticky lg:top-32 lg:self-start">
+      <SectionHeading tone="sand" eyebrow={services.eyebrow} title={services.title} lead={services.lead} />
+      <ul class="mt-10 hidden flex-col gap-3 lg:flex" aria-hidden="true">
+        {services.items.map((item) => (
+          <li class="flex items-center gap-3 text-small text-ink-muted">
+            <Icon name={item.icon as IconName} size={16} class="text-gold-700" />
+            {item.title}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Zweite Spalte laeuft versetzt, damit die vier Karten kein Raster bilden. -->
+    <div class="grid gap-6 sm:grid-cols-2">
+      {services.items.map((item, i) => (
+        <KiServiceCard
+          number={item.number}
+          title={item.title}
+          text={item.text}
+          points={item.points}
+          icon={item.icon as IconName}
+          tone="sand"
+          class={`glow-card glow-card--sand ${i % 2 === 1 ? 'sm:mt-14' : ''}`}
+        />
       ))}
     </div>
   </div>

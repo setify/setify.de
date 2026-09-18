@@ -20,7 +20,11 @@ export interface KiContent {
   navLabel: string;
   banner: { text: string; cta: { label: string; href: string }; dismissLabel: string };
   teaser: { eyebrow: string; title: string; titleAccent: string; lead: string; cardIds: string[]; cta: { label: string; href: string } };
-  page: { meta: { title: string; description: string }; hero: { eyebrow: string; title: string; titleAccent: string; statement: string; lead: string; primary: { label: string; href: string }; secondary: { label: string; href: string } } };
+  page: {
+    meta: { title: string; description: string };
+    hero: { eyebrow: string; title: string; titleAccent: string; statement: string; lead: string; primary: { label: string; href: string }; secondary: { label: string; href: string } };
+    console: { label: string; runs: { prompt: string; steps: string[]; result: string; time: string }[] };
+  };
   services: { eyebrow: string; title: string; lead: string; items: KiServiceCard[] };
   useCases: { eyebrow: string; title: string; lead: string; items: KiUseCase[] };
   process: { eyebrow: string; title: string; steps: KiStep[] };
@@ -234,6 +238,23 @@ export const site: SiteContent = {
         lead: 'Wir sind seit über 20 Jahren in den Abläufen mittelständischer Betriebe unterwegs. Das ist der Grund, warum wir bei KI nicht mit dem Werkzeug anfangen, sondern mit der Frage, wo bei dir tatsächlich Zeit verloren geht.',
         primary: { label: 'Erstgespräch vereinbaren', href: '#kontakt' },
         secondary: { label: 'Anwendungsfälle ansehen', href: '#ki-anwendungen' },
+      },
+      console: {
+        label: 'So sieht das im Alltag aus',
+        runs: [
+          {
+            prompt: 'Aus dem Aufmaß ein Angebot machen: 42 m² Eiche, Verlegung, Sockelleisten.',
+            steps: ['Aufmaß gelesen', 'Preise aus der Kalkulation geholt', 'Text im Ton des Betriebs geschrieben', 'Zur Freigabe an dich'],
+            result: 'Angebot liegt fertig im Entwurf.',
+            time: '4 Sekunden statt 40 Minuten',
+          },
+          {
+            prompt: 'Die Anfragen von heute sortieren und die dringenden zusammenfassen.',
+            steps: ['31 Mails gelesen', 'Nach Thema einsortiert', 'Vier dringende zusammengefasst', 'An die richtige Person übergeben'],
+            result: 'Zusammenfassung liegt im Teamkanal.',
+            time: '12 Sekunden statt 2 Stunden',
+          },
+        ],
       },
     },
     services: {
