@@ -243,6 +243,57 @@ html.js.motion-ready [data-icon='draw'].is-drawn > *:nth-child(n+4) { animation-
   html.js [data-icon='draw'] > * { stroke-dasharray: none; stroke-dashoffset: 0; }
 }
 
+/* --- Formularfelder -----------------------------------------------------
+   Eine Klasse fuer Eingabe, Textfeld und Auswahl, damit Fokus, Fehler und
+   Ruhezustand ueberall gleich aussehen. Der Fokusring ist bewusst deutlich:
+   er ist die einzige Rueckmeldung fuer Tastaturnutzer. */
+.field-control {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(26, 27, 30, 0.14);
+  background: var(--color-sand-50);
+  color: var(--color-anthracite-950);
+  padding-inline: 1rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.field-control::placeholder { color: rgba(107, 102, 92, 0.6); }
+.field-control:hover { border-color: rgba(26, 27, 30, 0.3); }
+
+.field-control:focus {
+  outline: none;
+  border-color: var(--color-gold-700);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(189, 172, 137, 0.45);
+}
+
+.field-control[aria-invalid='true'] { border-color: #b91c1c; }
+.field-control[aria-invalid='true']:focus { box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.18); }
+
+/* Haken erscheint erst, wenn ein Feld geprueft und in Ordnung ist. */
+.field-check {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease, transform 0.4s var(--ease-out-expo);
+}
+.field[data-valid] .field-check { opacity: 1; transform: none; }
+.field[data-valid] .field-control { padding-right: 2.75rem; }
+
+/* Haken in der Zustimmung: der Pfad liegt eine Ebene unter dem Geschwister
+   des Feldes, dafuer reicht der peer-Modifier von Tailwind nicht. */
+[data-consent-check] {
+  transform: scale(0.4);
+  opacity: 0;
+  transition: transform 0.25s var(--ease-out-expo), opacity 0.2s ease;
+}
+input:checked + .consent-box [data-consent-check] { transform: none; opacity: 1; }
+
+/* Ladezustand des Absendeknopfs. */
+.submit-spinner { display: none; animation: field-spin 0.7s linear infinite; }
+[data-contact-form][aria-busy='true'] .submit-spinner { display: block; }
+[data-contact-form][aria-busy='true'] .submit-arrow { display: none; }
+@keyframes field-spin { to { transform: rotate(360deg); } }
+
 /* --- Branchen-Panels ----------------------------------------------------
    Ab 1024px liegen die vier Bilder nebeneinander. Eines steht offen, die
    uebrigen schmal. Beim Ueberfahren wechselt das offene Bild. Unterhalb

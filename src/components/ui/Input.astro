@@ -1,72 +1,88 @@
 ---
 /**
- * Feld mit mitwanderndem Label. Das Label sitzt im Feld und rutscht beim
- * Fokussieren oder bei Inhalt nach oben, dadurch entfaellt die Labelzeile
- * darueber. Der Platzhalter ist ein Leerzeichen, weil die Bewegung an
- * `:placeholder-shown` haengt.
+ * Formularfeld mit fest stehendem Label ueber dem Feld.
  *
- * Die Fehlerzeile belegt bewusst keine feste Hoehe mehr. Sieben reservierte
- * Zeilen kosteten 140px, die in aller Regel leer blieben.
+ * Bewusst kein mitwanderndes Label mehr: es schrumpft genau dann, wenn Inhalt
+ * da ist, also wenn man es zum Pruefen am ehesten braucht, und es verschiebt
+ * den Platzhalter in den Fokus-Zustand. Ein festes Label bleibt lesbar,
+ * funktioniert mit Autofill und laesst Platz fuer einen Hinweis rechts daneben.
+ *
+ * Die Fehlerzeile hat keine feste Hoehe und ist ueber aria-describedby mit dem
+ * Feld verbunden, damit Screenreader sie beim Fokussieren mit vorlesen.
  */
 interface Props {
   name: string;
   label: string;
-  type?: 'text' | 'email' | 'tel' | 'textarea' | 'select';
-  options?: { value: string; label: string }[];
+  type?: 'text' | 'email' | 'tel' | 'textarea';
   required?: boolean;
   autocomplete?: string;
-  /** Erscheint erst im Fokus, damit er das mitwandernde Label nicht stoert. */
+  inputmode?: 'text' | 'tel' | 'email' | 'numeric';
+  /** Kurzer Hinweis rechts neben dem Label, etwa ein Beispiel. */
+  hint?: string;
   placeholder?: string;
   rows?: number;
+  /** Mindestlaenge, ab der ein Zeichenzaehler unter dem Feld mitlaeuft. */
+  minLength?: number;
   class?: string;
 }
-const { name, label, type = 'text', required = false, autocomplete, placeholder, options = [], rows = 4, class: className = '' } = Astro.props;
-const id = `field-${name}`;
+const {
+  name, label, type = 'text', required = false, autocomplete, inputmode,
+  hint, placeholder, rows = 4, minLength, class: className = '',
+} = Astro.props;
 
-const feld =
-  'peer w-full rounded-xl border border-anthracite-950/15 bg-sand-50 px-4 text-anthracite-950 transition-colors duration-300 placeholder:text-transparent focus:placeholder:text-ink-muted/55 focus:border-gold-700 focus:outline-none aria-[invalid=true]:border-red-700';
-const label_ =
-  'pointer-events-none absolute left-4 origin-left text-ink-muted transition-all duration-200 [transition-timing-function:var(--ease-out-expo)] peer-focus:text-gold-700';
+const id = `field-${name}`;
+const errorId = `${id}-error`;
+const hintId = hint ? `${id}-hint` : undefined;
+const describedBy = [hintId, errorId].filter(Boolean).join(' ');
 ---
-<div class={`relative ${className}`}>
-  {type === 'select' ? (
-    <>
-      {/* Eigener Pfeil und appearance-none, damit das Feld nicht nach
-          Browser-Standard aussieht. Das Label steht fest oben, weil ein Select
-          immer einen sichtbaren Wert hat und `:placeholder-shown` nicht greift. */}
-      <select
+<div class={`field ${className}`} data-field={name}>
+  <div class="flex items-baseline justify-between gap-3">
+    <label for={id} class="text-label text-ink-muted">
+      {label}{required && <span class="text-gold-700" aria-hidden="true"> *</span>}
+    </label>
+    {hint ? (
+      <span id={hintId} class="text-[0.7rem] text-ink-muted/75">{hint}</span>
+    ) : (
+      !required && <span class="text-[0.7rem] text-ink-muted/75">optional</span>
+    )}
+  </div>
+
+  <div class="relative mt-2">
+    {type === 'textarea' ? (
+      <textarea
         id={id}
         name={name}
+        rows={rows}
         required={required}
-        class={`${feld} h-[3.75rem] cursor-pointer appearance-none pt-6 pb-2 pr-11`}
-      >
-        <option value="">Bitte wählen</option>
-        {options.map((o) => <option value={o.value}>{o.label}</option>)}
-      </select>
-      <label for={id} class={`${label_} top-2 scale-[0.78]`}>
-        {label}{required && <span class="text-gold-700"> *</span>}
-      </label>
-      <svg class="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-        <path d="m4 6 4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </>
-  ) : type === 'textarea' ? (
-    <>
-      <textarea id={id} name={name} rows={rows} required={required} placeholder={placeholder ?? " "} class={`${feld} resize-y pt-7 pb-3`}></textarea>
-      <label for={id} class={`${label_} top-3 text-small peer-focus:top-3 peer-[:not(:placeholder-shown)]:top-3`}>
-        {label}{required && <span class="text-gold-700"> *</span>}
-      </label>
-    </>
-  ) : (
-    <>
-      <input id={id} name={name} type={type} required={required} autocomplete={autocomplete} placeholder={placeholder ?? " "} class={`${feld} h-[3.75rem] pt-6 pb-2`} />
-      <label
-        for={id}
-        class={`${label_} top-[1.15rem] peer-focus:top-2 peer-focus:scale-[0.78] peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:scale-[0.78]`}
-      >
-        {label}{required && <span class="text-gold-700"> *</span>}
-      </label>
-    </>
-  )}
-  <p class="mt-1.5 text-[0.75rem] leading-tight text-red-700 empty:hidden" data-error-for={name} aria-live="polite"></p>
+        placeholder={placeholder}
+        aria-describedby={describedBy}
+        data-min-length={minLength}
+        class="field-control block max-h-[22rem] resize-none py-3.5"
+      ></textarea>
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        required={required}
+        autocomplete={autocomplete}
+        inputmode={inputmode}
+        placeholder={placeholder}
+        aria-describedby={describedBy}
+        class="field-control h-14"
+      />
+    )}
+
+    <svg
+      class="field-check pointer-events-none absolute right-4 top-4 h-4 w-4 text-gold-700"
+      viewBox="0 0 16 16" fill="none" aria-hidden="true"
+    >
+      <path d="m3 8.5 3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
+
+  <div class="mt-1.5 flex items-start justify-between gap-3">
+    <p id={errorId} class="text-[0.75rem] leading-tight text-red-700 empty:hidden" data-error-for={name} aria-live="polite"></p>
+    {minLength && <p class="ml-auto shrink-0 text-[0.7rem] tabular-nums text-ink-muted/70 empty:hidden" data-counter-for={name}></p>}
+  </div>
 </div>
