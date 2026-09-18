@@ -140,6 +140,23 @@ html:not(.lenis) [id] { scroll-margin-top: 7.5rem; }
   inherits: false;
 }
 
+/* Zahlenfeld: an beiden Seiten weich auslaufen, damit die Ziffern nicht
+   abrupt an der Kante abreissen. Die Ziffern selbst zeichnet number-field.ts. */
+.number-field {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+}
+
+/* Zahlen laufen bewusst in der Fliesstext-Schrift: Satoshi zeichnet die
+   Ziffern geometrisch und flach, Switzer hat die schoeneren Formen.
+   Tabellenziffern halten die Breite waehrend des Hochzaehlens konstant. */
+.stat-numeral {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.03em;
+}
+
 /* LED-Raster, an den Raendern weich ausgeblendet. Die Punkte selbst zeichnet
    das Modul led-grid.ts auf Canvas. */
 .ki-led {

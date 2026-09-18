@@ -39,7 +39,7 @@ export interface SiteContent {
   services: { eyebrow: string; title: string; lead: string; items: { number: string; title: string; text: string; points: string[]; image: ImageRef }[] };
   process: { eyebrow: string; title: string; steps: { number: string; title: string; text: string; icon: string; image: ImageRef }[] };
   work: { eyebrow: string; title: string; items: { client: string; industry: string; text: string; quote: string; image: ImageRef }[]; testimonials: { quote: string; company: string; logo?: string; pending?: boolean }[] };
-  numbers: { items: { value: number; suffix: string; label: string }[] };
+  numbers: { eyebrow: string; title: string; lead: string; items: { value: number; suffix: string; label: string; note: string }[] };
   pricing: { eyebrow: string; title: string; note: string; plans: { name: string; price: string; prefix: string; period: string; text: string; features: string[]; cta: string; recommended: boolean }[] };
   industries: { eyebrow: string; title: string; items: { title: string; text: string; image: ImageRef }[] };
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] };
@@ -140,11 +140,14 @@ export const site: SiteContent = {
     ],
   },
   numbers: {
+    eyebrow: 'In Zahlen',
+    title: 'Zwanzig Jahre, auf vier Zahlen gebracht.',
+    lead: 'Keine Awards, keine Agenturfolklore. Nur das, was sich nachrechnen lässt.',
     items: [
-      { value: 20, suffix: '+', label: 'Jahre Erfahrung' },
-      { value: 100, suffix: '+', label: 'Projekte' },
-      { value: 100, suffix: '', label: 'PageSpeed als Ziel' },
-      { value: 1, suffix: '', label: 'Ansprechpartner' },
+      { value: 20, suffix: '+', label: 'Jahre Erfahrung', note: 'Vom ersten HTML bis zum heutigen Stack, ohne Unterbrechung.' },
+      { value: 100, suffix: '+', label: 'Projekte', note: 'Websites und Shops, viele davon seit Jahren im Einsatz.' },
+      { value: 100, suffix: '', label: 'PageSpeed als Ziel', note: 'Gemessen nach dem Launch, nicht im Angebot versprochen.' },
+      { value: 1, suffix: '', label: 'Ansprechpartner', note: 'Kein Ticketsystem, keine Weiterleitung. Eine Nummer.' },
     ],
   },
   pricing: {

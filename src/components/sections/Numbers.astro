@@ -1,16 +1,49 @@
 ---
 import { site } from '@/content/site';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import NumberField from '@/components/ui/NumberField.astro';
 const { numbers } = site;
+
+// Zweispaltig ab sm: die rechte Spalte bekommt die Trennlinie, die linke den
+// Abstand zur Linie. Daraus entsteht ein Raster ohne Karten.
+const zellenKlassen = (i: number) =>
+  i % 2 === 1 ? 'sm:border-l sm:border-sand-100/10 sm:pl-10' : 'sm:pr-10';
 ---
-<section id="zahlen" class="section--sand border-y border-anthracite-950/10 py-16" data-motion="counters">
-  <div class="container grid grid-cols-2 gap-10 md:grid-cols-4">
-    {numbers.items.map((n) => (
-      <div data-reveal>
-        <p class="font-display text-numeral leading-none text-gold-700">
-          <span data-counter data-value={n.value} data-suffix={n.suffix}>{n.value}{n.suffix}</span>
-        </p>
-        <p class="mt-3 text-label text-ink-muted">{n.label}</p>
+<section id="zahlen" class="section section--dark relative overflow-hidden py-24 md:py-32" data-motion="counters">
+  <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
+  <div class="gold-line absolute inset-x-0 bottom-0" aria-hidden="true"></div>
+
+  <!-- Hintergrund: treibendes Zahlenfeld plus zwei weiche Goldschleier. -->
+  <NumberField />
+  <div class="ki-beam pointer-events-none absolute -left-40 top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 opacity-45 [filter:blur(130px)] will-change-transform" aria-hidden="true"
+       style="background: radial-gradient(circle, rgba(189,172,137,0.3), rgba(122,106,76,0.12) 45%, transparent 70%)"></div>
+  <div class="ki-beam ki-beam--counter pointer-events-none absolute -right-48 top-0 h-[38rem] w-[38rem] opacity-35 [filter:blur(150px)] will-change-transform" aria-hidden="true"
+       style="background: radial-gradient(circle, rgba(122,106,76,0.34), rgba(189,172,137,0.12) 50%, transparent 72%)"></div>
+
+  <div class="container relative">
+    <div class="grid gap-12 lg:grid-cols-[0.85fr_2fr] lg:gap-16">
+      <div>
+        <Eyebrow>{numbers.eyebrow}</Eyebrow>
+        <h2 class="font-display text-h2 mt-5 text-balance" data-split>{numbers.title}</h2>
+        <p class="mt-6 max-w-[34ch] text-paper-muted" data-reveal>{numbers.lead}</p>
       </div>
-    ))}
+
+      <ul class="grid sm:grid-cols-2">
+        {numbers.items.map((n, i) => (
+          <li class={`group relative border-t border-sand-100/10 py-8 sm:py-10 ${zellenKlassen(i)}`} data-reveal>
+            <span
+              class="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gold-500/70 transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-x-100"
+              aria-hidden="true"></span>
+
+            <p class="stat-numeral flex items-baseline text-numeral leading-none text-sand-100 transition-colors duration-500 group-hover:text-gold-300">
+              <span data-counter data-value={n.value} data-suffix="">{n.value}</span>
+              {n.suffix && <span class="text-gold-500">{n.suffix}</span>}
+            </p>
+            <p class="mt-5 font-medium">{n.label}</p>
+            <p class="mt-2 max-w-[32ch] text-small text-paper-muted">{n.note}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 </section>

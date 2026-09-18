@@ -1,0 +1,8 @@
+---
+/** Treibendes Zahlenfeld als Hintergrund. Rein dekorativ. */
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<div class={`number-field pointer-events-none absolute inset-0 overflow-hidden ${className}`} data-motion="numberfield" aria-hidden="true">
+  <canvas class="h-full w-full" data-number-canvas></canvas>
+</div>

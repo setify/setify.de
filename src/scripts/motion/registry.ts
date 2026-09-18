@@ -18,6 +18,7 @@ import textGenerate from './text-generate';
 import cardStack from './card-stack';
 import glowingStars from './glowing-stars';
 import ledGrid from './led-grid';
+import numberField from './number-field';
 import quoteStage from './quote-stage';
 import stickyBanner from './sticky-banner';
 
@@ -42,6 +43,7 @@ registerMotion('generate', textGenerate);
 registerMotion('cardstack', cardStack);
 registerMotion('stars', glowingStars);
 registerMotion('ledgrid', ledGrid);
+registerMotion('numberfield', numberField);
 registerMotion('quotes', quoteStage);
 registerMotion('banner', stickyBanner);
 
