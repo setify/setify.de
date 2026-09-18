@@ -42,7 +42,7 @@ export interface SiteContent {
   manifest: { text: string; highlights: string[] };
   services: { eyebrow: string; title: string; lead: string; items: { number: string; title: string; text: string; points: string[]; image: ImageRef }[] };
   process: { eyebrow: string; title: string; steps: { number: string; title: string; text: string; icon: string; image: ImageRef }[] };
-  work: { eyebrow: string; title: string; items: { client: string; industry: string; text: string; quote: string; image: ImageRef }[]; testimonials: { quote: string; company: string; logo?: string; pending?: boolean }[] };
+  work: { eyebrow: string; title: string; lead: string; items: { client: string; industry: string; text: string; image: ImageRef }[]; testimonials: { quote: string; company: string; logo?: string; pending?: boolean }[] };
   numbers: { eyebrow: string; title: string; lead: string; items: { value: number; suffix: string; label: string; note: string }[] };
   pricing: { eyebrow: string; title: string; note: string; plans: { name: string; price: string; prefix: string; period: string; text: string; features: string[]; cta: string; recommended: boolean }[] };
   industries: { eyebrow: string; title: string; lead: string; items: { title: string; text: string; image: ImageRef }[] };
@@ -126,11 +126,15 @@ export const site: SiteContent = {
   work: {
     eyebrow: 'Referenzen',
     title: 'Ausgewählte Arbeiten.',
+    lead: 'Sieben Auftritte aus sieben Branchen. Was sie verbindet: Sie erklären in den ersten zehn Sekunden, worum es geht.',
     items: [
-      { client: 'Tivendo', industry: 'Industrie', text: 'Klare Produktkommunikation für Kunden und Bewerber.', quote: 'Zitat zur Freigabe: Endlich eine Seite, die unsere Produkte so erklärt, wie wir es im Gespräch tun.', image: { id: 'work-tivendo', ratio: '4:3', label: 'Screenshot Tivendo', alt: 'Startseite der Tivendo-Website' } },
-      { client: 'Blumen Strunck', industry: 'Handwerk', text: 'Regionaler Auftritt mit Anfragen direkt über die Website.', quote: 'Zitat zur Freigabe: Seit dem Relaunch kommen Anfragen über die Seite, nicht mehr nur über Telefon.', image: { id: 'work-strunck', ratio: '4:3', label: 'Screenshot Blumen Strunck', alt: 'Startseite der Blumen Strunck Website' } },
-      { client: 'Weinhof Rudolstadt', industry: 'Gastro & Event', text: 'Genuss und Veranstaltungen, stimmungsvoll inszeniert.', quote: 'Zitat zur Freigabe: Die Seite fühlt sich an wie ein Abend bei uns im Weinhof.', image: { id: 'work-weinhof', ratio: '4:3', label: 'Screenshot Weinhof Rudolstadt', alt: 'Startseite der Weinhof Rudolstadt Website' } },
-      { client: 'Berg-Loft Styles', industry: 'Lifestyle', text: 'Ästhetik mit Liebe zum Detail, die sich vom Wettbewerb abhebt.', quote: 'Zitat zur Freigabe: Jedes Detail sitzt. Genau so wollten wir wahrgenommen werden.', image: { id: 'work-bergloft', ratio: '4:3', label: 'Screenshot Berg-Loft Styles', alt: 'Startseite der Berg-Loft Styles Website' } },
+      { client: 'Privat-Institut für Finanzen', industry: 'Finanzen', text: 'Beratung, Produkte und Finanzmagazin unter einem Dach. Der Weg zum Erstgespräch führt von jeder Seite aus in zwei Klicks.', image: { id: 'work-pifrl', ratio: '4:3', label: 'Privat-Institut für Finanzen', alt: 'Startseite des Privat-Instituts für Finanzen mit Hero-Bereich und Beratungsabschnitt' } },
+      { client: 'coachmate', industry: 'Plattform', text: 'Coach-Suche mit Profilen, Kategorien und eigenem Bereich für Coaches. Die Suche steht direkt unter der Überschrift, nicht drei Klicks tiefer.', image: { id: 'work-coachmate', ratio: '4:3', label: 'coachmate', alt: 'Startseite von coachmate mit Suchfeld und Coach-Profilen' } },
+      { client: 'SOULMAKERS', industry: 'Beauty & Coworking', text: 'Coworking für Friseur- und Beauty-Selbstständige. Standorte, Tarife und Platzanfrage sind der rote Faden durch die ganze Seite.', image: { id: 'work-soulmakers', ratio: '4:3', label: 'SOULMAKERS', alt: 'Startseite von SOULMAKERS mit Innenaufnahme des Coworking-Space' } },
+      { client: 'myPowerhouse', industry: 'Sport & Studio', text: 'Pilates- und Barre-Studio aus Köln. Ruhige Bildsprache, Kursplan und Mitgliedschaft ohne Umwege.', image: { id: 'work-mypowerhouse', ratio: '4:3', label: 'myPowerhouse', alt: 'Startseite von myPowerhouse mit Hero-Bild und Studio-Vorstellung' } },
+      { client: 'DEEP CLARITY', industry: 'Coaching', text: 'Executive Mentoring für Unternehmer. Dunkel, ruhig und ganz auf einen einzigen nächsten Schritt zugeschnitten.', image: { id: 'work-deepclarity', ratio: '4:3', label: 'DEEP CLARITY', alt: 'Startseite von DEEP CLARITY mit dunklem Hero-Bereich' } },
+      { client: 'Praxis Timo Wenzel', industry: 'Gesundheit', text: 'Hypnose, Stressregulation und Osteopathie. Die Terminanfrage steht an erster Stelle, alles andere ordnet sich darunter.', image: { id: 'work-timowenzel', ratio: '4:3', label: 'Praxis Timo Wenzel', alt: 'Startseite der Praxis Timo Wenzel mit Hero-Bereich und drei Leistungsbereichen' } },
+      { client: 'förderino', industry: 'Software', text: 'Plattform für Fördervereine. Das Produkt wird gezeigt statt beschrieben, mit Demo und kostenlosem Einstieg.', image: { id: 'work-foerderino', ratio: '4:3', label: 'förderino', alt: 'Startseite von förderino mit Produktansicht der Vereinsverwaltung' } },
     ],
     // Wortlaut von setify.de uebernommen. `logo` verweist auf den Dateinamen
     // unter src/assets/logos/. `pending` bliebe fuer noch nicht freigegebene

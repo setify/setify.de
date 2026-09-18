@@ -281,6 +281,68 @@ html.js.motion-ready [data-icon='draw'].is-drawn > *:nth-child(n+4) { animation-
   .ki-step__mark, .ki-step__number, .ki-step__body { opacity: 1; transform: none; }
 }
 
+/* --- Referenzen ---------------------------------------------------------
+   Die Aufnahmen sind Startseiten. Ein angedeutetes Browserfenster sagt das
+   ohne ein Wort und gibt den sieben unterschiedlichen Gestaltungen einen
+   gemeinsamen Rahmen. */
+.work-frame {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid rgba(243, 238, 228, 0.1);
+  background: var(--color-anthracite-900);
+  padding: 0.5rem;
+  box-shadow: 0 40px 80px -50px rgba(0, 0, 0, 0.9);
+  transition: border-color 0.6s ease, transform 0.7s var(--ease-out-expo), box-shadow 0.7s ease;
+}
+
+.work-card:hover .work-frame {
+  border-color: rgba(189, 172, 137, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 50px 90px -50px rgba(0, 0, 0, 0.95);
+}
+
+.work-frame__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.5rem 0.6rem;
+}
+
+.work-frame__dots { display: flex; gap: 0.3rem; }
+.work-frame__dots i {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: rgba(189, 172, 137, 0.35);
+  transition: background-color 0.5s ease;
+}
+.work-card:hover .work-frame__dots i:first-child { background: rgba(189, 172, 137, 0.9); }
+
+/* Statt einer erfundenen Adresse steht der Projektname in der Leiste. */
+.work-frame__name {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: rgba(168, 164, 155, 0.9);
+  border-radius: 9999px;
+  background: rgba(26, 27, 30, 0.8);
+  padding: 0.15rem 0.7rem;
+}
+
+.work-frame__shot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.65rem;
+}
+.work-frame__shot img {
+  transition: transform 0.9s var(--ease-out-expo);
+}
+.work-card:hover .work-frame__shot img { transform: scale(1.03); }
+
+@media (prefers-reduced-motion: reduce) {
+  .work-card:hover .work-frame { transform: none; }
+  .work-card:hover .work-frame__shot img { transform: none; }
+}
+
 /* --- KI-Konsole ---------------------------------------------------------
    Schritte stehen zuerst blass da, werden beim Abarbeiten hell und bekommen
    dann ihren Haken. Das Ergebnis erscheint erst, wenn der Lauf fertig ist. */

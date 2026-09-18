@@ -1,32 +1,68 @@
 ---
 import { site } from '@/content/site';
-import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 import QuoteStage from '@/components/ui/QuoteStage.astro';
 const { work } = site;
+
+// Erste Referenz laeuft ueber die volle Breite, danach paarweise versetzt.
+// Sieben Projekte gehen in zwei gleichen Spalten nicht auf, mit einem
+// Aufmacher vorne schon.
+const [aufmacher, ...weitere] = work.items;
 ---
 <section id="referenzen" class="section section--dark">
   <div class="container">
-    <SectionHeading tone="dark" eyebrow={work.eyebrow} title={work.title} />
-    <div class="mt-16 grid gap-8 md:grid-cols-2 md:gap-x-10" data-motion="tilt">
-      {work.items.map((item, i) => (
-        <article class={`group relative ${i % 2 === 1 ? 'md:translate-y-[120px]' : ''}`} data-tilt-card data-reveal>
-          <div class="relative overflow-hidden rounded-3xl">
-            <ImagePlaceholder id={item.image.id} ratio={item.image.ratio} label={item.image.label} alt={item.image.alt} parallax class="transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-[1.03]" />
-            <span class="absolute right-5 top-5 grid h-11 w-11 -translate-y-2 place-items-center rounded-full bg-gold-500 text-anthracite-950 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100" aria-hidden="true">
-              <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M6 4h6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            </span>
-          </div>
-          <div class="mt-6 flex items-baseline justify-between gap-4">
-            <h3 class="font-display text-h3">{item.client}</h3>
-            <span class="text-label text-gold-500">{item.industry}</span>
-          </div>
-          <p class="mt-2 text-paper-muted">{item.text}</p>
-          <blockquote class="mt-4 border-l border-gold-500/40 pl-4 text-small italic text-sand-100/70">{item.quote}</blockquote>
-        </article>
-      ))}
+    <div class="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-end">
+      <div>
+        <Eyebrow>{work.eyebrow}</Eyebrow>
+        <h2 class="font-display text-h2 mt-5 text-balance" data-split>{work.title}</h2>
+      </div>
+      <p class="max-w-[46ch] text-paper-muted lg:pb-2" data-reveal>{work.lead}</p>
     </div>
 
-    <QuoteStage items={work.testimonials} class="mt-32 md:mt-44" />
+    <div class="mt-16" data-motion="tilt">
+      <!-- Aufmacher: gleiche Fensterkarte, nur breiter und mit Text daneben. -->
+      <article class="work-card group relative grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-center" data-tilt-card data-reveal>
+        <div class="work-frame">
+          <div class="work-frame__bar">
+            <span class="work-frame__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="work-frame__name">{aufmacher.client}</span>
+          </div>
+          <div class="work-frame__shot">
+            <ImagePlaceholder id={aufmacher.image.id} ratio={aufmacher.image.ratio} label={aufmacher.image.label} alt={aufmacher.image.alt} radius="inherit" />
+          </div>
+        </div>
+
+        <div>
+          <span class="text-label text-gold-500">{aufmacher.industry}</span>
+          <h3 class="font-display text-h3 mt-4">{aufmacher.client}</h3>
+          <p class="mt-4 max-w-[42ch] text-paper-muted">{aufmacher.text}</p>
+        </div>
+      </article>
+
+      <div class="mt-10 grid gap-x-10 gap-y-12 md:grid-cols-2 lg:mt-16">
+        {weitere.map((item, i) => (
+          <article class={`work-card group relative ${i % 2 === 1 ? 'md:translate-y-16' : ''}`} data-tilt-card data-reveal>
+            <div class="work-frame">
+              <div class="work-frame__bar">
+                <span class="work-frame__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="work-frame__name">{item.client}</span>
+              </div>
+              <div class="work-frame__shot">
+                <ImagePlaceholder id={item.image.id} ratio={item.image.ratio} label={item.image.label} alt={item.image.alt} radius="inherit" />
+              </div>
+            </div>
+
+            <div class="mt-6 flex items-baseline justify-between gap-4">
+              <h3 class="font-display text-h4">{item.client}</h3>
+              <span class="text-label text-gold-500">{item.industry}</span>
+            </div>
+            <p class="mt-3 text-small text-paper-muted">{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <QuoteStage items={work.testimonials} class="mt-40 md:mt-56" />
   </div>
 </section>
