@@ -16,10 +16,13 @@ interface Props {
    *  `ratio` bleibt trotzdem die Vorgabe fuer die Bildproduktion. */
   fill?: boolean;
   tone?: 'dark' | 'sand';
+  /** Eckenradius. `inherit` uebernimmt den Radius des Elternelements. */
+  radius?: '2xl' | 'inherit';
   class?: string;
   parallax?: boolean;
 }
-const { id, ratio, label, alt, prompt, overlay = false, fill = false, tone = 'dark', class: className = '', parallax = false } = Astro.props;
+const { id, ratio, label, alt, prompt, overlay = false, fill = false, tone = 'dark', radius = '2xl', class: className = '', parallax = false } = Astro.props;
+const rounded = radius === 'inherit' ? 'rounded-[inherit]' : 'rounded-2xl';
 
 const ratios = { '4:5': '4 / 5', '3:2': '3 / 2', '4:3': '4 / 3', '3:4': '3 / 4', '16:9': '16 / 9', '1:1': '1 / 1' };
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpg,jpeg,png,webp,avif}', { eager: true });
@@ -34,7 +37,7 @@ const bg = tone === 'dark' ? 'bg-anthracite-900' : 'bg-sand-200';
 const fg = tone === 'dark' ? 'text-paper-muted' : 'text-ink-muted';
 ---
 <figure
-  class={`relative overflow-hidden rounded-2xl ${bg} ${fill ? 'h-full' : ''} ${className}`}
+  class={`relative overflow-hidden ${rounded} ${bg} ${fill ? 'h-full' : ''} ${className}`}
   style={fill ? undefined : showPrompt ? 'min-height: 11rem' : `aspect-ratio: ${ratios[ratio]}`}
   data-image-id={id}
 >
@@ -64,5 +67,5 @@ const fg = tone === 'dark' ? 'text-paper-muted' : 'text-ink-muted';
       <span class="sr-only">{alt}</span>
     </div>
   )}
-  <span class="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-gold-500/20" aria-hidden="true"></span>
+  <span class={`pointer-events-none absolute inset-0 ${rounded} ring-1 ring-inset ring-gold-500/20`} aria-hidden="true"></span>
 </figure>

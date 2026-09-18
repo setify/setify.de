@@ -1,19 +1,45 @@
 ---
 import { site } from '@/content/site';
-import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 const { industries } = site;
 ---
 <section id="branchen" class="section section--sand">
   <div class="container">
-    <SectionHeading tone="sand" eyebrow={industries.eyebrow} title={industries.title} />
-    <ul class="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4">
-      {industries.items.map((item) => (
-        <li class="group relative overflow-hidden rounded-3xl" data-reveal>
-          <ImagePlaceholder id={item.image.id} ratio={item.image.ratio} label={item.image.label} alt={item.image.alt} prompt={item.image.prompt} overlay tone="sand" class="transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-[1.04]" />
-          <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-anthracite-950/90 via-anthracite-950/40 to-transparent p-6 text-sand-100 transition-colors duration-500 group-hover:from-anthracite-950/95">
-            <h3 class="font-display text-h3">{item.title}</h3>
-            <p class="mt-2 max-h-0 overflow-hidden text-small text-sand-100/80 opacity-0 transition-all duration-500 group-hover:max-h-24 group-hover:opacity-100 group-focus-within:max-h-24 group-focus-within:opacity-100">{item.text}</p>
+    <div class="grid gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-end">
+      <div>
+        <Eyebrow tone="sand">{industries.eyebrow}</Eyebrow>
+        <h2 class="font-display text-h2 mt-5 text-balance" data-split>{industries.title}</h2>
+      </div>
+      <p class="max-w-[46ch] text-ink-muted lg:pb-2" data-reveal>{industries.lead}</p>
+    </div>
+
+    <!-- Ausklappbare Bildspalten: die offene Spalte zeigt Text in Farbe, die
+         uebrigen stehen schmal, entsaettigt und mit senkrechter Marke.
+         Unter 1024px stehen alle Spalten offen untereinander. -->
+    <ul class="branch-panels mt-14 flex flex-col gap-3 lg:h-[34rem] lg:flex-row">
+      {industries.items.map((item, i) => (
+        <li class="branch-panel relative h-[22rem] overflow-hidden rounded-3xl bg-anthracite-950 lg:h-auto" data-reveal>
+          <ImagePlaceholder
+            id={item.image.id}
+            ratio={item.image.ratio}
+            label={item.image.label}
+            alt={item.image.alt}
+            prompt={item.image.prompt}
+            overlay
+            fill
+            radius="inherit"
+            class="branch-panel__media absolute inset-0"
+          />
+          <span class="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-t from-anthracite-950/92 via-anthracite-950/35 to-transparent" aria-hidden="true"></span>
+
+          <span class="absolute left-6 top-6 text-label text-gold-500">{String(i + 1).padStart(2, '0')}</span>
+          <span class="branch-panel__label text-h4 font-display text-sand-100/90" aria-hidden="true">{item.title}</span>
+
+          <div class="branch-panel__body absolute inset-x-6 bottom-6">
+            <h3 class="font-display text-h3 text-sand-100">{item.title}</h3>
+            <span class="mt-4 block h-px w-12 bg-gold-500" aria-hidden="true"></span>
+            <p class="mt-4 max-w-[32ch] text-small text-sand-100/80">{item.text}</p>
           </div>
         </li>
       ))}

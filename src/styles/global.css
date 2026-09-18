@@ -243,6 +243,60 @@ html.js.motion-ready [data-icon='draw'].is-drawn > *:nth-child(n+4) { animation-
   html.js [data-icon='draw'] > * { stroke-dasharray: none; stroke-dashoffset: 0; }
 }
 
+/* --- Branchen-Panels ----------------------------------------------------
+   Ab 1024px liegen die vier Bilder nebeneinander. Eines steht offen, die
+   uebrigen schmal. Beim Ueberfahren wechselt das offene Bild. Unterhalb
+   dieser Breite stehen alle Spalten untereinander und zeigen ihren Text.
+   Die senkrechte Marke ist aria-hidden, die Ueberschrift steht im Body. */
+.branch-panel__label { display: none; }
+
+@media (min-width: 1024px) {
+  .branch-panel {
+    flex: 1 1 0;
+    min-width: 0;
+    transition: flex-grow 0.9s var(--ease-out-expo);
+  }
+
+  .branch-panel__media {
+    filter: saturate(0.4) brightness(0.82);
+    transition: filter 0.7s var(--ease-out-expo);
+  }
+
+  .branch-panel__body {
+    opacity: 0;
+    transform: translateY(0.9rem);
+    transition: opacity 0.45s ease, transform 0.7s var(--ease-out-expo);
+  }
+
+  .branch-panel__label {
+    display: block;
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    letter-spacing: -0.01em;
+    transition: opacity 0.45s ease;
+  }
+
+  /* Ruhezustand: die erste Spalte steht offen. */
+  .branch-panel:first-child { flex-grow: 2.7; }
+  .branch-panel:first-child .branch-panel__media { filter: none; }
+  .branch-panel:first-child .branch-panel__body { opacity: 1; transform: none; }
+  .branch-panel:first-child .branch-panel__label { opacity: 0; }
+
+  /* Sobald die Reihe ueberfahren wird, zaehlt nur noch die Maus. */
+  .branch-panels:hover .branch-panel { flex-grow: 0.6; }
+  .branch-panels:hover .branch-panel .branch-panel__media { filter: saturate(0.4) brightness(0.82); }
+  .branch-panels:hover .branch-panel .branch-panel__body { opacity: 0; transform: translateY(0.9rem); }
+  .branch-panels:hover .branch-panel .branch-panel__label { opacity: 1; }
+
+  .branch-panels:hover .branch-panel:hover { flex-grow: 2.7; }
+  .branch-panels:hover .branch-panel:hover .branch-panel__media { filter: none; }
+  .branch-panels:hover .branch-panel:hover .branch-panel__body { opacity: 1; transform: none; }
+  .branch-panels:hover .branch-panel:hover .branch-panel__label { opacity: 0; }
+}
+
 /* --- Zitat-Buehne -------------------------------------------------------
    Ohne JS stehen alle Stimmen untereinander und sind vollstaendig lesbar.
    Erst mit JS liegen sie uebereinander und nur die aktive ist sichtbar. */
