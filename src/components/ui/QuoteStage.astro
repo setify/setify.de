@@ -1,0 +1,98 @@
+---
+/**
+ * Zitat-Buehne statt Kartenreihe: ein grosses Zitat, rechts ein Index der
+ * Stimmen mit laufendem Fortschritt.
+ *
+ * Ohne JS stehen alle Zitate untereinander und sind vollstaendig lesbar. Erst
+ * `html.js` legt sie uebereinander und blendet das aktive ein, dieselbe
+ * Gating-Logik wie bei `data-reveal`.
+ */
+interface Stimme {
+  quote: string;
+  author: string;
+  company: string;
+  pending?: boolean;
+}
+interface Props {
+  items: Stimme[];
+  class?: string;
+}
+const { items, class: className = '' } = Astro.props;
+const id = 'stimmen';
+---
+<div
+  class={`grid gap-12 lg:grid-cols-[1.55fr_1fr] lg:items-center lg:gap-20 ${className}`}
+  data-motion="quotes"
+  data-quote-root
+>
+  <div class="relative min-h-[15rem] sm:min-h-[13rem] lg:min-h-[15rem]" data-quote-stage>
+    <svg
+      class="pointer-events-none absolute -left-2 -top-8 h-24 w-24 text-gold-500/10 sm:-left-6 sm:-top-12 sm:h-32 sm:w-32"
+      viewBox="0 0 48 48"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M20 10c-7 3-12 9-12 17 0 6 4 11 10 11s10-4 10-10-4-10-9-10c0-3 2-6 6-8zm22 0c-7 3-12 9-12 17 0 6 4 11 10 11s10-4 10-10-4-10-9-10c0-3 2-6 6-8z" />
+    </svg>
+
+    {items.map((s, i) => (
+      <figure
+        class="quote-slide relative"
+        id={`${id}-panel-${i}`}
+        role="tabpanel"
+        aria-labelledby={`${id}-tab-${i}`}
+        data-quote-slide
+        data-aktiv={i === 0 ? '' : undefined}
+      >
+        <blockquote class="font-display text-[clamp(1.5rem,1rem+2.1vw,2.75rem)] leading-[1.2] font-light text-sand-100 text-balance">
+          <span data-quote-text>{s.quote}</span>
+        </blockquote>
+
+        <figcaption class="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2" data-quote-meta>
+          <span class="h-px w-8 bg-gold-500" aria-hidden="true"></span>
+          <span class="text-label text-gold-500">{s.author}, {s.company}</span>
+          {s.pending && (
+            <span class="rounded-full border border-gold-700/40 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-paper-muted">
+              Freigabe ausstehend
+            </span>
+          )}
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <div
+    class="flex flex-col lg:border-l lg:border-anthracite-800 lg:pl-10"
+    role="tablist"
+    aria-label="Kundenstimmen"
+    aria-orientation="vertical"
+    data-quote-tabs
+  >
+    {items.map((s, i) => (
+      <button
+        type="button"
+        id={`${id}-tab-${i}`}
+        role="tab"
+        aria-controls={`${id}-panel-${i}`}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        tabindex={i === 0 ? 0 : -1}
+        class="group relative py-4 text-left transition-colors duration-500"
+        data-quote-tab
+      >
+        <span class="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-anthracite-800" aria-hidden="true"></span>
+        <span
+          class="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-[image:var(--gold-gradient)]"
+          aria-hidden="true"
+          data-quote-fortschritt
+        ></span>
+
+        <span class="block text-[0.95rem] font-medium text-sand-100/50 transition-colors duration-500 group-hover:text-sand-100 group-aria-selected:text-sand-100" data-quote-name>
+          {s.company}
+        </span>
+        <span class="mt-0.5 block text-small text-paper-muted/70 transition-colors duration-500 group-aria-selected:text-paper-muted">
+          {s.author}
+        </span>
+      </button>
+    ))}
+  </div>
+</div>

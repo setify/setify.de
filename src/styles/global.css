@@ -233,6 +233,26 @@ html.js.motion-ready [data-icon='draw'].is-drawn > *:nth-child(n+4) { animation-
   html.js [data-icon='draw'] > * { stroke-dasharray: none; stroke-dashoffset: 0; }
 }
 
+/* --- Zitat-Buehne -------------------------------------------------------
+   Ohne JS stehen alle Stimmen untereinander und sind vollstaendig lesbar.
+   Erst mit JS liegen sie uebereinander und nur die aktive ist sichtbar. */
+html.js [data-quote-slide] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s var(--ease-out-expo);
+}
+html.js [data-quote-slide][data-aktiv] {
+  opacity: 1;
+  visibility: visible;
+}
+html.js [data-quote-slide] + [data-quote-slide] { margin-top: 0; }
+[data-quote-slide] + [data-quote-slide] { margin-top: 3rem; }
+
+/* Der Index bekommt ohne JS keine Rolle als Bedienelement. */
+html:not(.js) [data-quote-tabs] { display: none; }
+
 /* Reveal-Startzustände. JS entfernt sie, ohne JS bleibt alles sichtbar. */
 html.js [data-reveal] { opacity: 0; transform: translateY(40px); }
 html.js [data-generate] { opacity: 0; }

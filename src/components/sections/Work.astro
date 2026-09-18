@@ -2,6 +2,7 @@
 import { site } from '@/content/site';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
+import QuoteStage from '@/components/ui/QuoteStage.astro';
 const { work } = site;
 ---
 <section id="referenzen" class="section section--dark">
@@ -26,14 +27,6 @@ const { work } = site;
       ))}
     </div>
 
-    <div class="mt-32 grid gap-8 md:mt-44 md:grid-cols-3">
-      {work.testimonials.map((t) => (
-        <figure class="rounded-3xl border border-anthracite-800 bg-anthracite-900 p-8" data-reveal>
-          <span class="font-display text-numeral leading-none text-gold-500" aria-hidden="true">„</span>
-          <blockquote class="mt-2 text-sand-100/90">{t.quote}</blockquote>
-          <figcaption class="mt-6 text-small text-paper-muted">{t.author}, {t.company}</figcaption>
-        </figure>
-      ))}
-    </div>
+    <QuoteStage items={work.testimonials} class="mt-32 md:mt-44" />
   </div>
 </section>

@@ -18,6 +18,7 @@ import textGenerate from './text-generate';
 import cardStack from './card-stack';
 import glowingStars from './glowing-stars';
 import ledGrid from './led-grid';
+import quoteStage from './quote-stage';
 import stickyBanner from './sticky-banner';
 
 export type MotionInit = (root: HTMLElement) => (() => void) | void;
@@ -41,6 +42,7 @@ registerMotion('generate', textGenerate);
 registerMotion('cardstack', cardStack);
 registerMotion('stars', glowingStars);
 registerMotion('ledgrid', ledGrid);
+registerMotion('quotes', quoteStage);
 registerMotion('banner', stickyBanner);
 
 let cleanups: Array<() => void> = [];
