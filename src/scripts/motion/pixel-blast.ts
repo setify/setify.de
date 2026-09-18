@@ -14,8 +14,9 @@ import { motionEnabled, isDesktop } from './gsap-setup';
 
 const MAX_CLICKS = 10;
 
-// Gold 700 auf sandfarbenem Grund.
-const COLOR: [number, number, number] = [0x7a / 255, 0x6a / 255, 0x4c / 255];
+// Gold 500 auf sandfarbenem Grund: heller als Gold 700, damit der Text
+// darueber ruhig lesbar bleibt.
+const COLOR: [number, number, number] = [0xbd / 255, 0xac / 255, 0x89 / 255];
 
 const VERT = `#version 300 es
 in vec2 position;
@@ -216,7 +217,7 @@ export default function pixelBlast(root: HTMLElement): () => void {
   gl.uniform1f(u('uRippleThickness'), 0.1);
   gl.uniform1f(u('uRippleIntensity'), 1.4);
   gl.uniform1f(u('uEdgeFade'), 0.32);
-  gl.uniform1f(u('uOpacity'), 0.45);
+  gl.uniform1f(u('uOpacity'), 0.6);
   gl.enable(gl.BLEND);
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
   gl.clearColor(0, 0, 0, 0);
