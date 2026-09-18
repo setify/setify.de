@@ -1,0 +1,8 @@
+---
+/** Pulsierendes LED-Raster als Hintergrund. Rein dekorativ. */
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<div class={`ki-led pointer-events-none absolute inset-0 overflow-hidden ${className}`} data-motion="ledgrid" aria-hidden="true">
+  <canvas class="h-full w-full" data-led-canvas></canvas>
+</div>

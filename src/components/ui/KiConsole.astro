@@ -1,0 +1,49 @@
+---
+import { site } from '@/content/site';
+const { console: konsole } = site.ki.page;
+const ersterLauf = konsole.runs[0];
+---
+<!--
+  Lauffaehiges Beispiel statt Symbolbild: die Konsole tippt einen Auftrag,
+  arbeitet ihn Schritt fuer Schritt ab und zeigt das Ergebnis. Zwei Laeufe
+  wechseln sich ab. Ohne Animation steht der erste Lauf fertig da.
+-->
+<div class="ki-console glow-card relative overflow-hidden rounded-3xl border border-anthracite-800 bg-anthracite-900/70 backdrop-blur-sm" data-motion="kiconsole" data-reveal>
+  <div class="flex items-center gap-3 border-b border-anthracite-800 px-5 py-3.5">
+    <span class="flex gap-1.5" aria-hidden="true">
+      <span class="h-2 w-2 rounded-full bg-gold-500/70"></span>
+      <span class="h-2 w-2 rounded-full bg-gold-500/40"></span>
+      <span class="h-2 w-2 rounded-full bg-gold-500/20"></span>
+    </span>
+    <span class="text-label text-paper-muted">{konsole.label}</span>
+    <span class="ml-auto inline-flex items-center gap-2 text-label text-gold-500">
+      <span class="ki-console__pulse h-1.5 w-1.5 rounded-full bg-gold-500" aria-hidden="true"></span>
+      <span data-console-status>bereit</span>
+    </span>
+  </div>
+
+  <div class="px-5 py-5 sm:px-6 sm:py-6">
+    <p class="text-small leading-relaxed text-sand-100">
+      <span class="mr-2 select-none text-gold-500" aria-hidden="true">&rsaquo;</span>
+      <span data-console-prompt>{ersterLauf.prompt}</span><span class="ki-console__caret" aria-hidden="true"></span>
+    </p>
+
+    <ol class="mt-6 flex flex-col gap-3">
+      {ersterLauf.steps.map((step) => (
+        <li class="ki-console__step flex items-center gap-3 text-small text-sand-100/85" data-console-step>
+          <span class="ki-console__mark grid h-5 w-5 shrink-0 place-items-center rounded-full border border-gold-500/40 text-gold-500" aria-hidden="true">
+            <svg class="h-2.5 w-2.5" viewBox="0 0 12 12" fill="none">
+              <path d="m2.5 6.2 2.4 2.4L9.5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+          <span data-console-step-text>{step}</span>
+        </li>
+      ))}
+    </ol>
+
+    <div class="ki-console__result mt-6 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-anthracite-800 pt-5" data-console-result>
+      <p class="text-sand-100" data-console-result-text>{ersterLauf.result}</p>
+      <p class="text-label text-gold-500" data-console-time>{ersterLauf.time}</p>
+    </div>
+  </div>
+</div>

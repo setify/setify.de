@@ -1,0 +1,22 @@
+---
+import { site } from '@/content/site';
+const { trust } = site;
+const groups = [0, 1];
+---
+<section id="vertrauen" class="section--dark relative overflow-hidden border-y border-anthracite-800/70 py-10" data-motion="marquee" aria-label={trust.label}>
+  <div class="container mb-6">
+    <p class="text-label text-paper-muted">{trust.label}</p>
+  </div>
+  <div class="flex w-max will-change-transform" data-marquee-track>
+    {groups.map((g) => (
+      <ul class="flex shrink-0 items-center gap-12 pr-12" data-marquee-group aria-hidden={g === 1}>
+        {trust.clients.map((c) => (
+          <li class="flex items-center gap-12">
+            <span class="font-display whitespace-nowrap text-numeral font-light text-sand-100/80">{c}</span>
+            <span class="block h-1.5 w-1.5 rounded-full bg-gold-500" aria-hidden="true"></span>
+          </li>
+        ))}
+      </ul>
+    ))}
+  </div>
+</section>

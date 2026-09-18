@@ -1,0 +1,56 @@
+---
+import { site, kiTeaserCards } from '@/content/site';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Button from '@/components/ui/Button.astro';
+import LedGrid from '@/components/ui/LedGrid.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
+const { teaser } = site.ki;
+const cards = kiTeaserCards();
+---
+<section id="ki" class="section section--dark relative overflow-hidden">
+  <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
+
+  <!-- Hintergrund: pulsierendes LED-Raster plus zwei treibende Goldschleier. -->
+  <LedGrid />
+  <div class="ki-beam pointer-events-none absolute -right-52 -top-40 h-[50rem] w-[50rem] opacity-50 [filter:blur(140px)] will-change-transform" aria-hidden="true"
+       style="background: radial-gradient(circle, rgba(189,172,137,0.34), rgba(122,106,76,0.13) 45%, transparent 70%)"></div>
+  <div class="ki-beam ki-beam--counter pointer-events-none absolute -bottom-56 -left-52 h-[45rem] w-[45rem] opacity-40 [filter:blur(150px)] will-change-transform" aria-hidden="true"
+       style="background: radial-gradient(circle, rgba(122,106,76,0.34), rgba(189,172,137,0.12) 50%, transparent 72%)"></div>
+
+  <div class="container relative">
+    <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+      <div>
+        <Eyebrow>{teaser.eyebrow}</Eyebrow>
+        <h2 class="font-display text-h2 mt-5 text-balance" data-split>
+          {teaser.title} <span class="gold-gradient-text">{teaser.titleAccent}</span>
+        </h2>
+      </div>
+      <p class="text-lead text-paper-muted" data-reveal>{teaser.lead}</p>
+    </div>
+
+    <ul class="mt-14 grid gap-4 md:grid-cols-3">
+      {cards.map((card) => (
+        <li
+          class="glow-card group relative overflow-hidden rounded-2xl bg-anthracite-900/70 p-6 backdrop-blur-sm transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)] hover:-translate-y-1"
+          data-reveal
+        >
+          <span
+            class="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            aria-hidden="true"
+            style="background: radial-gradient(60% 60% at 50% 0%, rgba(189,172,137,0.16), transparent 70%)"></span>
+
+          <div class="relative flex items-center justify-between gap-3">
+            <span class="font-display text-h4 text-gold-500">{card.number}</span>
+            <Icon name={card.icon as IconName} size={20} class="text-gold-500/70 transition-colors duration-500 group-hover:text-gold-500" animate />
+          </div>
+          <h3 class="relative font-display mt-3 text-h4 leading-tight">{card.title}</h3>
+          <p class="relative mt-3 text-small text-sand-100/70">{card.text}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-12" data-reveal>
+      <Button href={teaser.cta.href} magnetic>{teaser.cta.label}</Button>
+    </div>
+  </div>
+</section>

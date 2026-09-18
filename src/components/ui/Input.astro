@@ -1,0 +1,88 @@
+---
+/**
+ * Formularfeld mit fest stehendem Label ueber dem Feld.
+ *
+ * Bewusst kein mitwanderndes Label mehr: es schrumpft genau dann, wenn Inhalt
+ * da ist, also wenn man es zum Pruefen am ehesten braucht, und es verschiebt
+ * den Platzhalter in den Fokus-Zustand. Ein festes Label bleibt lesbar,
+ * funktioniert mit Autofill und laesst Platz fuer einen Hinweis rechts daneben.
+ *
+ * Die Fehlerzeile hat keine feste Hoehe und ist ueber aria-describedby mit dem
+ * Feld verbunden, damit Screenreader sie beim Fokussieren mit vorlesen.
+ */
+interface Props {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'textarea';
+  required?: boolean;
+  autocomplete?: string;
+  inputmode?: 'text' | 'tel' | 'email' | 'numeric';
+  /** Kurzer Hinweis rechts neben dem Label, etwa ein Beispiel. */
+  hint?: string;
+  placeholder?: string;
+  rows?: number;
+  /** Mindestlaenge, ab der ein Zeichenzaehler unter dem Feld mitlaeuft. */
+  minLength?: number;
+  class?: string;
+}
+const {
+  name, label, type = 'text', required = false, autocomplete, inputmode,
+  hint, placeholder, rows = 4, minLength, class: className = '',
+} = Astro.props;
+
+const id = `field-${name}`;
+const errorId = `${id}-error`;
+const hintId = hint ? `${id}-hint` : undefined;
+const describedBy = [hintId, errorId].filter(Boolean).join(' ');
+---
+<div class={`field ${className}`} data-field={name}>
+  <div class="flex items-baseline justify-between gap-3">
+    <label for={id} class="text-label text-ink-muted">
+      {label}{required && <span class="text-gold-700" aria-hidden="true"> *</span>}
+    </label>
+    {hint ? (
+      <span id={hintId} class="text-[0.7rem] text-ink-muted/75">{hint}</span>
+    ) : (
+      !required && <span class="text-[0.7rem] text-ink-muted/75">optional</span>
+    )}
+  </div>
+
+  <div class="relative mt-2">
+    {type === 'textarea' ? (
+      <textarea
+        id={id}
+        name={name}
+        rows={rows}
+        required={required}
+        placeholder={placeholder}
+        aria-describedby={describedBy}
+        data-min-length={minLength}
+        class="field-control block max-h-[22rem] resize-none py-3.5"
+      ></textarea>
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        required={required}
+        autocomplete={autocomplete}
+        inputmode={inputmode}
+        placeholder={placeholder}
+        aria-describedby={describedBy}
+        class="field-control h-14"
+      />
+    )}
+
+    <svg
+      class="field-check pointer-events-none absolute right-4 top-4 h-4 w-4 text-gold-700"
+      viewBox="0 0 16 16" fill="none" aria-hidden="true"
+    >
+      <path d="m3 8.5 3.5 3.5L13 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
+
+  <div class="mt-1.5 flex items-start justify-between gap-3">
+    <p id={errorId} class="text-[0.75rem] leading-tight text-red-700 empty:hidden" data-error-for={name} aria-live="polite"></p>
+    {minLength && <p class="ml-auto shrink-0 text-[0.7rem] tabular-nums text-ink-muted/70 empty:hidden" data-counter-for={name}></p>}
+  </div>
+</div>

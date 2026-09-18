@@ -1,0 +1,9 @@
+---
+/** Goldenes Partikelfeld auf Canvas. Rein dekorativ, pausiert ausserhalb des
+ *  Viewports und faellt bei reduzierter Bewegung auf einen statischen Verlauf. */
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+<div class={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} data-motion="sparkles" aria-hidden="true">
+  <canvas class="h-full w-full" data-sparkles-canvas></canvas>
+</div>

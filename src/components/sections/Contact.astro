@@ -1,0 +1,117 @@
+---
+import { site } from '@/content/site';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Input from '@/components/ui/Input.astro';
+import ChoiceGroup from '@/components/ui/ChoiceGroup.astro';
+const { contact, meta } = site;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+<section id="kontakt" class="section section--dark relative overflow-hidden">
+  <div class="pointer-events-none absolute -left-40 top-1/2 h-[60rem] w-[60rem] -translate-y-1/2 rounded-full opacity-40 [filter:blur(120px)]" aria-hidden="true" style="background: radial-gradient(circle, rgba(189,172,137,0.55), rgba(122,106,76,0.2) 45%, transparent 70%)"></div>
+  <div class="container relative grid gap-14 lg:grid-cols-[1fr_1.1fr]">
+    <div>
+      <Eyebrow>{contact.eyebrow}</Eyebrow>
+      <h2 class="font-display text-h2 mt-5 text-balance" data-split>{contact.title}</h2>
+      <p class="text-lead mt-6 text-paper-muted" data-reveal>{contact.text}</p>
+      <dl class="mt-10 flex flex-col gap-4 text-sand-100/80" data-reveal>
+        <div><dt class="text-label text-gold-500">E-Mail</dt><dd><a href={`mailto:${meta.email}`} class="hover:text-gold-300">{meta.email}</a></dd></div>
+        <div><dt class="text-label text-gold-500">Standort</dt><dd>{meta.city}</dd></div>
+      </dl>
+    </div>
+
+    <div class="relative overflow-hidden rounded-3xl bg-sand-100 p-6 text-anthracite-950 shadow-[0_40px_80px_-50px_rgba(10,12,17,0.9)] md:p-9 [color-scheme:light]" data-reveal>
+      <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
+
+      <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+        <p class="text-label text-gold-700">Projektanfrage</p>
+        <p class="text-[0.75rem] text-ink-muted">Dauert zwei Minuten</p>
+      </div>
+
+      <form class="mt-7 grid gap-5" action="/api/contact" method="post" novalidate data-contact-form>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Input name="firstName" label="Vorname" required autocomplete="given-name" />
+          <Input name="lastName" label="Nachname" required autocomplete="family-name" />
+        </div>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Input name="email" label="E-Mail" type="email" required autocomplete="email" inputmode="email" hint="für unsere Antwort" />
+          <Input name="phone" label="Telefon" type="tel" autocomplete="tel" inputmode="tel" />
+        </div>
+
+        <ChoiceGroup name="projectType" label="Worum geht es?" required options={contact.projectTypes} />
+
+        <Input
+          name="message"
+          label="Nachricht"
+          type="textarea"
+          required
+          rows={4}
+          minLength={20}
+          placeholder="Worum geht es, was ist dein Ziel, bis wann soll es fertig sein?"
+        />
+
+        <div class="hidden" aria-hidden="true">
+          <label for="field-website">Website</label>
+          <input id="field-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div>
+          <label class="flex cursor-pointer items-start gap-3 text-small leading-snug text-ink-muted">
+            <input type="checkbox" name="consent" value="on" required class="peer sr-only" aria-describedby="field-consent-error" />
+            <span
+              class="consent-box mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[0.4rem] border border-anthracite-950/25 bg-sand-50 transition-colors duration-200
+                     peer-checked:border-gold-700 peer-checked:bg-gold-700
+                     peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-gold-700"
+              aria-hidden="true"
+            >
+              <svg class="h-3 w-3 text-sand-50" viewBox="0 0 12 12" fill="none" data-consent-check>
+                <path d="m2.5 6.2 2.4 2.4L9.5 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span>Ich habe die <a href="/datenschutz" class="underline decoration-gold-700/50 underline-offset-2 hover:text-anthracite-950">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben einverstanden. <span class="text-gold-700" aria-hidden="true">*</span></span>
+          </label>
+          <p id="field-consent-error" class="mt-1.5 text-[0.75rem] leading-tight text-red-700 empty:hidden" data-error-for="consent" aria-live="polite"></p>
+        </div>
+
+        {siteKey && <div class="cf-turnstile" data-sitekey={siteKey} data-theme="light" data-size="flexible"></div>}
+
+        <p class="hidden rounded-xl border border-red-700/30 bg-red-50 px-4 py-3 text-[0.85rem] text-red-800" role="alert" data-contact-error></p>
+
+        <div class="mt-1">
+          <button
+            type="submit"
+            class="group relative inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold-500 px-7 py-4 font-semibold text-anthracite-950 transition-[background-color,transform] duration-500 hover:bg-gold-300 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+            data-magnetic
+          >
+            <span class="submit-spinner h-4 w-4 shrink-0 rounded-full border-2 border-anthracite-950/25 border-t-anthracite-950" aria-hidden="true"></span>
+            <span data-submit-label>Anfrage senden</span>
+            <svg class="submit-arrow h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </button>
+          <p class="mt-3 text-center text-[0.75rem] text-ink-muted">Kein Newsletter, keine Weitergabe an Dritte. Pflichtfelder sind mit <span class="text-gold-700">*</span> markiert.</p>
+        </div>
+      </form>
+
+      <div class="absolute inset-0 grid place-items-center rounded-3xl bg-sand-100 p-10 text-center" hidden tabindex="-1" data-contact-success>
+        <div>
+          <svg class="mx-auto h-16 w-16 text-gold-700" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="1.5" data-success-circle />
+            <path d="M20 33l8 8 16-18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-success-check />
+          </svg>
+          <h3 class="font-display text-h3 mt-6">{contact.success.title}</h3>
+          <p class="mt-3 text-ink-muted">{contact.success.text}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    import { initContactForm } from '@/scripts/contact-form';
+    let cleanup: (() => void) | undefined;
+    const setup = () => {
+      cleanup?.();
+      const root = document.getElementById('kontakt');
+      cleanup = root ? initContactForm(root) : undefined;
+    };
+    document.addEventListener('astro:page-load', setup);
+    document.addEventListener('astro:before-swap', () => cleanup?.());
+  </script>
+  {siteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+</section>

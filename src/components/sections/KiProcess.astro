@@ -1,0 +1,42 @@
+---
+import { site } from '@/content/site';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import GlowingStars from '@/components/ui/GlowingStars.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
+const { process } = site.ki;
+---
+<!--
+  Drei Schritte an einer Schiene statt in drei Karten. Die goldene Linie
+  waechst beim Scrollen mit und schaltet die Schritte nacheinander ein.
+  Die Textbloecke stehen versetzt, damit kein gleichfoermiges Raster entsteht.
+-->
+<section id="ki-prozess" class="section section--dark relative overflow-hidden" data-motion="kirail">
+  <GlowingStars class="opacity-60" />
+
+  <div class="container relative">
+    <SectionHeading tone="dark" eyebrow={process.eyebrow} title={process.title} />
+
+    <ol class="relative mt-20 grid gap-14 md:grid-cols-3 md:gap-8">
+      <!-- Schiene liegt auf der Mitte der Marken. -->
+      <div class="pointer-events-none absolute left-0 right-0 top-9 hidden h-px bg-anthracite-800 md:block" aria-hidden="true">
+        <span class="block h-px w-full origin-left scale-x-0 bg-[image:var(--gold-gradient)]" data-ki-rail-fill></span>
+      </div>
+
+      {process.steps.map((step, i) => (
+        <li class="ki-step relative" data-ki-step>
+          <div class="flex items-center gap-5">
+            <span class="ki-step__mark relative grid h-[4.5rem] w-[4.5rem] shrink-0 place-items-center rounded-full border border-anthracite-800 bg-anthracite-950 text-gold-500">
+              <Icon name={step.icon as IconName} size={24} animate />
+            </span>
+            <span class="ki-step__number font-display text-numeral font-light leading-none text-gold-700">{step.number}</span>
+          </div>
+
+          <div class={`ki-step__body mt-8 ${i === 1 ? 'md:mt-16' : i === 2 ? 'md:mt-24' : 'md:mt-8'}`}>
+            <h3 class="font-display text-h3">{step.title}</h3>
+            <p class="mt-4 max-w-[34ch] text-paper-muted">{step.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

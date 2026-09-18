@@ -1,0 +1,21 @@
+---
+interface Props {
+  href: string;
+  variant?: 'gold' | 'ghost';
+  magnetic?: boolean;
+  class?: string;
+}
+const { href, variant = 'gold', magnetic = false, class: className = '' } = Astro.props;
+const base =
+  'group relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-small font-semibold transition-[transform,box-shadow,background-color,color] duration-500 [transition-timing-function:var(--ease-out-expo)] will-change-transform';
+const variants = {
+  gold: 'bg-gold-500 text-anthracite-950 hover:bg-gold-300 hover:shadow-[0_20px_60px_-20px_rgba(189,172,137,0.6)]',
+  ghost: 'border border-gold-500/50 text-current hover:border-gold-500 hover:bg-gold-500/10',
+};
+---
+<a href={href} class={`${base} ${variants[variant]} ${className}`} data-magnetic={magnetic ? '' : undefined}>
+  <span class="relative z-10"><slot /></span>
+  <svg class="relative z-10 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</a>

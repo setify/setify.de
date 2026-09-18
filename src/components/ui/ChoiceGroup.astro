@@ -1,0 +1,40 @@
+---
+/**
+ * Auswahl als Chip-Reihe statt als Auswahlliste.
+ *
+ * Sechs Projektarten passen nebeneinander, dadurch entfaellt das Aufklappen:
+ * alle Optionen sind sofort sichtbar, ein Tipp genuegt und die Trefferflaeche
+ * ist auf dem Handy gross genug. Technisch bleiben es Radios, der abgeschickte
+ * Wert ist derselbe wie vorher.
+ */
+interface Props {
+  name: string;
+  label: string;
+  options: { value: string; label: string }[];
+  required?: boolean;
+  class?: string;
+}
+const { name, label, options, required = false, class: className = '' } = Astro.props;
+const errorId = `field-${name}-error`;
+---
+<fieldset class={`field ${className}`} data-field={name} aria-describedby={errorId}>
+  <legend class="text-label text-ink-muted">
+    {label}{required && <span class="text-gold-700" aria-hidden="true"> *</span>}
+  </legend>
+
+  <div class="mt-2 flex flex-wrap gap-2">
+    {options.map((option) => (
+      <label class="cursor-pointer">
+        <input type="radio" name={name} value={option.value} required={required} class="peer sr-only" />
+        <span
+          class="block rounded-full border border-anthracite-950/15 bg-sand-50 px-4 py-3 text-small transition-colors duration-300
+                 hover:border-anthracite-950/35
+                 peer-checked:border-gold-700 peer-checked:bg-gold-700 peer-checked:text-sand-50
+                 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-gold-700"
+        >{option.label}</span>
+      </label>
+    ))}
+  </div>
+
+  <p id={errorId} class="mt-1.5 text-[0.75rem] leading-tight text-red-700 empty:hidden" data-error-for={name} aria-live="polite"></p>
+</fieldset>

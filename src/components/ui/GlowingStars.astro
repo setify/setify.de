@@ -1,0 +1,15 @@
+---
+/** Punktraster, in dem zufaellige Punkte aufleuchten. Reines DOM, der Schein
+ *  kommt aus box-shadow, damit er exakt den Gold-Token trifft. */
+interface Props { rows?: number; cols?: number; class?: string }
+const { rows = 8, cols = 14, class: className = '' } = Astro.props;
+const dots = Array.from({ length: rows * cols });
+---
+<div
+  class={`pointer-events-none absolute inset-0 grid place-items-center overflow-hidden ${className}`}
+  style={`grid-template-columns: repeat(${cols}, minmax(0, 1fr)); grid-template-rows: repeat(${rows}, minmax(0, 1fr))`}
+  data-motion="stars"
+  aria-hidden="true"
+>
+  {dots.map(() => <span class="block h-[3px] w-[3px] rounded-full bg-gold-500 opacity-20" data-star></span>)}
+</div>

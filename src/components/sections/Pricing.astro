@@ -1,0 +1,37 @@
+---
+import { site } from '@/content/site';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import Button from '@/components/ui/Button.astro';
+const { pricing } = site;
+---
+<section id="preise" class="section section--dark">
+  <div class="container">
+    <SectionHeading tone="dark" eyebrow={pricing.eyebrow} title={pricing.title} align="center" />
+    <div class="mt-16 grid gap-6 lg:grid-cols-3">
+      {pricing.plans.map((plan) => (
+        <article class={`relative flex flex-col rounded-3xl p-8 ${plan.recommended ? 'bg-anthracite-900 ring-1 ring-gold-500 shadow-[0_40px_120px_-40px_rgba(189,172,137,0.35)]' : 'border border-anthracite-800 bg-anthracite-950'}`} data-reveal>
+          {plan.recommended && <span class="absolute -top-3 left-8 rounded-full bg-gold-500 px-3 py-1 text-label text-anthracite-950">Empfohlen</span>}
+          <h3 class="font-display text-h3">{plan.name}</h3>
+          <p class="mt-6 flex flex-wrap items-baseline gap-2">
+            {plan.prefix && <span class="text-small text-paper-muted">{plan.prefix}</span>}
+            <span class="font-display text-numeral leading-none text-gold-500">{plan.price}</span>
+          </p>
+          {plan.period && <p class="mt-2 text-small text-paper-muted">{plan.period}</p>}
+          <p class="mt-5 text-sand-100/80">{plan.text}</p>
+          <ul class="mt-6 flex flex-col gap-3 text-small">
+            {plan.features.map((f) => (
+              <li class="flex gap-3">
+                <svg class="mt-1 h-3.5 w-3.5 shrink-0 text-gold-500" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-8 pt-2">
+            <Button href="#kontakt" variant={plan.recommended ? 'gold' : 'ghost'} class="w-full">{plan.cta}</Button>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="mt-8 text-center text-small text-paper-muted">{pricing.note}</p>
+  </div>
+</section>

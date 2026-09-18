@@ -1,0 +1,54 @@
+---
+import { site } from '@/content/site';
+
+/**
+ * Strukturierte Daten der Startseite als Graph: das Unternehmen, die Website
+ * und die Fragenliste. Die FAQ kommt aus demselben Inhalt wie die Sektion,
+ * damit Auszeichnung und sichtbarer Text nie auseinanderlaufen. Google
+ * verlangt genau das.
+ */
+const { meta, faq, services } = site;
+
+const data = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${meta.url}#organization`,
+      name: 'setify',
+      description: meta.description,
+      url: meta.url,
+      email: meta.email,
+      image: `${meta.url}/og.png`,
+      logo: `${meta.url}/logo.svg`,
+      founder: { '@type': 'Person', name: 'Philipp Walter' },
+      address: { '@type': 'PostalAddress', streetAddress: 'Linder Weg 16a', postalCode: '51147', addressLocality: 'Köln', addressCountry: 'DE' },
+      areaServed: 'DE',
+      priceRange: '€€€',
+      knowsAbout: ['Webdesign', 'Webentwicklung', 'Performance-Optimierung', 'UX Design', 'KI-Beratung', 'Prozessautomatisierung'],
+      makesOffer: services.items.map((item) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: item.title, description: item.text },
+      })),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${meta.url}#website`,
+      url: meta.url,
+      name: 'setify',
+      inLanguage: 'de-DE',
+      publisher: { '@id': `${meta.url}#organization` },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${meta.url}#faq`,
+      mainEntity: faq.items.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    },
+  ],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(data).replace(/</g, '<')} />

@@ -1,0 +1,38 @@
+---
+import { site } from '@/content/site';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Icon from '@/components/ui/Icon.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
+const { privacy } = site.ki;
+---
+<section id="ki-datenschutz" class="section section--dark relative overflow-hidden">
+  <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
+  <div class="container grid gap-14 lg:grid-cols-[1fr_1fr]">
+    <div>
+      <Eyebrow>{privacy.eyebrow}</Eyebrow>
+      <h2 class="font-display text-h2 mt-5 text-balance" data-split>{privacy.title}</h2>
+      <p class="text-lead mt-6 text-paper-muted" data-reveal>{privacy.text}</p>
+    </div>
+    <ul class="flex flex-col justify-center gap-4" data-reveal>
+      {privacy.points.map((point) => (
+        <li class="flex items-start gap-4 border-b border-anthracite-800 pb-4 last:border-0">
+          <Icon name="shieldCheck" size={18} class="mt-0.5 shrink-0 text-gold-500" />
+          <span class="text-sand-100/85">{point}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="container mt-14">
+    <div class="relative overflow-hidden rounded-3xl" data-reveal>
+      <ImagePlaceholder
+        id={privacy.image.id}
+        ratio={privacy.image.ratio}
+        label={privacy.image.label}
+        alt={privacy.image.alt}
+        prompt={privacy.image.prompt}
+      />
+      <span class="pointer-events-none absolute inset-0 rounded-3xl bg-[linear-gradient(to_right,rgba(26,27,30,0.75),transparent_55%)]" aria-hidden="true"></span>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,31 @@
+---
+import { site } from '@/content/site';
+const { banner } = site.ki;
+---
+<div
+  class="overflow-hidden border-b border-gold-500/20 bg-[image:var(--gold-gradient)] text-anthracite-950"
+  data-motion="banner"
+  data-ki-banner
+>
+  <div class="container flex items-center justify-between gap-4 py-2.5">
+    <p class="text-small font-medium leading-snug">
+      {banner.text}
+      <a href={banner.cta.href} class="ml-2 inline-flex items-center gap-1 font-semibold underline underline-offset-2 hover:no-underline">
+        {banner.cta.label}
+        <svg class="h-3 w-3" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </p>
+    <button
+      type="button"
+      class="grid h-7 w-7 shrink-0 place-items-center rounded-full transition-colors hover:bg-anthracite-950/10"
+      aria-label={banner.dismissLabel}
+      data-ki-banner-close
+    >
+      <svg class="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+</div>

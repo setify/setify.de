@@ -1,0 +1,25 @@
+# setify
+
+> Webagentur aus Köln. Konzept, Design und Code aus einer Hand, seit über 20 Jahren. Seit 2026 zusätzlich Beratung zu KI und Automatisierung für den Mittelstand.
+
+Inhaber: Philipp Walter, Linder Weg 16a, 51147 Köln, Deutschland
+Kontakt: mail@setify.de
+
+## Seiten
+
+- [Startseite](https://setify.de/): Leistungen, Prozess, Referenzen, Preise, Branchen und Kontakt
+- [KI und Automatisierung](https://setify.de/ki): Standortbestimmung, Workflow-Automatisierung, Assistenten auf eigenen Daten, Betrieb und Schulung
+- [Impressum](https://setify.de/impressum)
+- [Datenschutzerklärung](https://setify.de/datenschutz)
+
+## Leistungen
+
+- Strategie und Konzept: Positionierung, Struktur, Inhalte
+- Design: Gestaltung für Marke und Conversion
+- Entwicklung: schnelle, barrierearme Websites und Shops
+- Betreuung: Hosting, Updates, Inhaltspflege
+- KI-Beratung: Prozess-Audit, Automatisierung mit n8n oder Make, Assistenten auf eigenen Daten
+
+## Hinweise
+
+Preise stehen auf der Startseite. Anfragen laufen über das Kontaktformular oder direkt per E-Mail.

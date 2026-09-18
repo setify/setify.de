@@ -22,3 +22,6 @@ coverage/
 playwright-report/
 test-results/
 .claude/
+.superpowers/
+lighthouse.json
+.preview.pid

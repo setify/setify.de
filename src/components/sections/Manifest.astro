@@ -1,0 +1,19 @@
+---
+import { site } from '@/content/site';
+const { manifest } = site;
+
+function markup(text: string, highlights: string[]): string {
+  const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  let out = escape(text);
+  for (const h of highlights) {
+    out = out.replace(escape(h), `<em>${escape(h)}</em>`);
+  }
+  return out;
+}
+const html = markup(manifest.text, manifest.highlights);
+---
+<section id="manifest" class="section section--dark" data-motion="manifest">
+  <div class="container">
+    <p class="font-display text-statement text-paper-muted [&_em]:not-italic [&_em]:text-inherit max-w-6xl" data-manifest-text set:html={html} />
+  </div>
+</section>

@@ -44,7 +44,7 @@ Regeln: Gold nie flächig als Hintergrund ganzer Sektionen. Sektionen wechseln z
 
 | Rolle | Font | Gewichte | Details |
 |---|---|---|---|
-| Headlines | Fraunces (variable) | 300 bis 600 | Optische Größe aktiv, Letterspacing -0.02em, Zeilenhöhe 0.95 bis 1.05 |
+| Headlines | Space Grotesk (variable) | 500 bis 600 | Letterspacing -0.035em, Zeilenhöhe 0.95 bis 1.05 (Fraunces am 2026-09-08 ersetzt, Wunsch: nur Sans) |
 | Text, UI | Manrope (variable) | 400 bis 700 | Zeilenhöhe 1.6 |
 | Labels, Zahlen | Manrope | 600 | Uppercase, Letterspacing 0.12em, 12 bis 13 px |
 

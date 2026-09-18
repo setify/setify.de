@@ -1,0 +1,45 @@
+---
+import { site } from '@/content/site';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import PixelBlast from '@/components/ui/PixelBlast.astro';
+const { numbers } = site;
+
+// Zweispaltig ab sm: die rechte Spalte bekommt die Trennlinie, die linke den
+// Abstand zur Linie. Daraus entsteht ein Raster ohne Karten.
+const zellenKlassen = (i: number) =>
+  i % 2 === 1 ? 'sm:border-l sm:border-anthracite-950/10 sm:pl-10' : 'sm:pr-10';
+---
+<section id="zahlen" class="section section--sand relative overflow-hidden py-20 md:py-28" data-motion="counters">
+  <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
+  <div class="gold-line absolute inset-x-0 bottom-0" aria-hidden="true"></div>
+
+  <!-- Hintergrund: Pixel Blast, gedithertes Punktraster mit Ringen auf Klick. -->
+  <PixelBlast />
+
+  <div class="container relative">
+    <div class="grid gap-12 lg:grid-cols-[0.85fr_2fr] lg:gap-16">
+      <div>
+        <Eyebrow tone="sand">{numbers.eyebrow}</Eyebrow>
+        <h2 class="font-display text-h2 mt-5 text-balance" data-split>{numbers.title}</h2>
+        <p class="mt-6 max-w-[34ch] text-ink-muted" data-reveal>{numbers.lead}</p>
+      </div>
+
+      <ul class="grid sm:grid-cols-2">
+        {numbers.items.map((n, i) => (
+          <li class={`group relative border-t border-anthracite-950/10 py-8 sm:py-10 ${zellenKlassen(i)}`} data-reveal>
+            <span
+              class="pointer-events-none absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gold-700/80 transition-transform duration-700 [transition-timing-function:var(--ease-out-expo)] group-hover:scale-x-100"
+              aria-hidden="true"></span>
+
+            <p class="stat-numeral flex items-baseline text-numeral leading-none text-anthracite-950 transition-colors duration-500 group-hover:text-gold-700">
+              <span data-counter data-value={n.value} data-suffix="">{n.value}</span>
+              {n.suffix && <span class="text-gold-700">{n.suffix}</span>}
+            </p>
+            <p class="mt-5 font-medium">{n.label}</p>
+            <p class="mt-2 max-w-[32ch] text-small text-ink-muted">{n.note}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

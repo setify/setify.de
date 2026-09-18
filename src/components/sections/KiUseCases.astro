@@ -1,0 +1,31 @@
+---
+import { site } from '@/content/site';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import CardStack from '@/components/ui/CardStack.astro';
+import LedGrid from '@/components/ui/LedGrid.astro';
+const { useCases } = site.ki;
+---
+<section id="ki-anwendungen" class="section section--dark relative overflow-hidden">
+  <LedGrid class="opacity-70" />
+
+  <div class="container relative grid items-center gap-14 lg:grid-cols-[1fr_1fr]">
+    <div>
+      <SectionHeading tone="dark" eyebrow={useCases.eyebrow} title={useCases.title} lead={useCases.lead} />
+
+      <!-- Zeigt an, welche Karte gerade vorne liegt. Rein informativ, die
+           Karten wechseln von selbst und halten bei Hover an. -->
+      <ul class="mt-10 flex flex-col gap-2" aria-hidden="true">
+        {useCases.items.map((item) => (
+          <li class="ki-case-mark flex items-center gap-3 text-small" data-stack-dot>
+            <span class="ki-case-mark__bar block h-px w-6 bg-gold-500"></span>
+            <span>{item.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div data-reveal>
+      <CardStack items={useCases.items} />
+    </div>
+  </div>
+</section>

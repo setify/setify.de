@@ -1,0 +1,38 @@
+---
+import Base from '@/layouts/Base.astro';
+import Nav from '@/components/layout/Nav.astro';
+import Footer from '@/components/layout/Footer.astro';
+import Hero from '@/components/sections/Hero.astro';
+import TrustMarquee from '@/components/sections/TrustMarquee.astro';
+import Manifest from '@/components/sections/Manifest.astro';
+import Services from '@/components/sections/Services.astro';
+import KiTeaser from '@/components/sections/KiTeaser.astro';
+import Process from '@/components/sections/Process.astro';
+import Work from '@/components/sections/Work.astro';
+import Numbers from '@/components/sections/Numbers.astro';
+import Pricing from '@/components/sections/Pricing.astro';
+import Industries from '@/components/sections/Industries.astro';
+import Faq from '@/components/sections/Faq.astro';
+import Contact from '@/components/sections/Contact.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import { site } from '@/content/site';
+---
+<Base title={site.meta.title} description={site.meta.description}>
+  <JsonLd slot="head" />
+  <Nav />
+  <main>
+    <Hero />
+    <TrustMarquee />
+    <Manifest />
+    <Services />
+    <Process />
+    <KiTeaser />
+    <Work />
+    <Numbers />
+    <Pricing />
+    <Industries />
+    <Faq />
+    <Contact />
+  </main>
+  <Footer />
+</Base>
