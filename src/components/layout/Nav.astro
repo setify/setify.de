@@ -13,6 +13,18 @@ const barColor = sand ? 'bg-anthracite-950' : 'bg-sand-100';
 // Praefix haengt am Ort, nicht am Farbton: /ki ist dunkel und trotzdem Unterseite.
 const href = (h: string) => navHref(h, Astro.url.pathname);
 const isCurrent = (h: string) => h === Astro.url.pathname;
+
+// Der KI-Bereich ist die einzige eigene Seite im Menue und das neueste
+// Angebot. Er laeuft deshalb als goldene Pille statt als Textlink.
+const KI_HREF = '/ki';
+const kiBasis =
+  'nav-ki relative inline-flex items-center gap-2 overflow-hidden rounded-full px-3.5 py-1.5 text-small font-medium transition-colors duration-300';
+const kiRuhe = sand
+  ? 'border border-gold-700/35 bg-gold-500/15 text-gold-700 hover:bg-gold-500/25'
+  : 'border border-gold-500/40 bg-gold-500/10 text-gold-300 hover:bg-gold-500/20';
+const kiAktiv = sand
+  ? 'border border-gold-700 bg-gold-700 text-sand-50'
+  : 'border border-gold-500 bg-gold-500 text-anthracite-950';
 ---
 <header class="fixed inset-x-0 top-0 z-50 transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)]" data-motion="nav" data-nav>
   {banner && <StickyBanner />}
@@ -24,7 +36,14 @@ const isCurrent = (h: string) => h === Astro.url.pathname;
     <ul class="hidden items-center gap-6 lg:flex xl:gap-8">
       {site.nav.links.map((l) => (
         <li>
-          <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`relative whitespace-nowrap text-small font-medium transition-colors duration-300 ${linkColor} after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold-500 after:transition-[width] after:duration-500 hover:after:w-full ${isCurrent(l.href) ? 'after:w-full' : 'after:w-0'}`}>{l.label}</a>
+          {l.href === KI_HREF ? (
+            <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`${kiBasis} ${isCurrent(l.href) ? kiAktiv : kiRuhe}`}>
+              <span class="nav-ki__dot" aria-hidden="true"></span>
+              {l.label}
+            </a>
+          ) : (
+            <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`relative whitespace-nowrap text-small font-medium transition-colors duration-300 ${linkColor} after:absolute after:-bottom-1 after:left-0 after:h-px after:bg-gold-500 after:transition-[width] after:duration-500 hover:after:w-full ${isCurrent(l.href) ? 'after:w-full' : 'after:w-0'}`}>{l.label}</a>
+          )}
         </li>
       ))}
     </ul>
@@ -41,7 +60,12 @@ const isCurrent = (h: string) => h === Astro.url.pathname;
     <ul class="flex flex-col gap-6">
       {site.nav.links.map((l) => (
         <li data-nav-overlay-item>
-          <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`font-display text-h2 ${isCurrent(l.href) ? 'text-gold-500' : 'text-sand-100'}`} data-nav-link>{l.label}</a>
+          <a href={href(l.href)} aria-current={isCurrent(l.href) ? 'page' : undefined} class={`inline-flex items-center gap-3 font-display text-h2 ${l.href === KI_HREF || isCurrent(l.href) ? 'text-gold-500' : 'text-sand-100'}`} data-nav-link>
+            {l.label}
+            {l.href === KI_HREF && (
+              <span class="nav-ki rounded-full border border-gold-500/50 px-2.5 py-1 font-sans text-label text-gold-300">Neu</span>
+            )}
+          </a>
         </li>
       ))}
     </ul>

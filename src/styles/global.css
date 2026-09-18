@@ -243,6 +243,43 @@ html.js.motion-ready [data-icon='draw'].is-drawn > *:nth-child(n+4) { animation-
   html.js [data-icon='draw'] > * { stroke-dasharray: none; stroke-dashoffset: 0; }
 }
 
+/* --- KI im Menue --------------------------------------------------------
+   Goldene Pille statt Textlink, mit einem kleinen Punkt davor und einem
+   Lichtstreifen, der alle paar Sekunden durchlaeuft. Der Streifen liegt
+   hinter dem Text und nimmt keine Zeiger an. */
+.nav-ki__dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: nav-ki-puls 2.8s ease-in-out infinite;
+}
+
+@keyframes nav-ki-puls {
+  0%, 100% { opacity: 0.45; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+.nav-ki::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(227, 214, 184, 0.5) 50%, transparent 62%);
+  transform: translateX(-120%);
+  animation: nav-ki-glanz 7s ease-in-out infinite;
+}
+
+@keyframes nav-ki-glanz {
+  0%, 62% { transform: translateX(-120%); }
+  78%, 100% { transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-ki::after { display: none; }
+  .nav-ki__dot { animation: none; opacity: 1; }
+}
+
 /* --- Formularfelder -----------------------------------------------------
    Eine Klasse fuer Eingabe, Textfeld und Auswahl, damit Fokus, Fehler und
    Ruhezustand ueberall gleich aussehen. Der Fokusring ist bewusst deutlich:
