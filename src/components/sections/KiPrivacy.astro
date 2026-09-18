@@ -2,6 +2,7 @@
 import { site } from '@/content/site';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import Icon from '@/components/ui/Icon.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 const { privacy } = site.ki;
 ---
 <section id="ki-datenschutz" class="section section--dark relative overflow-hidden">
@@ -20,5 +21,18 @@ const { privacy } = site.ki;
         </li>
       ))}
     </ul>
+  </div>
+
+  <div class="container mt-14">
+    <div class="relative overflow-hidden rounded-3xl" data-reveal>
+      <ImagePlaceholder
+        id={privacy.image.id}
+        ratio={privacy.image.ratio}
+        label={privacy.image.label}
+        alt={privacy.image.alt}
+        prompt={privacy.image.prompt}
+      />
+      <span class="pointer-events-none absolute inset-0 rounded-3xl bg-[linear-gradient(to_right,rgba(26,27,30,0.75),transparent_55%)]" aria-hidden="true"></span>
+    </div>
   </div>
 </section>

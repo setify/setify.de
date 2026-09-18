@@ -2,6 +2,7 @@
 import { site } from '@/content/site';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import Icon, { type IconName } from '@/components/ui/Icon.astro';
+import ImagePlaceholder from '@/components/ui/ImagePlaceholder.astro';
 const { services } = site.ki;
 ---
 <!--
@@ -11,7 +12,7 @@ const { services } = site.ki;
   Startseite, deshalb dasselbe Modul und dieselben Datenattribute.
   Darunter stehen die Karten schlicht untereinander.
 -->
-<section id="ki-leistungen" class="section--sand relative overflow-hidden py-24 lg:py-28" data-motion="process">
+<section id="ki-leistungen" class="section--sand relative overflow-hidden py-16 lg:py-20" data-motion="process">
   <div class="gold-line absolute inset-x-0 top-0" aria-hidden="true"></div>
 
   <!-- Kopf zweispaltig: gepinnt zaehlt jede Zeile Hoehe, die Karte muss
@@ -30,33 +31,49 @@ const { services } = site.ki;
     <ol class="container flex flex-col gap-6 lg:w-max lg:max-w-none lg:flex-row lg:gap-8" data-process-track>
       {services.items.map((item) => (
         <li
-          class="glow-card glow-card--sand group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-anthracite-950/10 bg-sand-50 p-8 lg:h-[24rem] lg:w-[40rem] lg:shrink-0 lg:p-11"
+          class="glow-card glow-card--sand group relative overflow-hidden rounded-3xl border border-anthracite-950/10 bg-sand-50 lg:h-[28rem] lg:w-[46rem] lg:shrink-0"
           data-process-card
           data-reveal
         >
-          <div class="flex items-start justify-between gap-6">
-            <span class="font-display text-numeral font-light leading-none text-gold-700">{item.number}</span>
-            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold-700/25 text-gold-700 transition-colors duration-500 group-hover:border-gold-700/60">
-              <Icon name={item.icon as IconName} size={22} animate />
-            </span>
-          </div>
-
-          <div class="mt-8 lg:mt-0 lg:grid lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-10">
-            <div>
-              <h3 class="font-display text-h3 text-balance">{item.title}</h3>
-              <p class="mt-4 max-w-[38ch] text-ink-muted">{item.text}</p>
+          <div class="flex h-full flex-col sm:flex-row">
+            <!-- Bild buendig an der linken Kante, fuellt die Kartenhoehe. -->
+            <div class="relative w-full shrink-0 sm:w-[13rem] lg:w-[17rem]">
+              <ImagePlaceholder
+                id={item.image.id}
+                ratio={item.image.ratio}
+                label={item.image.label}
+                alt={item.image.alt}
+                prompt={item.image.prompt}
+                tone="sand"
+                fill
+                class="!rounded-none h-52 sm:h-full"
+              />
             </div>
 
-            <ul class="mt-7 flex flex-col gap-3 text-small lg:mt-0">
-              {item.points.map((p) => (
-                <li class="flex gap-3">
-                  <svg class="mt-1.5 h-2.5 w-2.5 shrink-0 text-gold-700" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-                    <path d="M1 5h8M5 1v8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-                  </svg>
-                  <span class="text-anthracite-950/85">{p}</span>
-                </li>
-              ))}
-            </ul>
+            <div class="flex flex-1 flex-col justify-between gap-6 p-8 lg:p-9">
+              <div class="flex items-start justify-between gap-6">
+                <span class="font-display text-numeral font-light leading-none text-gold-700">{item.number}</span>
+                <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold-700/25 text-gold-700 transition-colors duration-500 group-hover:border-gold-700/60">
+                  <Icon name={item.icon as IconName} size={22} animate />
+                </span>
+              </div>
+
+              <div>
+                <h3 class="font-display text-h3 text-balance">{item.title}</h3>
+                <p class="mt-3 max-w-[42ch] text-ink-muted">{item.text}</p>
+
+                <ul class="mt-6 grid gap-2.5 text-small">
+                  {item.points.map((p) => (
+                    <li class="flex gap-2.5">
+                      <svg class="mt-1.5 h-2.5 w-2.5 shrink-0 text-gold-700" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                        <path d="M1 5h8M5 1v8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+                      </svg>
+                      <span class="text-anthracite-950/85">{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </li>
       ))}

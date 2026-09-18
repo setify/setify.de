@@ -7,7 +7,7 @@ export type Ratio = '4:5' | '3:2' | '4:3' | '3:4' | '16:9' | '1:1';
 export interface ImageRef { id: string; ratio: Ratio; label: string; alt: string; prompt?: string }
 export interface SectionMeta { id: string; tone: Tone }
 
-export interface KiServiceCard { id: string; number: string; title: string; text: string; points: string[]; icon: string }
+export interface KiServiceCard { id: string; number: string; title: string; text: string; points: string[]; icon: string; image: ImageRef }
 export interface KiUseCase { id: string; label: string; title: string; text: string }
 export interface KiStep { number: string; title: string; text: string; icon: string }
 
@@ -28,7 +28,7 @@ export interface KiContent {
   services: { eyebrow: string; title: string; lead: string; items: KiServiceCard[] };
   useCases: { eyebrow: string; title: string; lead: string; items: KiUseCase[] };
   process: { eyebrow: string; title: string; steps: KiStep[] };
-  privacy: { eyebrow: string; title: string; text: string; points: string[] };
+  privacy: { eyebrow: string; title: string; text: string; points: string[]; image: ImageRef };
   faq: { eyebrow: string; title: string; items: { question: string; answer: string }[] };
   cta: { title: string; text: string; primary: { label: string; href: string } };
 }
@@ -269,6 +269,7 @@ export const site: SiteContent = {
           title: 'Standortbestimmung',
           text: 'Wir sehen uns an, wo bei dir Zeit verloren geht. Am Ende steht eine Liste mit Aufwand, Nutzen und Reihenfolge, nicht eine Liste mit Tools.',
           points: ['Prozess-Audit im Tagesgeschäft', 'Use-Cases bewertet nach Aufwand und Nutzen', 'Ehrliche Einschätzung, wo KI nichts bringt', 'Fahrplan mit Prioritäten'],
+          image: { id: 'ki-standort', ratio: '3:4', label: 'Standortbestimmung', alt: 'Zwei Personen stehen vor einer Wand mit sortierten Haftnotizen und einem ausgedruckten Ablaufdiagramm', prompt: 'Hochformat 3:4, realistische Reportagefotografie, hell und luftig. Zwei Personen in einem modernen Loft-Buero stehen vor einer weissen Wand mit sortierten Haftnotizen und einem ausgedruckten Ablaufdiagramm, eine Person zeigt auf einen Schritt in der Mitte, die andere haelt ein Notizbuch. Heller Holzboden, grosses Sprossenfenster links, viel Tageslicht, weiche Schatten. Im Vordergrund unscharf ein MacBook und eine Kaffeetasse. Freundliche, gut gekleidete Personen, kein Anzug, kein Kamerablick. Palette: Sand #f3eee4, helles Holz, Anthrazit #1a1b1e, Goldakzent #bdac89 an einer Messinglampe. 35mm, f/2.8, natuerliche Hauttoene, korrekte Haende. Keine Bildschirme mit lesbarem Text, keine Diagramm-Grafiken im Bild, keine Logos, kein HDR.' },
         },
         {
           id: 'automatisierung',
@@ -277,6 +278,7 @@ export const site: SiteContent = {
           title: 'Workflow-Automatisierung',
           text: 'Angebote, Rechnungen, Terminbestätigungen, Datenübergaben zwischen Systemen. Alles, was heute jemand von Hand kopiert, läuft danach von selbst.',
           points: ['Anbindung deiner bestehenden Systeme', 'Automatisierungen mit n8n oder Make', 'Fehlerbehandlung und Benachrichtigung', 'Dokumentierte Abläufe, kein Blackbox-Skript'],
+          image: { id: 'ki-automatisierung', ratio: '3:4', label: 'Workflow-Automatisierung', alt: 'Person am Stehschreibtisch vor einem Display mit einem unscharfen Netz aus verbundenen Knoten', prompt: 'Hochformat 3:4, realistische Fotografie, helle Morgenstimmung. Eine Person steht an einem hoehenverstellbaren Schreibtisch in einem hellen Loft und arbeitet an einem grossen Display, auf dem unscharf ein Netz aus verbundenen Knoten zu sehen ist, abstrakt und unlesbar. Halbnah von schraeg hinten, Gesicht im Profil. Daneben ein zweiter Monitor, ausgeschaltet, dunkel und matt. Grosses Fenster rechts, warmes Licht, Pflanze am Rand, Holzoberflaeche. Palette: Sand #eae3d5, helles Holz, Anthrazit #1a1b1e, Goldakzent #bdac89 als Messingdetail am Tisch. 50mm, f/2.5, natuerliche Hauttoene, korrekte Haende. Nur eine Person. Keine lesbaren Texte oder Zahlen auf den Bildschirmen, keine blauen Neonfarben, keine Serverraeume, keine Logos.' },
         },
         {
           id: 'assistenten',
@@ -285,6 +287,7 @@ export const site: SiteContent = {
           title: 'Assistenten auf deinen Daten',
           text: 'Ein Assistent, der deine Preisliste kennt, deine Verträge liest und deinem Team antwortet. Nicht das halbe Internet, sondern dein Wissen.',
           points: ['Chat-Assistent für Website oder intern', 'Dokumente auswerten statt durchsuchen', 'Angebunden an CRM, ERP oder Wissensablage', 'Antworten mit Quellenangabe'],
+          image: { id: 'ki-assistenten', ratio: '3:4', label: 'Assistenten auf deinen Daten', alt: 'Aufgeraeumter Holzschreibtisch mit MacBook, Dokumentenstapel und Tablet, eine Person blaettert darin', prompt: 'Hochformat 3:4, realistische Fotografie, hell und ruhig. Ein aufgeraeumter Schreibtisch aus hellem Holz, darauf ein aufgeklapptes MacBook, daneben ein sauberer Stapel Papierdokumente und Ordner, ein Tablet liegt schraeg an. Eine Person sitzt halb im Bild und blaettert in einem Dokument, Blick nach unten, kein Kamerablick. Grosses Fenster hinter dem Tisch, Gegenlicht weich abgefangen, feiner Staub in der Luft. Palette: Sand #fbf9f4, helles Holz, Anthrazit #1a1b1e, Goldakzent #bdac89 an einer Lampe. 50mm, f/2.2, natuerliche Hauttoene, korrekte Haende. Nur eine Person. Kein lesbarer Text auf Papier oder Display, keine Aktenberge, kein Chaos, keine Logos.' },
         },
         {
           id: 'betrieb',
@@ -293,6 +296,7 @@ export const site: SiteContent = {
           title: 'Betrieb & Schulung',
           text: 'Eine Automatisierung, die keiner versteht, wird nach drei Monaten abgeschaltet. Wir übergeben sie so, dass dein Team damit arbeitet.',
           points: ['Monitoring und Kostenkontrolle', 'Schulung für dein Team', 'Anpassung, wenn sich Abläufe ändern', 'DSGVO-Dokumentation inklusive'],
+          image: { id: 'ki-betrieb', ratio: '3:4', label: 'Betrieb & Schulung', alt: 'Zwei Personen sitzen am Holztisch, eine erklaert der anderen etwas am Laptop', prompt: 'Hochformat 3:4, realistische Reportagefotografie, hell und freundlich. Zwei Personen sitzen nebeneinander an einem Holztisch in einem modernen Loft, eine erklaert der anderen etwas am Laptop, beide schauen auf den Bildschirm, entspannte Koerperhaltung, kein Kamerablick. Im Hintergrund unscharf ein Regal mit Buechern und eine Pflanze. Tageslicht von links, weiche Schatten, helle Waende. Casual, gut gekleidet, keine Krawatte. Palette: Sand #eae3d5, helles Holz, Anthrazit #1a1b1e, Goldakzent #bdac89. 35mm, f/2.8, natuerliche Hauttoene, korrekte Haende. Genau zwei Personen. Kein Daumen hoch, kein Meeting-Stockfoto, kein lesbarer Bildschirminhalt, keine Logos.' },
         },
       ],
     },
@@ -321,6 +325,7 @@ export const site: SiteContent = {
       title: 'Deine Daten bleiben deine Daten.',
       text: 'Der häufigste Grund, warum KI im Mittelstand liegen bleibt, ist nicht fehlender Nutzen. Es ist die Unsicherheit, wo die Daten landen. Deshalb klären wir das vor der ersten Zeile Code.',
       points: ['Verarbeitung in der EU, wo immer es geht', 'Keine Weitergabe deiner Inhalte an Modelltraining', 'Auftragsverarbeitungsvertrag inklusive', 'Auf Wunsch Modelle, die bei dir im Haus laufen'],
+      image: { id: 'ki-datenschutz', ratio: '16:9', label: 'Datenschutz', alt: 'Aufgeraeumter Arbeitsplatz am Abend mit geschlossenem Laptop, abgeschlossenem Aktenschrank und einer warmen Schreibtischlampe', prompt: 'Querformat 16:9, realistische Fotografie, dunkle ruhige Stimmung, Low-Key aber gut durchgezeichnet. Ein aufgeraeumter Arbeitsplatz in einem Buero am spaeten Abend: ein geschlossener Laptop, ein abgeschlossener Aktenschrank aus dunklem Metall, eine einzelne warme Schreibtischlampe als Lichtquelle. Menschenleer. Im Hintergrund unscharf grosse Fenster mit Stadtlichtern. Palette: Anthrazit #1a1b1e und #232428, Stahlgrau, Goldakzent #bdac89 als Messingreflex an Lampe und Schrankgriff. 35mm, f/2.0, ruhige Komposition, viel Platz links im Bild fuer Text. Keine Serverracks, keine blauen LEDs, keine Schloss-Symbolik, keine Logos, kein Teal-Orange-Grading.' },
     },
     faq: {
       eyebrow: 'Fragen',
